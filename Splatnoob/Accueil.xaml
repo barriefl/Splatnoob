@@ -7,7 +7,26 @@
         mc:Ignorable="d"
         Title="Accueil" Height="450" Width="800" Background="black">
     <Canvas>
-        <Label Content="Splatnoob" Foreground="white" Margin="235,120,235,200" FontSize="70"/>
+        <Label Content="Splatnoob" Margin="160,120,160,200" FontSize="70" FontFamily="Ravie" Height="103.243333333333">
+            <Label.Foreground>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <LinearGradientBrush.RelativeTransform>
+                        <TransformGroup>
+                            <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                            <SkewTransform CenterX="0.5" CenterY="0.5"/>
+                            <RotateTransform Angle="91" CenterX="0.5" CenterY="0.5"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </LinearGradientBrush.RelativeTransform>
+                    <GradientStop Color="#FF0D74B5" Offset="1"/>
+                    <GradientStop Color="#FFE61B1B"/>
+                    <GradientStop Color="White"/>
+                    <GradientStop Color="#FFFDF0F0"/>
+                    <GradientStop Color="#FFE80505"/>
+                    <GradientStop Color="#FFEEEBEF" Offset="0.5"/>
+                </LinearGradientBrush>
+            </Label.Foreground>
+        </Label>
         <Button Content="BONJOUR" Click="Button_Click" Background="{x:Null}" Foreground="White" Margin="150,300,474,75" FontSize="36" />
         <Button Content="parametre" Click="Button_Click" Background="{x:Null}" Foreground="White" Margin="470,300,150,75" FontSize="36" />
 
