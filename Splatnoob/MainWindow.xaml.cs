@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace Splatnoob
 {
@@ -20,9 +21,17 @@ namespace Splatnoob
     /// </summary>
     public partial class MainWindow : Window
     {
+        private DispatcherTimer dispatcherTimer = new DispatcherTimer();
+
+        private ImageBrush fondSkin = new ImageBrush();
+
         public MainWindow()
         {
             InitializeComponent();
+
+            fondSkin.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/fond.jpeg"));
+
+            rectangleFond.Fill = fondSkin;
         }
     }
 }
