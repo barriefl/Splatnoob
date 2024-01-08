@@ -6,10 +6,10 @@
         xmlns:local="clr-namespace:Splatnoob"
         mc:Ignorable="d"
         Title="Accueil" Height="450" Width="800" Background="black">
-    <Grid>
-        <Label Content="bonjour" Foreground="White" Margin="150,300,510,75" FontSize="36"/>
-        <Label Content="parametre" Foreground="White" Margin="470,300,150,75" FontSize="36"/>
+    <Canvas>
         <Label Content="Splatnoob" Foreground="white" Margin="235,120,235,200" FontSize="70"/>
+        <Button Content="BONJOUR" Click="Button_Click" Background="{x:Null}" Foreground="White" Margin="150,300,474,75" FontSize="36" />
+        <Button Content="parametre" Click="Button_Click" Background="{x:Null}" Foreground="White" Margin="470,300,150,75" FontSize="36" />
 
-    </Grid>
+    </Canvas>
 </Window>
