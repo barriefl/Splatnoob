@@ -5,8 +5,37 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Splatnoob"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="Splatnoob" Height="450" Width="800">
+    <Canvas Background="Black">
+        <Rectangle x:Name="rectangle22" Height="75" Canvas.Left="363" Stroke="Black" Canvas.Top="180" Width="75" HorizontalAlignment="Left" VerticalAlignment="Center" Fill="White"/>
+        <Rectangle x:Name="rectangle21" Height="75" Canvas.Left="283" Stroke="Black" Canvas.Top="180" Width="75" HorizontalAlignment="Left" VerticalAlignment="Center" Fill="White"/>
+        <Rectangle x:Name="rectangle20" Height="75" Canvas.Left="203" Stroke="Black" Canvas.Top="180" Width="75" HorizontalAlignment="Left" VerticalAlignment="Center" Fill="White"/>
+        <Rectangle x:Name="rectangleRouge" Height="75" Canvas.Left="123" Stroke="Black" Canvas.Top="180" Width="75" HorizontalAlignment="Left" VerticalAlignment="Center" Fill="Red"/>
+        <Rectangle x:Name="rectangle23" Height="75" Canvas.Left="443" Stroke="Black" Canvas.Top="180" Width="75" HorizontalAlignment="Left" VerticalAlignment="Center" Fill="White"/>
+        <Rectangle x:Name="rectangle24" Height="75" Canvas.Left="523" Stroke="Black" Canvas.Top="180" Width="75" HorizontalAlignment="Left" VerticalAlignment="Center" Fill="White"/>
+        <Rectangle x:Name="rectangleBleu" Height="75" Canvas.Left="603" Stroke="Black" Canvas.Top="180" Width="75" HorizontalAlignment="Left" VerticalAlignment="Center" Fill="#FF1E1EFF"/>
+        <Rectangle x:Name="rectangle12" Height="75" Canvas.Left="363" Stroke="Black" Canvas.Top="100" Width="75" HorizontalAlignment="Center" VerticalAlignment="Top" Fill="White"/>
+        <Rectangle x:Name="rectangle02" Height="75" Canvas.Left="363" Stroke="Black" Canvas.Top="20" Width="75" HorizontalAlignment="Center" VerticalAlignment="Top" Fill="White"/>
+        <Rectangle x:Name="rectangle32" Height="75" Canvas.Left="362" Stroke="Black" Canvas.Top="260" Width="76" HorizontalAlignment="Center" VerticalAlignment="Top" Fill="White"/>
+        <Rectangle x:Name="rectangle42" Height="75" Canvas.Left="362" Stroke="Black" Canvas.Top="340" Width="76" HorizontalAlignment="Center" VerticalAlignment="Top" Fill="White"/>
+        <Rectangle x:Name="rectangle11" Height="75" Canvas.Left="283" Stroke="Black" Canvas.Top="100" Width="75" HorizontalAlignment="Center" VerticalAlignment="Top" Fill="White"/>
+        <Rectangle x:Name="rectangle01" Height="75" Canvas.Left="283" Stroke="Black" Canvas.Top="20" Width="75" HorizontalAlignment="Center" VerticalAlignment="Top" Fill="White"/>
+        <Rectangle x:Name="rectangle10" Height="75" Canvas.Left="203" Stroke="Black" Canvas.Top="100" Width="75" HorizontalAlignment="Center" VerticalAlignment="Top" Fill="White"/>
+        <Rectangle x:Name="rectangle00" Height="75" Canvas.Left="203" Stroke="Black" Canvas.Top="20" Width="75" HorizontalAlignment="Center" VerticalAlignment="Top" Fill="White"/>
+        <Rectangle x:Name="rectangle31" Height="75" Canvas.Left="282" Stroke="Black" Canvas.Top="260" Width="75" HorizontalAlignment="Left" VerticalAlignment="Top" Fill="White"/>
+        <Rectangle x:Name="rectangle41" Height="75" Canvas.Left="282" Stroke="Black" Canvas.Top="340" Width="75" HorizontalAlignment="Center" VerticalAlignment="Top" Fill="White"/>
+        <Rectangle x:Name="rectangle30" Height="75" Canvas.Left="202" Stroke="Black" Canvas.Top="260" Width="75" HorizontalAlignment="Left" VerticalAlignment="Center" Fill="White"/>
+        <Rectangle x:Name="rectangle40" Height="75" Canvas.Left="202" Stroke="Black" Canvas.Top="340" Width="75" HorizontalAlignment="Center" VerticalAlignment="Top" Fill="White"/>
+        <Rectangle x:Name="rectangle13" Height="75" Canvas.Left="443" Stroke="Black" Canvas.Top="100" Width="75" HorizontalAlignment="Center" VerticalAlignment="Top" Fill="White"/>
+        <Rectangle x:Name="rectangle03" Height="75" Canvas.Left="443" Stroke="Black" Canvas.Top="20" Width="75" HorizontalAlignment="Center" VerticalAlignment="Top" Fill="White"/>
+        <Rectangle x:Name="rectangle33" Height="75" Canvas.Left="443" Stroke="Black" Canvas.Top="260" Width="75" HorizontalAlignment="Center" VerticalAlignment="Top" Fill="White"/>
+        <Rectangle x:Name="rectangle43" Height="75" Canvas.Left="443" Stroke="Black" Canvas.Top="340" Width="75" HorizontalAlignment="Center" VerticalAlignment="Top" Fill="White"/>
+        <Rectangle x:Name="rectangle14" Height="75" Canvas.Left="523" Stroke="Black" Canvas.Top="100" Width="75" HorizontalAlignment="Center" VerticalAlignment="Top" Fill="White"/>
+        <Rectangle x:Name="rectangle04" Height="75" Canvas.Left="523" Stroke="Black" Canvas.Top="20" Width="75" HorizontalAlignment="Center" VerticalAlignment="Top" Fill="White"/>
+        <Rectangle x:Name="rectangle34" Height="75" Canvas.Left="523" Stroke="Black" Canvas.Top="260" Width="75" HorizontalAlignment="Center" VerticalAlignment="Top" Fill="White"/>
+        <Rectangle x:Name="rectangle44" Height="75" Canvas.Left="523" Stroke="Black" Canvas.Top="340" Width="75" HorizontalAlignment="Center" VerticalAlignment="Top" Fill="White"/>
+        <Rectangle x:Name="joueur1" Height="25" Canvas.Left="148" Canvas.Top="205" Width="25" HorizontalAlignment="Left" VerticalAlignment="Center" Fill="#FF640000" Stroke="Black"/>
+        <Rectangle x:Name="joueur2" Height="25" Canvas.Left="628" Canvas.Top="205" Width="25" Fill="#FF000064" HorizontalAlignment="Left" VerticalAlignment="Top" Stroke="Black"/>
 
-    </Grid>
+    </Canvas>
 </Window>
