@@ -7,7 +7,8 @@
         mc:Ignorable="d"
         Title="Accueil" Height="500" Width="450">
     <Canvas>
-		<Button Content="BONJOUR" Click="Button_Click" Margin="129,420,474,75" FontSize="36" Background="#FFF97C25" />
+		<Button Content="BONJOUR" Click="Button_Click" Margin="40,420,474,75" FontSize="36" Background="#FFF97C25" />
+        <Button Content="Paramètre" Click="Button_Click" FontSize="36" Background="#FFF97C25" Canvas.Left="239" Canvas.Top="420" />
 
     </Canvas>
 </Window>

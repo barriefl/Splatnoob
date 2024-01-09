@@ -5,8 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Splatnoob"
         mc:Ignorable="d"
-        Title="parametre" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="parametre" Height="450" Width="800" Background="black">
+    <Canvas>
+        <CheckBox Content="CheckBox" Margin="150,140,633,297" IsChecked="False"/>
+        <Label Content="Label" Margin="180,120,460,280" Foreground="White" FontSize="30"/>
+        <CheckBox Content="CheckBox" Margin="150,220,633,217" IsChecked="False"/>
+        <Label Content="Label" Margin="180,200,460,200" Foreground="White" FontSize="30"/>
+        <CheckBox Content="CheckBox" Margin="150,300,633,133" IsChecked="False"/>
+        <Label Content="Label" Margin="180,280,460,116" Foreground="White" FontSize="30"/>
+        <Label Content="Paramètre" Foreground="White" FontSize="36" Canvas.Left="314" Canvas.Top="56"/>
+        <Button Content="X" Height="40" Canvas.Left="760" Canvas.Top="395" Width="40" Background="#00DDDDDD" Foreground="White" FontSize="30"/>
+
+    </Canvas>
 </Window>
