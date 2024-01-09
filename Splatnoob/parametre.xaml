@@ -13,7 +13,7 @@
         <Label Content="Label" Margin="180,200,460,200" Foreground="White" FontSize="30"/>
         <CheckBox Content="CheckBox" Margin="150,300,633,133" IsChecked="False"/>
         <Label Content="Label" Margin="180,280,460,116" Foreground="White" FontSize="30"/>
-        <Label Content="Paramètre" Foreground="White" FontSize="36" Canvas.Left="314" Canvas.Top="56"/>
+        <Label Content="Paramètres" Foreground="White" FontSize="36" Canvas.Left="314" Canvas.Top="56"/>
         <Button Content="X" Height="40" Canvas.Left="760" Canvas.Top="395" Width="40" Background="#00DDDDDD" Foreground="White" FontSize="30"/>
 
     </Canvas>
