@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -24,6 +25,7 @@ namespace Splatnoob
     {
         // Timer.
         private DispatcherTimer dispatcherTimer = new DispatcherTimer();
+        private double temps = 10;
 
         // Skin.
         private ImageBrush fondSkin = new ImageBrush();
@@ -41,6 +43,9 @@ namespace Splatnoob
         private const int POSITION_JOUEUR_Z = 1;
 
         // Variables.
+        private int scoreRouge = 0;
+        private int scoreBleu = 0;
+
         private int pasJoueur = 80;
         private int x1 = 0;
         private int y1 = 0;
@@ -72,7 +77,7 @@ namespace Splatnoob
             fondSkin.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/fond.jpeg"));
 
             // On rempli le rectangle avec le skin.
-            rectangleFond.Fill = fondSkin;
+            rectFond.Fill = fondSkin;
 
             // Création des rectangles et on charge le Canvas pour que les coordonnées de la grille soient correcte.
             CreationRectangle();
@@ -98,7 +103,8 @@ namespace Splatnoob
                         Height = RECTANGLE_HAUTEUR,
                         Fill = Brushes.White,
                         Stroke = Brushes.Black,
-                        StrokeThickness = 1
+                        StrokeThickness = 1,
+                        Tag = "blanc"
                     };
                 }
             }
@@ -106,13 +112,13 @@ namespace Splatnoob
 
         private void CreationGrille()
         {
-            // Variables pour la grille.
+            // Variables pour les coordonnées.
             double largeurTotale = COLONNE * (RECTANGLE_LARGEUR + RECTANGLE_ESPACEMENT) - RECTANGLE_ESPACEMENT;
             double hauteurTotale = LIGNE * (RECTANGLE_HAUTEUR + RECTANGLE_ESPACEMENT) - RECTANGLE_ESPACEMENT;
 
             // Coordonnées pour centrer la grille.
-            double coordonneesX = (rectangleFond.ActualWidth - largeurTotale) /2;
-            double coordonneesY = (rectangleFond.ActualHeight - hauteurTotale) /2;
+            double coordonneesX = (rectFond.ActualWidth - largeurTotale) /2;
+            double coordonneesY = (rectFond.ActualHeight - hauteurTotale) /2;
 
             for (int i = 0; i < LIGNE; i++)
             {
@@ -212,39 +218,67 @@ namespace Splatnoob
                     cooLabelJ2.Content = x2 + "," + y2;
                 }
             }
-        }
-
-        private void TestCollisionJoueur1(Rectangle x, Rect player)
-        {
-            // Vérification de la collision avec le joueur.
-            Rect carreau = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
-            if (player.IntersectsWith(carreau))
-            {
-                x.Fill = new SolidColorBrush(Color.FromRgb(255, 25, 25));
-            }
-        }
-
-        private void TestCollisionJoueur2(Rectangle x, Rect player)
-        {
-            // Vérification de la collision avec le joueur.
-            Rect carreau = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
-            if (player.IntersectsWith(carreau))
-            {
-                x.Fill = new SolidColorBrush(Color.FromRgb(25, 25, 255));
-            }
-        }
-
-        private void MoteurJeu(object sender, EventArgs e)
-        {
             // Création d’un rectangle joueur pour la détection de collision.
             Rect rectJoueur1 = new Rect(Canvas.GetLeft(joueur1), Canvas.GetTop(joueur1), joueur1.Width, joueur1.Height);
             Rect rectJoueur2 = new Rect(Canvas.GetLeft(joueur2), Canvas.GetTop(joueur2), joueur2.Width, joueur2.Height);
-
             foreach (Rectangle x in monCanvas.Children.OfType<Rectangle>())
             {
                 TestCollisionJoueur1(x, rectJoueur1);
                 TestCollisionJoueur2(x, rectJoueur2);
             }
+        }
+
+        private void TestCollisionJoueur1(Rectangle x, Rect joueur)
+        {
+            // Vérification de la collision avec le joueur.
+            Rect carreau = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
+            if (joueur.IntersectsWith(carreau) && (string)x.Tag != "joueur" && (string)x.Tag != "rouge")
+            {
+                x.Fill = new SolidColorBrush(Color.FromRgb(255, 25, 25));
+                scoreRouge++;
+                labScoreRouge.Content = scoreRouge.ToString();
+                if (joueur.IntersectsWith(carreau) && (string)x.Tag == "bleu")
+                {
+                    scoreBleu = scoreBleu - 1;
+                    labScoreBleu.Content = scoreBleu.ToString();
+                }
+                x.Tag = "rouge";
+            }
+        }
+
+        private void TestCollisionJoueur2(Rectangle x, Rect joueur)
+        {
+            // Vérification de la collision avec le joueur.
+            Rect carreau = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
+            if (joueur.IntersectsWith(carreau) && (string)x.Tag != "joueur" && (string)x.Tag != "bleu")
+            {
+                x.Fill = new SolidColorBrush(Color.FromRgb(25, 25, 255));
+                scoreBleu++;
+                labScoreBleu.Content = scoreBleu.ToString();
+                if (joueur.IntersectsWith(carreau) && (string)x.Tag == "rouge")
+                {
+                    scoreRouge = scoreRouge - 1;
+                    labScoreRouge.Content = scoreRouge.ToString();
+                }
+                x.Tag = "bleu";
+            }
+        }
+
+        private void TestGagnant()
+        {
+            if (temps <= 0)
+            {
+                dispatcherTimer.Stop();
+                temps = 0;
+            }
+        }
+
+        private void MoteurJeu(object sender, EventArgs e)
+        {
+            temps = Math.Round(temps - 0.016, 2);
+            labTemps.Content = temps.ToString();
+
+            TestGagnant();
         }
     }
 }

@@ -5,15 +5,11 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
-    <ApplicationIcon>OIG.ico</ApplicationIcon>
+    <ApplicationIcon>Images\OIG.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="OIG.ico" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Images\" />
+    <Content Include="Images\OIG.ico" />
   </ItemGroup>
 
   <ItemGroup>
