@@ -42,8 +42,15 @@ namespace Splatnoob
         // Variables.
         private int pasJoueur = 80;
         private int x1 = 0;
-        private int y1 = LIGNE / 2;
+        private int y1 = 0;
+        private int x2 = COLONNE - 1;
+        private int y2 = LIGNE - 1;
 
+        // Variables rectOriginal.
+        private int xO = COLONNE / 2;
+        private int yO = LIGNE / 2;
+
+        // Limites grille.
         private double maxX = COLONNE - 1;
         private double minX = 0;
         private double maxY = LIGNE - 1;
@@ -69,6 +76,11 @@ namespace Splatnoob
             // Création des rectangles et on charge le Canvas pour que les coordonnées de la grille soient correcte.
             CreationRectangle();
             monCanvas.Loaded += (sender, e) => CreationGrille();
+
+            Point J1 = new Point(x1, y1);
+            Point J2 = new Point(x2, y2);
+            cooLabelJ1.Content = J1;
+            cooLabelJ2.Content = J2;
         }
 
         private void CreationRectangle()
@@ -120,8 +132,7 @@ namespace Splatnoob
 
         private void MouvementsJoueursEtVerifications(object sender, KeyEventArgs e)
         {
-            // Joueur 1 - Z, Q, S, D.
-          
+            // Joueur 1 - Z, Q, S, D. 
             Point J1 = new Point(x1, y1);
 
             if (e.Key == Key.Z)
@@ -130,7 +141,7 @@ namespace Splatnoob
                 {
                     Canvas.SetTop(joueur1, Canvas.GetTop(joueur1) - pasJoueur);
                     y1 -= 1;
-                    cooLabel.Content = y1;
+                    cooLabelJ1.Content = J1;
                 }
             }
             if (e.Key == Key.Q)
@@ -139,6 +150,7 @@ namespace Splatnoob
                 {
                     Canvas.SetLeft(joueur1, Canvas.GetLeft(joueur1) - pasJoueur);
                     x1 -= 1;
+                    cooLabelJ1.Content = J1;
                 }
             }
             if (e.Key == Key.S)
@@ -147,7 +159,7 @@ namespace Splatnoob
                 {
                     Canvas.SetTop(joueur1, Canvas.GetTop(joueur1) + pasJoueur);
                     y1 += 1;
-                    cooLabel.Content = y1;
+                    cooLabelJ1.Content = J1;
                 }
             }
             if (e.Key == Key.D)
@@ -156,40 +168,47 @@ namespace Splatnoob
                 {
                     Canvas.SetLeft(joueur1, Canvas.GetLeft(joueur1) + pasJoueur);
                     x1 += 1;
+                    cooLabelJ1.Content = J1;
                 }
             }
 
             // Joueur 2 - Up, Left, Down, Right.
-            int x2 = (int)Canvas.GetLeft(joueur2);
-            int y2 = (int)Canvas.GetTop(joueur2);
             Point J2 = new Point(x2, y2);
 
             if (e.Key == Key.Up)
             {
-                if (Canvas.GetTop(joueur2) > 0)
+                if (y2 > minY)
                 {
                     Canvas.SetTop(joueur2, Canvas.GetTop(joueur2) - pasJoueur);
+                    y2 -= 1;
+                    cooLabelJ2.Content = J2;
                 }
             }
             if (e.Key == Key.Left)
             {
-                if (Canvas.GetLeft(joueur2) > 0)
+                if (x2 > minX)
                 {
                     Canvas.SetLeft(joueur2, Canvas.GetLeft(joueur2) - pasJoueur);
+                    x2 -= 1;
+                    cooLabelJ2.Content = J2;
                 }
             }
             if (e.Key == Key.Down)
             {
-                if (Canvas.GetTop(joueur2) + joueur2.Width < Application.Current.MainWindow.Width)
+                if (y2 < maxY)
                 {
                     Canvas.SetTop(joueur2, Canvas.GetTop(joueur2) + pasJoueur);
+                    y2 += 1;
+                    cooLabelJ2.Content = J2;
                 }
             }
             if (e.Key == Key.Right)
             {
-                if (Canvas.GetLeft(joueur2) + joueur2.Width < Application.Current.MainWindow.Width)
+                if (x2 < maxX)
                 {
                     Canvas.SetLeft(joueur2, Canvas.GetLeft(joueur2) + pasJoueur);
+                    x2 += 1;
+                    cooLabelJ2.Content = J2;
                 }
             }
         }
