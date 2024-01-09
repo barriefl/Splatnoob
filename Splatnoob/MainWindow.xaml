@@ -7,13 +7,14 @@
         mc:Ignorable="d"
         Title="Splatnoob" Height="450" Width="800">
     <Canvas Background="Black">
+        <Rectangle x:Name="rectangleFond" Height="434" Stroke="Black" Width="800"/>
         <Rectangle x:Name="rectangle22" Height="75" Canvas.Left="363" Stroke="Black" Canvas.Top="180" Width="75" HorizontalAlignment="Left" VerticalAlignment="Center" Fill="White"/>
         <Rectangle x:Name="rectangle21" Height="75" Canvas.Left="283" Stroke="Black" Canvas.Top="180" Width="75" HorizontalAlignment="Left" VerticalAlignment="Center" Fill="White"/>
         <Rectangle x:Name="rectangle20" Height="75" Canvas.Left="203" Stroke="Black" Canvas.Top="180" Width="75" HorizontalAlignment="Left" VerticalAlignment="Center" Fill="White"/>
         <Rectangle x:Name="rectangleRouge" Height="75" Canvas.Left="123" Stroke="Black" Canvas.Top="180" Width="75" HorizontalAlignment="Left" VerticalAlignment="Center" Fill="Red"/>
         <Rectangle x:Name="rectangle23" Height="75" Canvas.Left="443" Stroke="Black" Canvas.Top="180" Width="75" HorizontalAlignment="Left" VerticalAlignment="Center" Fill="White"/>
         <Rectangle x:Name="rectangle24" Height="75" Canvas.Left="523" Stroke="Black" Canvas.Top="180" Width="75" HorizontalAlignment="Left" VerticalAlignment="Center" Fill="White"/>
-        <Rectangle x:Name="rectangleBleu" Height="75" Canvas.Left="603" Stroke="Black" Canvas.Top="180" Width="75" HorizontalAlignment="Left" VerticalAlignment="Center" Fill="#FF1E1EFF"/>
+        <Rectangle x:Name="rectangleBleu" Height="75" Canvas.Left="603" Stroke="Black" Canvas.Top="180" Width="75" HorizontalAlignment="Left" VerticalAlignment="Center" Fill="#FF1919FF"/>
         <Rectangle x:Name="rectangle12" Height="75" Canvas.Left="363" Stroke="Black" Canvas.Top="100" Width="75" HorizontalAlignment="Center" VerticalAlignment="Top" Fill="White"/>
         <Rectangle x:Name="rectangle02" Height="75" Canvas.Left="363" Stroke="Black" Canvas.Top="20" Width="75" HorizontalAlignment="Center" VerticalAlignment="Top" Fill="White"/>
         <Rectangle x:Name="rectangle32" Height="75" Canvas.Left="362" Stroke="Black" Canvas.Top="260" Width="76" HorizontalAlignment="Center" VerticalAlignment="Top" Fill="White"/>
