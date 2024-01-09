@@ -21,37 +21,48 @@ namespace Splatnoob
     /// </summary>
     public partial class MainWindow : Window
     {
+        // Timer.
         private DispatcherTimer dispatcherTimer = new DispatcherTimer();
 
+        // Skin.
         private ImageBrush fondSkin = new ImageBrush();
 
+        // Constantes.
         private const int LIGNE = 5;
         private const int COLONNE = 5;
         private const int RECTANGLE_LARGEUR = 75;
         private const int RECTANGLE_HAUTEUR = 75;
         private const int RECTANGLE_ESPACEMENT = 5;
         private const int POSITION_JOUEUR_Z = 1;
+
+        // Variables.
         private int joueurVitesse = 80;
 
+        // Tableau (grille).
         private Rectangle[,] grille;
 
         public MainWindow()
         {
+            // Début du jeu.
             InitializeComponent();
             dispatcherTimer.Tick += MoteurJeu;
             dispatcherTimer.Interval = TimeSpan.FromMilliseconds(16);
             dispatcherTimer.Start();
 
+            // Chemin du skin.
             fondSkin.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/fond.jpeg"));
 
+            // On rempli le rectangle avec le skin.
             rectangleFond.Fill = fondSkin;
 
+            // Création des rectangles et on charge le Canvas pour que les coordonnées de la grille soient correcte.
             CreationRectangle();
             monCanvas.Loaded += (sender, e) => CreationGrille();
         }
 
         private void CreationRectangle()
         {
+            // Création de la grille + propriétés des rectangles.
             grille = new Rectangle[LIGNE, COLONNE];
             for (int i = 0; i < LIGNE; i++)
             {
@@ -71,9 +82,11 @@ namespace Splatnoob
 
         private void CreationGrille()
         {
+            // Variables pour la grille.
             double largeurTotale = COLONNE * (RECTANGLE_LARGEUR + RECTANGLE_ESPACEMENT) - RECTANGLE_ESPACEMENT;
             double hauteurTotale = LIGNE * (RECTANGLE_HAUTEUR + RECTANGLE_ESPACEMENT) - RECTANGLE_ESPACEMENT;
 
+            // Coordonnées pour centrer la grille.
             double coordonneesX = (rectangleFond.ActualWidth - largeurTotale) /2;
             double coordonneesY = (rectangleFond.ActualHeight - hauteurTotale) /2;
 
@@ -89,13 +102,14 @@ namespace Splatnoob
                     monCanvas.Children.Add(grille[i, j]);
                 }
             }
+            // Placement des joueurs dans l'espace.
             Canvas.SetZIndex(joueur1, POSITION_JOUEUR_Z);
             Canvas.SetZIndex(joueur2, POSITION_JOUEUR_Z);
         }
 
         private void ToucheCanvasEnBas(object sender, KeyEventArgs e)
         {
-            // Joueur 1
+            // Joueur 1 - Z, Q, S, D.
             if (e.Key == Key.Z)
             {
                 if (Canvas.GetTop(joueur1) > 0)
@@ -124,7 +138,7 @@ namespace Splatnoob
                     Canvas.SetLeft(joueur1, Canvas.GetLeft(joueur1) + joueurVitesse);
                 }
             }
-            // Joueur 2
+            // Joueur 2 - Up, Left, Down, Right.
             if (e.Key == Key.Up)
             {
                 if (Canvas.GetTop(joueur2) > 0)
