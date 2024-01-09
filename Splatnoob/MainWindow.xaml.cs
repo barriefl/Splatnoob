@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -141,7 +142,7 @@ namespace Splatnoob
                 {
                     Canvas.SetTop(joueur1, Canvas.GetTop(joueur1) - pasJoueur);
                     y1 -= 1;
-                    cooLabelJ1.Content = J1;
+                    cooLabelJ1.Content = x1 + "," + y1;
                 }
             }
             if (e.Key == Key.Q)
@@ -150,7 +151,7 @@ namespace Splatnoob
                 {
                     Canvas.SetLeft(joueur1, Canvas.GetLeft(joueur1) - pasJoueur);
                     x1 -= 1;
-                    cooLabelJ1.Content = J1;
+                    cooLabelJ1.Content = x1 + "," + y1;
                 }
             }
             if (e.Key == Key.S)
@@ -159,7 +160,7 @@ namespace Splatnoob
                 {
                     Canvas.SetTop(joueur1, Canvas.GetTop(joueur1) + pasJoueur);
                     y1 += 1;
-                    cooLabelJ1.Content = J1;
+                    cooLabelJ1.Content = x1 + "," + y1;
                 }
             }
             if (e.Key == Key.D)
@@ -168,7 +169,7 @@ namespace Splatnoob
                 {
                     Canvas.SetLeft(joueur1, Canvas.GetLeft(joueur1) + pasJoueur);
                     x1 += 1;
-                    cooLabelJ1.Content = J1;
+                    cooLabelJ1.Content = x1 + "," + y1;
                 }
             }
 
@@ -181,7 +182,7 @@ namespace Splatnoob
                 {
                     Canvas.SetTop(joueur2, Canvas.GetTop(joueur2) - pasJoueur);
                     y2 -= 1;
-                    cooLabelJ2.Content = J2;
+                    cooLabelJ2.Content = x2 + "," + y2;
                 }
             }
             if (e.Key == Key.Left)
@@ -190,7 +191,7 @@ namespace Splatnoob
                 {
                     Canvas.SetLeft(joueur2, Canvas.GetLeft(joueur2) - pasJoueur);
                     x2 -= 1;
-                    cooLabelJ2.Content = J2;
+                    cooLabelJ2.Content = x2 + "," + y2;
                 }
             }
             if (e.Key == Key.Down)
@@ -199,7 +200,7 @@ namespace Splatnoob
                 {
                     Canvas.SetTop(joueur2, Canvas.GetTop(joueur2) + pasJoueur);
                     y2 += 1;
-                    cooLabelJ2.Content = J2;
+                    cooLabelJ2.Content = x2 + "," + y2;
                 }
             }
             if (e.Key == Key.Right)
@@ -208,14 +209,42 @@ namespace Splatnoob
                 {
                     Canvas.SetLeft(joueur2, Canvas.GetLeft(joueur2) + pasJoueur);
                     x2 += 1;
-                    cooLabelJ2.Content = J2;
+                    cooLabelJ2.Content = x2 + "," + y2;
                 }
             }
         }
-     
+
+        private void TestCollisionJoueur1(Rectangle x, Rect player)
+        {
+            // Vérification de la collision avec le joueur.
+            Rect carreau = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
+            if (player.IntersectsWith(carreau))
+            {
+                x.Fill = new SolidColorBrush(Color.FromRgb(255, 25, 25));
+            }
+        }
+
+        private void TestCollisionJoueur2(Rectangle x, Rect player)
+        {
+            // Vérification de la collision avec le joueur.
+            Rect carreau = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
+            if (player.IntersectsWith(carreau))
+            {
+                x.Fill = new SolidColorBrush(Color.FromRgb(25, 25, 255));
+            }
+        }
+
         private void MoteurJeu(object sender, EventArgs e)
         {
+            // Création d’un rectangle joueur pour la détection de collision.
+            Rect rectJoueur1 = new Rect(Canvas.GetLeft(joueur1), Canvas.GetTop(joueur1), joueur1.Width, joueur1.Height);
+            Rect rectJoueur2 = new Rect(Canvas.GetLeft(joueur2), Canvas.GetTop(joueur2), joueur2.Width, joueur2.Height);
 
+            foreach (Rectangle x in monCanvas.Children.OfType<Rectangle>())
+            {
+                TestCollisionJoueur1(x, rectJoueur1);
+                TestCollisionJoueur2(x, rectJoueur2);
+            }
         }
     }
 }

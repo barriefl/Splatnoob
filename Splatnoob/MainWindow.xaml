@@ -13,7 +13,7 @@
         <Rectangle x:Name="rectangleFond" Height="434" Stroke="Black" Width="800"/>
         <Rectangle x:Name="joueur1" Height="25" Canvas.Left="228" Canvas.Top="45" Width="25" HorizontalAlignment="Left" VerticalAlignment="Center" Fill="#FF640000" Stroke="Black"/>
         <Rectangle x:Name="joueur2" Height="25" Canvas.Left="548" Canvas.Top="365" Width="25" Fill="#FF000064" HorizontalAlignment="Left" VerticalAlignment="Top" Stroke="Black"/>
-        <Label x:Name="cooLabelJ1" Content="Label" Canvas.Left="38" Canvas.Top="45" Foreground="White"/>
+        <Label x:Name="cooLabelJ1" Content="Label" Canvas.Left="70" Canvas.Top="45" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center"/>
         <Rectangle x:Name="rectOriginal" Height="75" Canvas.Left="362" Stroke="Black" Canvas.Top="180" Width="76" Fill="White" HorizontalAlignment="Left" VerticalAlignment="Center"/>
         <Label x:Name="cooLabelJ2" Content="Label" Canvas.Left="718" Canvas.Top="45" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
