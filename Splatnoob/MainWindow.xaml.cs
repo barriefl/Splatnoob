@@ -27,6 +27,10 @@ namespace Splatnoob
         // Skin.
         private ImageBrush fondSkin = new ImageBrush();
 
+        // Points.
+        private Point J1;
+        private Point J2;
+
         // Constantes.
         private const int LIGNE = 5;
         private const int COLONNE = 5;
@@ -36,7 +40,14 @@ namespace Splatnoob
         private const int POSITION_JOUEUR_Z = 1;
 
         // Variables.
-        private int joueurVitesse = 80;
+        private int pasJoueur = 80;
+        private int x1 = 0;
+        private int y1 = LIGNE / 2;
+
+        private double maxX = COLONNE - 1;
+        private double minX = 0;
+        private double maxY = LIGNE - 1;
+        private double minY = 0; 
 
         // Tableau (grille).
         private Rectangle[,] grille;
@@ -107,71 +118,85 @@ namespace Splatnoob
             Canvas.SetZIndex(joueur2, POSITION_JOUEUR_Z);
         }
 
-        private void ToucheCanvasEnBas(object sender, KeyEventArgs e)
+        private void MouvementsJoueursEtVerifications(object sender, KeyEventArgs e)
         {
             // Joueur 1 - Z, Q, S, D.
+          
+            Point J1 = new Point(x1, y1);
+
             if (e.Key == Key.Z)
             {
-                if (Canvas.GetTop(joueur1) > 0)
+                if (y1 > minY)
                 {
-                    Canvas.SetTop(joueur1, Canvas.GetTop(joueur1) - joueurVitesse);
+                    Canvas.SetTop(joueur1, Canvas.GetTop(joueur1) - pasJoueur);
+                    y1 -= 1;
+                    cooLabel.Content = y1;
                 }
             }
             if (e.Key == Key.Q)
             {
-                if (Canvas.GetLeft(joueur1) > 0)
+                if (x1 > minX)
                 {
-                    Canvas.SetLeft(joueur1, Canvas.GetLeft(joueur1) - joueurVitesse);
+                    Canvas.SetLeft(joueur1, Canvas.GetLeft(joueur1) - pasJoueur);
+                    x1 -= 1;
                 }
             }
             if (e.Key == Key.S)
             {
-                if (Canvas.GetTop(joueur1) + joueur1.Width < Application.Current.MainWindow.Width)
+                if (y1 < maxY)
                 {
-                    Canvas.SetTop(joueur1, Canvas.GetTop(joueur1) + joueurVitesse);
+                    Canvas.SetTop(joueur1, Canvas.GetTop(joueur1) + pasJoueur);
+                    y1 += 1;
+                    cooLabel.Content = y1;
                 }
             }
             if (e.Key == Key.D)
             {
-                if (Canvas.GetLeft(joueur1) + joueur1.Width < Application.Current.MainWindow.Width)
+                if (x1 < maxX)
                 {
-                    Canvas.SetLeft(joueur1, Canvas.GetLeft(joueur1) + joueurVitesse);
+                    Canvas.SetLeft(joueur1, Canvas.GetLeft(joueur1) + pasJoueur);
+                    x1 += 1;
                 }
             }
+
             // Joueur 2 - Up, Left, Down, Right.
+            int x2 = (int)Canvas.GetLeft(joueur2);
+            int y2 = (int)Canvas.GetTop(joueur2);
+            Point J2 = new Point(x2, y2);
+
             if (e.Key == Key.Up)
             {
                 if (Canvas.GetTop(joueur2) > 0)
                 {
-                    Canvas.SetTop(joueur2, Canvas.GetTop(joueur2) - joueurVitesse);
+                    Canvas.SetTop(joueur2, Canvas.GetTop(joueur2) - pasJoueur);
                 }
             }
             if (e.Key == Key.Left)
             {
                 if (Canvas.GetLeft(joueur2) > 0)
                 {
-                    Canvas.SetLeft(joueur2, Canvas.GetLeft(joueur2) - joueurVitesse);
+                    Canvas.SetLeft(joueur2, Canvas.GetLeft(joueur2) - pasJoueur);
                 }
             }
             if (e.Key == Key.Down)
             {
                 if (Canvas.GetTop(joueur2) + joueur2.Width < Application.Current.MainWindow.Width)
                 {
-                    Canvas.SetTop(joueur2, Canvas.GetTop(joueur2) + joueurVitesse);
+                    Canvas.SetTop(joueur2, Canvas.GetTop(joueur2) + pasJoueur);
                 }
             }
             if (e.Key == Key.Right)
             {
                 if (Canvas.GetLeft(joueur2) + joueur2.Width < Application.Current.MainWindow.Width)
                 {
-                    Canvas.SetLeft(joueur2, Canvas.GetLeft(joueur2) + joueurVitesse);
+                    Canvas.SetLeft(joueur2, Canvas.GetLeft(joueur2) + pasJoueur);
                 }
             }
         }
      
         private void MoteurJeu(object sender, EventArgs e)
         {
-            
+
         }
     }
 }

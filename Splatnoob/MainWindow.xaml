@@ -8,13 +8,14 @@
         FocusManager.FocusedElement="{Binding ElementName=myCanvas}"
         WindowStartupLocation="CenterScreen"
         Title="Splatnoob" Height="450" Width="800"  
-        KeyDown="ToucheCanvasEnBas" ResizeMode="NoResize">
+        KeyDown="MouvementsJoueursEtVerifications" ResizeMode="NoResize">
     <Canvas x:Name="monCanvas" Background="Black" Focusable="True">
         <Rectangle x:Name="rectangleFond" Height="434" Stroke="Black" Width="800"/>
         <Rectangle x:Name="rectangleRouge" Height="75" Canvas.Left="123" Stroke="Black" Canvas.Top="180" Width="75" HorizontalAlignment="Left" VerticalAlignment="Center" Fill="Red"/>
         <Rectangle x:Name="rectangleBleu" Height="75" Canvas.Left="603" Stroke="Black" Canvas.Top="180" Width="75" HorizontalAlignment="Left" VerticalAlignment="Center" Fill="#FF1919FF"/>
         <Rectangle x:Name="joueur1" Height="25" Canvas.Left="148" Canvas.Top="205" Width="25" HorizontalAlignment="Left" VerticalAlignment="Center" Fill="#FF640000" Stroke="Black"/>
         <Rectangle x:Name="joueur2" Height="25" Canvas.Left="628" Canvas.Top="205" Width="25" Fill="#FF000064" HorizontalAlignment="Left" VerticalAlignment="Top" Stroke="Black"/>
+        <Label x:Name="cooLabel" Content="Label" Canvas.Left="42" Canvas.Top="41" Foreground="White"/>
 
     </Canvas>
 </Window>
