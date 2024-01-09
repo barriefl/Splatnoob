@@ -25,14 +25,15 @@ namespace Splatnoob
 
         private ImageBrush fondSkin = new ImageBrush();
 
-        string[,] grille5x5 = new string[5, 5] {
-                                            { "00", "01", "02", "03", "04" },
-                                            { "10", "11", "12", "13", "14" },
-                                            { "20", "21", "22", "23", "24" },
-                                            { "30", "31", "32", "33", "34" },
-                                            { "40", "41", "42", "43", "44" }
-                                           };
+        private const int LIGNE = 5;
+        private const int COLONNE = 5;
+        private const int RECTANGLE_LARGEUR = 75;
+        private const int RECTANGLE_HAUTEUR = 75;
+        private const int RECTANGLE_ESPACEMENT = 5;
+        private const int POSITION_JOUEUR_Z = 1;
         private int joueurVitesse = 80;
+
+        private Rectangle[,] grille;
 
         public MainWindow()
         {
@@ -44,7 +45,54 @@ namespace Splatnoob
             fondSkin.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/fond.jpeg"));
 
             rectangleFond.Fill = fondSkin;
+
+            CreationRectangle();
+            monCanvas.Loaded += (sender, e) => CreationGrille();
         }
+
+        private void CreationRectangle()
+        {
+            grille = new Rectangle[LIGNE, COLONNE];
+            for (int i = 0; i < LIGNE; i++)
+            {
+                for (int j = 0; j < COLONNE; j++)
+                {
+                    grille[i, j] = new Rectangle
+                    {
+                        Width = RECTANGLE_LARGEUR,
+                        Height = RECTANGLE_HAUTEUR,
+                        Fill = Brushes.White,
+                        Stroke = Brushes.Black,
+                        StrokeThickness = 1
+                    };
+                }
+            }
+        }
+
+        private void CreationGrille()
+        {
+            double largeurTotale = COLONNE * (RECTANGLE_LARGEUR + RECTANGLE_ESPACEMENT) - RECTANGLE_ESPACEMENT;
+            double hauteurTotale = LIGNE * (RECTANGLE_HAUTEUR + RECTANGLE_ESPACEMENT) - RECTANGLE_ESPACEMENT;
+
+            double coordonneesX = (rectangleFond.ActualWidth - largeurTotale) /2;
+            double coordonneesY = (rectangleFond.ActualHeight - hauteurTotale) /2;
+
+            for (int i = 0; i < LIGNE; i++)
+            {
+                for (int j = 0; j < COLONNE; j++)
+                {
+                    double x = coordonneesX + j * (RECTANGLE_LARGEUR + RECTANGLE_ESPACEMENT);
+                    double y = coordonneesY + i * (RECTANGLE_HAUTEUR + RECTANGLE_ESPACEMENT);
+
+                    Canvas.SetTop(grille[i, j], y);
+                    Canvas.SetLeft(grille[i, j], x);
+                    monCanvas.Children.Add(grille[i, j]);
+                }
+            }
+            Canvas.SetZIndex(joueur1, POSITION_JOUEUR_Z);
+            Canvas.SetZIndex(joueur2, POSITION_JOUEUR_Z);
+        }
+
         private void ToucheCanvasEnBas(object sender, KeyEventArgs e)
         {
             // Joueur 1

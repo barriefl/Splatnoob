@@ -15,9 +15,6 @@
     <None Update="Images\fond.jpeg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Images\pexels-photo-2892619.jpeg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>
