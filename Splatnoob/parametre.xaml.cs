@@ -35,7 +35,10 @@ namespace Splatnoob
             double tpsTotal = TEMPSPARDEPLACAGE * Math.Round(choisirTps.Value);
             double tpsMin = Math.Truncate(tpsTotal / NBRSECMIN);
             double tpsSec = (tpsTotal - (tpsMin * NBRSECMIN));
-            affichTps.Content = (tpsMin + ":" + tpsSec);
+            if (tpsSec != 0)
+                affichTps.Content = (tpsMin + ":" + tpsSec);
+            else
+                affichTps.Content = (tpsMin + ":00");
         }
     }
 }
