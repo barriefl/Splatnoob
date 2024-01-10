@@ -32,10 +32,13 @@ namespace Splatnoob
         }
         private void actualisation(object sender, EventArgs e)
         {
-            double tps_total = TEMPSPARDEPLACAGE * Math.Round(choisirtps.Value);
-            double tps_min = Math.Truncate(tps_total / NBRSECMIN);
-            double tps_sec = (tps_total - (tps_min * NBRSECMIN));
-            affichtps.Content = (tps_min + ":" + tps_sec);
+            double tpsTotal = TEMPSPARDEPLACAGE * Math.Round(choisirTps.Value);
+            double tpsMin = Math.Truncate(tpsTotal / NBRSECMIN);
+            double tpsSec = (tpsTotal - (tpsMin * NBRSECMIN));
+            if (tpsSec != 0)
+                affichTps.Content = (tpsMin + ":" + tpsSec);
+            else
+                affichTps.Content = (tpsMin + ":00");
         }
     }
 }
