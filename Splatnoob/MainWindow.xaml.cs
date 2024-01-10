@@ -25,12 +25,14 @@ namespace Splatnoob
     {
         // Timer.
         private DispatcherTimer dispatcherTimer = new DispatcherTimer();
-        private double temps = 10;
+        private static double tempsInitial = 10;
+        private double tempsJeu = tempsInitial;
 
         // Skin.
         private ImageBrush fondSkin = new ImageBrush();
 
         // Points.
+        private Point PO;
         private Point J1;
         private Point J2;
 
@@ -47,8 +49,8 @@ namespace Splatnoob
         private int scoreBleu = 0;
 
         private int pasJoueur = 80;
-        private int x1 = 0;
-        private int y1 = 0;
+        private int x1 = LIGNE - LIGNE;
+        private int y1 = COLONNE - COLONNE;
         private int x2 = COLONNE - 1;
         private int y2 = LIGNE - 1;
 
@@ -139,6 +141,7 @@ namespace Splatnoob
 
         private void MouvementsJoueursEtVerifications(object sender, KeyEventArgs e)
         {
+            Point PO = new Point(xO, yO);
             // Joueur 1 - Z, Q, S, D. 
             Point J1 = new Point(x1, y1);
 
@@ -266,19 +269,83 @@ namespace Splatnoob
 
         private void TestGagnant()
         {
-            if (temps <= 0)
+            // On vérifie que le temps arrive à 0 et on fait des vérifications pour savoir qui est le gagnant.
+            if (tempsJeu <= 0)
             {
+                if (scoreBleu > scoreRouge)
+                {
+                    labBleuGagne.Visibility = Visibility.Visible;
+                }
+                else if (scoreBleu < scoreRouge)
+                {
+                    labRougeGagne.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    labPersonneGagne.Visibility = Visibility.Visible;
+                }
+                Canvas.SetZIndex(rectFond, 2);
+                butRejouer.Visibility = Visibility.Visible;
                 dispatcherTimer.Stop();
-                temps = 0;
+                tempsJeu = 0;
             }
         }
 
         private void MoteurJeu(object sender, EventArgs e)
         {
-            temps = Math.Round(temps - 0.016, 2);
-            labTemps.Content = temps.ToString();
+            tempsJeu = Math.Round(tempsJeu - 0.016, 2);
+            labTemps.Content = tempsJeu.ToString();
 
             TestGagnant();
+        }
+
+        private void butRejouer_Click(object sender, RoutedEventArgs e)
+        {
+            // On réinitialise le score.
+            scoreBleu = 0;
+            scoreRouge = 0;
+            labScoreBleu.Content = scoreBleu.ToString();
+            labScoreRouge.Content = scoreRouge.ToString();
+
+            // On réinitialise le temps.
+            tempsJeu = tempsInitial;
+
+            // On réinitialise les carreaux et on remet les joueurs à leur place.
+            foreach (Rectangle x in monCanvas.Children.OfType<Rectangle>())
+            {
+                if ((string)x.Tag == "joueur")
+                {
+                    Canvas.SetLeft(joueur1, 228);
+                    Canvas.SetTop(joueur1, 45);
+
+                    Canvas.SetLeft(joueur2, 548);
+                    Canvas.SetTop(joueur2, 365);
+                }
+                if ((string)x.Tag == "bleu" || (string)x.Tag == "rouge")
+                {
+                    x.Fill = new SolidColorBrush(Color.FromRgb(255, 255, 255));
+                    x.Tag = "blanc";
+                }
+            }
+            // On remet le fond à sa place.
+            Canvas.SetZIndex(rectFond, 0);
+
+            // On réinitialise les coordonnées.
+            x1 = LIGNE - LIGNE;
+            y1 = COLONNE - COLONNE;
+            x2 = COLONNE - 1;
+            y2 = LIGNE - 1;
+            cooLabelJ1.Content = x1 + "," + y1;
+            cooLabelJ2.Content = x2 + "," + y2;
+
+            // On met en Hidden toutes les fenêtres possible.
+            labBleuGagne.Visibility = Visibility.Hidden;
+            labRougeGagne.Visibility = Visibility.Hidden;
+            labPersonneGagne.Visibility = Visibility.Hidden;
+            butRejouer.Visibility = Visibility.Hidden;
+
+            // Et c'est reparti !
+            dispatcherTimer.Start();
         }
     }
 }
