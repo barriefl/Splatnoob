@@ -23,6 +23,9 @@
             Click="Button_Click"
             Content="Paramètres"
             FontSize="36" />
-
+        <ComboBox Canvas.Left="160" Canvas.Top="255" Width="120">
+            <ComboBoxItem Content="1 joueurs"/>
+            <ComboBoxItem Content="2 joueurs"/>
+        </ComboBox>
     </Canvas>
 </Window>
