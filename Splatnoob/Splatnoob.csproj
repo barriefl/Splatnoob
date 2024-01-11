@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="qm5w5d34.mef~" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="Images\OIG.ico" />
   </ItemGroup>
 

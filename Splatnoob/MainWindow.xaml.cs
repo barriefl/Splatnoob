@@ -24,7 +24,7 @@ namespace Splatnoob
     public partial class MainWindow : Window
     {
         // Timer.
-        private DispatcherTimer dispatcherTimer = new DispatcherTimer();
+        private DispatcherTimer minuteurJeu = new DispatcherTimer();
         private static double tempsInitial = 10;
         private double tempsJeu = tempsInitial;
 
@@ -79,9 +79,9 @@ namespace Splatnoob
         {
             // Début du jeu.
             InitializeComponent();
-            dispatcherTimer.Tick += MoteurJeu;
-            dispatcherTimer.Interval = TimeSpan.FromMilliseconds(16);
-            dispatcherTimer.Start();
+            WindowState = WindowState.Maximized;
+            minuteurJeu.Tick += MoteurJeu;
+            minuteurJeu.Interval = TimeSpan.FromMilliseconds(16);
 
             // Chemin du skin.
             fondSkin.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/fond.jpeg"));
@@ -145,12 +145,13 @@ namespace Splatnoob
         private void MouvementsJoueursEtVerifications(object sender, KeyEventArgs e)
         {
             Point PO = new Point(xO, yO);
+
             // Joueur 1 - Z, Q, S, D. 
             Point J1 = new Point(x1, y1);
 
             if (e.Key == Key.Z)
             {
-                if (y1 > minY && (y1 - 1 != y2 || x1 != x2))
+                if (y1 > minY && (y1 - 1 != y2 || x1 != x2) && tempsJeu < tempsInitial)
                 {
                     Canvas.SetTop(joueur1, Canvas.GetTop(joueur1) - pasJoueur);
                     y1 -= 1;
@@ -161,7 +162,7 @@ namespace Splatnoob
             }
             if (e.Key == Key.Q)
             {
-                if (x1 > minX && (y1 != y2 || x1 - 1 != x2))
+                if (x1 > minX && (y1 != y2 || x1 - 1 != x2) && tempsJeu < tempsInitial)
                 {
                     Canvas.SetLeft(joueur1, Canvas.GetLeft(joueur1) - pasJoueur);
                     x1 -= 1;
@@ -172,7 +173,7 @@ namespace Splatnoob
             }
             if (e.Key == Key.S)
             {
-                if (y1 < maxY && (y1 + 1 != y2 || x1 != x2))
+                if (y1 < maxY && (y1 + 1 != y2 || x1 != x2) && tempsJeu < tempsInitial)
                 {
                     Canvas.SetTop(joueur1, Canvas.GetTop(joueur1) + pasJoueur);
                     y1 += 1;
@@ -183,7 +184,7 @@ namespace Splatnoob
             }
             if (e.Key == Key.D)
             {
-                if (x1 < maxX && (y1 != y2 || x1 + 1 != x2))
+                if (x1 < maxX && (y1 != y2 || x1 + 1 != x2) && tempsJeu < tempsInitial)
                 {
                     Canvas.SetLeft(joueur1, Canvas.GetLeft(joueur1) + pasJoueur);
                     x1 += 1;
@@ -192,28 +193,13 @@ namespace Splatnoob
                     labTourRouge.Content = "Nb tours joués : " + nbTourRouge;
                 }
             }
-            if (e.Key == Key.F1)
-            {
-                if (statOuvert == true)
-                {
-                    cooLabelJ1.Visibility = Visibility.Hidden;
-                    labTourRouge.Visibility = Visibility.Hidden;
-                    statOuvert = false;
-                }
-                else
-                {
-                    cooLabelJ1.Visibility = Visibility.Visible;
-                    labTourRouge.Visibility = Visibility.Visible;
-                    statOuvert = true;
-                }
-            }
 
             // Joueur 2 - Up, Left, Down, Right.
             Point J2 = new Point(x2, y2);
 
             if (e.Key == Key.Up)
             {
-                if (y2 > minY && (y1 != y2 -1 || x1 != x2))
+                if (y2 > minY && (y1 != y2 -1 || x1 != x2) && tempsJeu < tempsInitial)
                 {
                     Canvas.SetTop(joueur2, Canvas.GetTop(joueur2) - pasJoueur);
                     y2 -= 1;
@@ -224,7 +210,7 @@ namespace Splatnoob
             }
             if (e.Key == Key.Left)
             {
-                if (x2 > minX && (y1 != y2 || x1 != x2 - 1))
+                if (x2 > minX && (y1 != y2 || x1 != x2 - 1) && tempsJeu < tempsInitial)
                 {
                     Canvas.SetLeft(joueur2, Canvas.GetLeft(joueur2) - pasJoueur);
                     x2 -= 1;
@@ -235,7 +221,7 @@ namespace Splatnoob
             }
             if (e.Key == Key.Down)
             {
-                if (y2 < maxY && (y1 != y2 + 1 || x1 != x2))
+                if (y2 < maxY && (y1 != y2 + 1 || x1 != x2) && tempsJeu < tempsInitial)
                 {
                     Canvas.SetTop(joueur2, Canvas.GetTop(joueur2) + pasJoueur);
                     y2 += 1;
@@ -246,7 +232,7 @@ namespace Splatnoob
             }
             if (e.Key == Key.Right)
             {
-                if (x2 < maxX && (y1 != y2 || x1 != x2 + 1))
+                if (x2 < maxX && (y1 != y2 || x1 != x2 + 1) && tempsJeu < tempsInitial)
                 {
                     Canvas.SetLeft(joueur2, Canvas.GetLeft(joueur2) + pasJoueur);
                     x2 += 1;
@@ -255,25 +241,41 @@ namespace Splatnoob
                     labTourBleu.Content = "Nb tours joués : " + nbTourBleu;
                 }
             }
-            if (e.Key == Key.F2)
+
+            // Autre.
+            if (e.Key == Key.F1)
             {
                 if (statOuvert == true)
                 {
+                    cooLabelJ1.Visibility = Visibility.Hidden;
+                    labTourRouge.Visibility = Visibility.Hidden;
+
                     cooLabelJ2.Visibility = Visibility.Hidden;
                     labTourBleu.Visibility = Visibility.Hidden;
+
                     statOuvert = false;
                 }
                 else
                 {
+                    cooLabelJ1.Visibility = Visibility.Visible;
+                    labTourRouge.Visibility = Visibility.Visible;
+
                     cooLabelJ2.Visibility = Visibility.Visible;
                     labTourBleu.Visibility = Visibility.Visible;
+
                     statOuvert = true;
                 }
+            }
+            if (e.Key == Key.Space)
+            {
+                labCommencer.Visibility = Visibility.Hidden;
+                minuteurJeu.Start();
             }
 
             // Création d’un rectangle joueur pour la détection de collision.
             Rect rectJoueur1 = new Rect(Canvas.GetLeft(joueur1), Canvas.GetTop(joueur1), joueur1.Width, joueur1.Height);
             Rect rectJoueur2 = new Rect(Canvas.GetLeft(joueur2), Canvas.GetTop(joueur2), joueur2.Width, joueur2.Height);
+
             foreach (Rectangle x in monCanvas.Children.OfType<Rectangle>())
             {
                 TestCollisionJoueur1(x, rectJoueur1);
@@ -336,7 +338,7 @@ namespace Splatnoob
                 }
                 Canvas.SetZIndex(rectFond, 2);
                 butRejouer.Visibility = Visibility.Visible;
-                dispatcherTimer.Stop();
+                minuteurJeu.Stop();
                 tempsJeu = 0;
             }
         }
@@ -401,7 +403,7 @@ namespace Splatnoob
             butRejouer.Visibility = Visibility.Hidden;
 
             // Et c'est reparti !
-            dispatcherTimer.Start();
+            labCommencer.Visibility = Visibility.Visible;
         }
     }
 }
