@@ -56,13 +56,14 @@ namespace Splatnoob
         private int nbTourRouge = 0;
         private int nbTourBleu = 0;
 
+        private int nbPartieGagneRouge = 0;
+        private int nbPartieGagneBleu = 0;
+
         private int pasJoueur = 80;
         private int x1 = LIGNE - LIGNE;
         private int y1 = COLONNE - COLONNE;
         private int x2 = COLONNE - 1;
         private int y2 = LIGNE - 1;
-
-        // Variables rectOriginal.
         private int xO = COLONNE / 2;
         private int yO = LIGNE / 2;
 
@@ -92,6 +93,16 @@ namespace Splatnoob
             // Création des rectangles et on charge le Canvas pour que les coordonnées de la grille soient correcte.
             CreationRectangle();
             monCanvas.Loaded += (sender, e) => CreationGrille();
+
+            // On actualise les stats.
+            labCooRouge.Content = "x,y : " + x1 + "," + y1;
+            labCooBleu.Content = "x,y : " + x2 + "," + y2;
+
+            labTourRouge.Content = "Nb tours joués : " + nbTourRouge;
+            labTourBleu.Content = "Nb tours joués : " + nbTourBleu;
+
+            labNbPartiesGagneRouge.Content = "Parties gagnées : " + nbPartieGagneRouge;
+            labNbPartiesGagneBleu.Content = "Parties gagnées : " + nbPartieGagneBleu;
         }
 
         private void CreationRectangle()
@@ -155,7 +166,7 @@ namespace Splatnoob
                 {
                     Canvas.SetTop(joueur1, Canvas.GetTop(joueur1) - pasJoueur);
                     y1 -= 1;
-                    cooLabelJ1.Content = "x,y : " + x1 + "," + y1;
+                    labCooRouge.Content = "x,y : " + x1 + "," + y1;
                     nbTourRouge++;
                     labTourRouge.Content = "Nb tours joués : " + nbTourRouge;
                 }
@@ -166,7 +177,7 @@ namespace Splatnoob
                 {
                     Canvas.SetLeft(joueur1, Canvas.GetLeft(joueur1) - pasJoueur);
                     x1 -= 1;
-                    cooLabelJ1.Content = "x,y : " + x1 + "," + y1;
+                    labCooRouge.Content = "x,y : " + x1 + "," + y1;
                     nbTourRouge++;
                     labTourRouge.Content = "Nb tours joués : " + nbTourRouge;
                 }
@@ -177,7 +188,7 @@ namespace Splatnoob
                 {
                     Canvas.SetTop(joueur1, Canvas.GetTop(joueur1) + pasJoueur);
                     y1 += 1;
-                    cooLabelJ1.Content = "x,y : " + x1 + "," + y1;
+                    labCooRouge.Content = "x,y : " + x1 + "," + y1;
                     nbTourRouge++;
                     labTourRouge.Content = "Nb tours joués : " + nbTourRouge;
                 }
@@ -188,7 +199,7 @@ namespace Splatnoob
                 {
                     Canvas.SetLeft(joueur1, Canvas.GetLeft(joueur1) + pasJoueur);
                     x1 += 1;
-                    cooLabelJ1.Content = "x,y : " + x1 + "," + y1;
+                    labCooRouge.Content = "x,y : " + x1 + "," + y1;
                     nbTourRouge++;
                     labTourRouge.Content = "Nb tours joués : " + nbTourRouge;
                 }
@@ -203,7 +214,7 @@ namespace Splatnoob
                 {
                     Canvas.SetTop(joueur2, Canvas.GetTop(joueur2) - pasJoueur);
                     y2 -= 1;
-                    cooLabelJ2.Content = "x,y : " + x2 + "," + y2;
+                    labCooBleu.Content = "x,y : " + x2 + "," + y2;
                     nbTourBleu++;
                     labTourBleu.Content = "Nb tours joués : " + nbTourBleu;
                 }
@@ -214,7 +225,7 @@ namespace Splatnoob
                 {
                     Canvas.SetLeft(joueur2, Canvas.GetLeft(joueur2) - pasJoueur);
                     x2 -= 1;
-                    cooLabelJ2.Content = "x,y : " + x2 + "," + y2;
+                    labCooBleu.Content = "x,y : " + x2 + "," + y2;
                     nbTourBleu++;
                     labTourBleu.Content = "Nb tours joués : " + nbTourBleu;
                 }
@@ -225,7 +236,7 @@ namespace Splatnoob
                 {
                     Canvas.SetTop(joueur2, Canvas.GetTop(joueur2) + pasJoueur);
                     y2 += 1;
-                    cooLabelJ2.Content = "x,y : " + x2 + "," + y2;
+                    labCooBleu.Content = "x,y : " + x2 + "," + y2;
                     nbTourBleu++;
                     labTourBleu.Content = "Nb tours joués : " + nbTourBleu;
                 }
@@ -236,7 +247,7 @@ namespace Splatnoob
                 {
                     Canvas.SetLeft(joueur2, Canvas.GetLeft(joueur2) + pasJoueur);
                     x2 += 1;
-                    cooLabelJ2.Content = "x,y : " + x2 + "," + y2;
+                    labCooBleu.Content = "x,y : " + x2 + "," + y2;
                     nbTourBleu++;
                     labTourBleu.Content = "Nb tours joués : " + nbTourBleu;
                 }
@@ -247,21 +258,25 @@ namespace Splatnoob
             {
                 if (statOuvert == true)
                 {
-                    cooLabelJ1.Visibility = Visibility.Hidden;
+                    labCooRouge.Visibility = Visibility.Hidden;
                     labTourRouge.Visibility = Visibility.Hidden;
+                    labNbPartiesGagneRouge.Visibility = Visibility.Hidden;
 
-                    cooLabelJ2.Visibility = Visibility.Hidden;
+                    labCooBleu.Visibility = Visibility.Hidden;
                     labTourBleu.Visibility = Visibility.Hidden;
+                    labNbPartiesGagneBleu.Visibility = Visibility.Hidden;
 
                     statOuvert = false;
                 }
                 else
                 {
-                    cooLabelJ1.Visibility = Visibility.Visible;
+                    labCooRouge.Visibility = Visibility.Visible;
                     labTourRouge.Visibility = Visibility.Visible;
+                    labNbPartiesGagneRouge.Visibility = Visibility.Visible;
 
-                    cooLabelJ2.Visibility = Visibility.Visible;
+                    labCooBleu.Visibility = Visibility.Visible;
                     labTourBleu.Visibility = Visibility.Visible;
+                    labNbPartiesGagneBleu.Visibility = Visibility.Visible;
 
                     statOuvert = true;
                 }
@@ -327,10 +342,12 @@ namespace Splatnoob
                 if (scoreBleu > scoreRouge)
                 {
                     labBleuGagne.Visibility = Visibility.Visible;
+                    nbPartieGagneBleu++;
                 }
                 else if (scoreBleu < scoreRouge)
                 {
                     labRougeGagne.Visibility = Visibility.Visible;
+                    nbPartieGagneRouge++;
                 }
                 else
                 {
@@ -365,6 +382,10 @@ namespace Splatnoob
             labTourRouge.Content = "Nb tours joués : " + nbTourRouge;
             labTourBleu.Content = "Nb tours joués : " + nbTourBleu;
 
+            // On actualise la stat du nombre de partie gagné.
+            labNbPartiesGagneRouge.Content = "Parties gagnées : " + nbPartieGagneRouge;
+            labNbPartiesGagneBleu.Content = "Parties gagnées : " + nbPartieGagneBleu;
+
             // On réinitialise le temps.
             tempsJeu = tempsInitial;
 
@@ -393,10 +414,10 @@ namespace Splatnoob
             y1 = COLONNE - COLONNE;
             x2 = COLONNE - 1;
             y2 = LIGNE - 1;
-            cooLabelJ1.Content = "x,y : " + x1 + "," + y1;
-            cooLabelJ2.Content = "x,y : " + x2 + "," + y2;
+            labCooRouge.Content = "x,y : " + x1 + "," + y1;
+            labCooBleu.Content = "x,y : " + x2 + "," + y2;
 
-            // On met en Hidden toutes les fenêtres possible.
+            // On met en Hidden toutes les fenêtres pour restart le jeu.
             labBleuGagne.Visibility = Visibility.Hidden;
             labRougeGagne.Visibility = Visibility.Hidden;
             labPersonneGagne.Visibility = Visibility.Hidden;
