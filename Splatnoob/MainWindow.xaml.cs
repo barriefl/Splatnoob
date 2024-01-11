@@ -92,6 +92,7 @@ namespace Splatnoob
             // Création des rectangles et on charge le Canvas pour que les coordonnées de la grille soient correcte.
             CreationRectangle();
             monCanvas.Loaded += (sender, e) => CreationGrille();
+
         }
 
         private void CreationRectangle()
