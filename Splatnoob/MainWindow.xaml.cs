@@ -150,7 +150,7 @@ namespace Splatnoob
 
             if (e.Key == Key.Z)
             {
-                if (y1 > minY)
+                if (y1 > minY && (y1 - 1 != y2 || x1 != x2))
                 {
                     Canvas.SetTop(joueur1, Canvas.GetTop(joueur1) - pasJoueur);
                     y1 -= 1;
@@ -161,7 +161,7 @@ namespace Splatnoob
             }
             if (e.Key == Key.Q)
             {
-                if (x1 > minX)
+                if (x1 > minX && (y1 != y2 || x1 - 1 != x2))
                 {
                     Canvas.SetLeft(joueur1, Canvas.GetLeft(joueur1) - pasJoueur);
                     x1 -= 1;
@@ -172,7 +172,7 @@ namespace Splatnoob
             }
             if (e.Key == Key.S)
             {
-                if (y1 < maxY)
+                if (y1 < maxY && (y1 + 1 != y2 || x1 != x2))
                 {
                     Canvas.SetTop(joueur1, Canvas.GetTop(joueur1) + pasJoueur);
                     y1 += 1;
@@ -183,7 +183,7 @@ namespace Splatnoob
             }
             if (e.Key == Key.D)
             {
-                if (x1 < maxX)
+                if (x1 < maxX && (y1 != y2 || x1 + 1 != x2))
                 {
                     Canvas.SetLeft(joueur1, Canvas.GetLeft(joueur1) + pasJoueur);
                     x1 += 1;
@@ -213,7 +213,7 @@ namespace Splatnoob
 
             if (e.Key == Key.Up)
             {
-                if (y2 > minY)
+                if (y2 > minY && (y1 != y2 -1 || x1 != x2))
                 {
                     Canvas.SetTop(joueur2, Canvas.GetTop(joueur2) - pasJoueur);
                     y2 -= 1;
@@ -224,7 +224,7 @@ namespace Splatnoob
             }
             if (e.Key == Key.Left)
             {
-                if (x2 > minX)
+                if (x2 > minX && (y1 != y2 || x1 != x2 - 1))
                 {
                     Canvas.SetLeft(joueur2, Canvas.GetLeft(joueur2) - pasJoueur);
                     x2 -= 1;
@@ -235,7 +235,7 @@ namespace Splatnoob
             }
             if (e.Key == Key.Down)
             {
-                if (y2 < maxY)
+                if (y2 < maxY && (y1 != y2 + 1 || x1 != x2))
                 {
                     Canvas.SetTop(joueur2, Canvas.GetTop(joueur2) + pasJoueur);
                     y2 += 1;
@@ -246,7 +246,7 @@ namespace Splatnoob
             }
             if (e.Key == Key.Right)
             {
-                if (x2 < maxX)
+                if (x2 < maxX && (y1 != y2 || x1 != x2 + 1))
                 {
                     Canvas.SetLeft(joueur2, Canvas.GetLeft(joueur2) + pasJoueur);
                     x2 += 1;
