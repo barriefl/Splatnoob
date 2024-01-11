@@ -39,6 +39,7 @@ namespace Splatnoob
                 affichTps.Content = (tpsMin + ":" + tpsSec);
             else
                 affichTps.Content = (tpsMin + ":00");
+                   
         }
     }
 }
