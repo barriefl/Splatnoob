@@ -23,7 +23,6 @@ namespace Splatnoob
     /// </summary>
     public partial class MainWindow : Window
     {
-
         // Timer.
         private DispatcherTimer minuteurJeu = new DispatcherTimer();
         private static double tempsInitial = 10;
@@ -118,9 +117,10 @@ namespace Splatnoob
 
             labNbPartiesGagneRouge.Content = "Parties gagnées : " + nbPartieGagneRouge;
             labNbPartiesGagneBleu.Content = "Parties gagnées : " + nbPartieGagneBleu;
-            Console.WriteLine("Actualisation des statistiques.");
+            
             labNbPartiesGagneRouge.Content = "Parties gagnées : " + nbPartieGagneRouge;
             labNbPartiesGagneBleu.Content = "Parties gagnées : " + nbPartieGagneBleu;
+            Console.WriteLine("Actualisation des statistiques.");
         }
 
         private void CreationRectangle()
