@@ -30,7 +30,7 @@ namespace Splatnoob
 
         // Skin.
         private ImageBrush fondSkin = new ImageBrush();
-        //private ImageBrush joueurRougeSkin = new ImageBrush();
+        private ImageBrush joueurRougeSkin = new ImageBrush();
 
         // Points.
         private Point PO;
@@ -87,12 +87,12 @@ namespace Splatnoob
 
             // Chemin du skin.
             fondSkin.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/fond.jpeg"));
-            //joueurRougeSkin.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/SlimeRouge.jpg"));
+            joueurRougeSkin.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/SlimeRouge.png"));
             Console.WriteLine("Chargement des skins.");
 
             // On rempli le rectangle avec le skin.
             rectFond.Fill = fondSkin;
-            //joueur1.Fill = joueurRougeSkin;
+            joueur1.Fill = joueurRougeSkin;
             Console.WriteLine("Skins chargés.");
 
             // Création des rectangles et on charge le Canvas pour que les coordonnées de la grille soient correcte.
