@@ -4,7 +4,9 @@ using System.Linq;
 using System.Numerics;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -31,6 +33,7 @@ namespace Splatnoob
         // Skin.
         private ImageBrush fondSkin = new ImageBrush();
         private ImageBrush joueurRougeSkin = new ImageBrush();
+        private ImageBrush joueurBleuSkin = new ImageBrush();
 
         // Points.
         private Point PO;
@@ -88,15 +91,13 @@ namespace Splatnoob
             // Chemin du skin.
             fondSkin.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/fond.jpeg"));
             joueurRougeSkin.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/SlimeRouge.png"));
+            joueurBleuSkin.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/SlimeBleu.png"));
             Console.WriteLine("Chargement des skins.");
-
-            // Chemin du skin.
-            fondSkin.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/fond.jpeg"));
-            joueurRougeSkin.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/SlimeRouge.png"));
 
             // On rempli le rectangle avec le skin.
             rectFond.Fill = fondSkin;
             joueur1.Fill = joueurRougeSkin;
+            joueur2.Fill = joueurBleuSkin;
             Console.WriteLine("Skins chargés.");
 
             // Fenêtre de dialogue.
@@ -115,9 +116,6 @@ namespace Splatnoob
             labTourRouge.Content = "Nb tours joués : " + nbTourRouge;
             labTourBleu.Content = "Nb tours joués : " + nbTourBleu;
 
-            labNbPartiesGagneRouge.Content = "Parties gagnées : " + nbPartieGagneRouge;
-            labNbPartiesGagneBleu.Content = "Parties gagnées : " + nbPartieGagneBleu;
-            
             labNbPartiesGagneRouge.Content = "Parties gagnées : " + nbPartieGagneRouge;
             labNbPartiesGagneBleu.Content = "Parties gagnées : " + nbPartieGagneBleu;
             Console.WriteLine("Actualisation des statistiques.");

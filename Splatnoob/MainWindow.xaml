@@ -8,11 +8,11 @@
         FocusManager.FocusedElement="{Binding ElementName=myCanvas}"
         WindowStartupLocation="CenterScreen"
         Title="Splatnoob" Height="450" Width="800"  
-        KeyDown="MouvementsJoueursEtVerifications" HorizontalAlignment="Center" VerticalAlignment="Center">
-    <Canvas x:Name="monCanvas" Background="Black" Focusable="True">
+        KeyDown="MouvementsJoueursEtVerifications" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Black" WindowState="Maximized">
+    <Canvas x:Name="monCanvas" Background="Black" Focusable="True" HorizontalAlignment="Center" Width="800" Height="434" VerticalAlignment="Center">
         <Rectangle x:Name="rectFond" Height="434" Stroke="Black" Width="800"/>
-        <Rectangle x:Name="joueur1" Height="25" Canvas.Left="228" Canvas.Top="45" Width="25" HorizontalAlignment="Left" VerticalAlignment="Center" Fill="#FF640000" Stroke="Black" Tag="joueur"/>
-        <Rectangle x:Name="joueur2" Height="25" Canvas.Left="548" Canvas.Top="365" Width="25" Fill="#FF000064" HorizontalAlignment="Left" VerticalAlignment="Top" Stroke="Black" Tag="joueur" RenderTransformOrigin="0.48,0.482"/>
+        <Rectangle x:Name="joueur1" Height="25" Canvas.Left="228" Canvas.Top="45" Width="25" HorizontalAlignment="Left" VerticalAlignment="Center" Fill="#FF640000" Tag="joueur"/>
+        <Rectangle x:Name="joueur2" Height="25" Canvas.Left="548" Canvas.Top="365" Width="25" Fill="#FF000064" HorizontalAlignment="Left" VerticalAlignment="Top" Tag="joueur" RenderTransformOrigin="0.48,0.482"/>
         <Label x:Name="labCooRouge" Content="x,y : 0,0" Canvas.Left="65" Canvas.Top="128" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" Background="{x:Null}" Visibility="Hidden"/>
         <Label x:Name="labCooBleu" Content="x,y : 4,4" Canvas.Left="707" Canvas.Top="128" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" Background="{x:Null}" Visibility="Hidden"/>
         <Label x:Name="labTemps" Content="10" Canvas.Left="77" Canvas.Top="10" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center"/>
