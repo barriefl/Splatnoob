@@ -109,6 +109,10 @@ namespace Splatnoob
             monCanvas.Loaded += (sender, e) => CreationGrille();
             Console.WriteLine("Création de la grille.");
 
+            // Création des rectangles et on charge le Canvas pour que les coordonnées de la grille soient correcte.
+            CreationRectangle();
+            monCanvas.Loaded += (sender, e) => CreationGrille();
+
             // On actualise les stats.
             labCooRouge.Content = "x,y : " + x1 + "," + y1;
             labCooBleu.Content = "x,y : " + x2 + "," + y2;
