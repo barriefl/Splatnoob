@@ -98,7 +98,6 @@ namespace Splatnoob
 
                 Accueil fenetreAccueil2 = new Accueil();
                 fenetreAccueil2.ShowDialog();
-                bouton = fenetreAccueil.Bouton;
             }
 
 
