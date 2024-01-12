@@ -24,16 +24,13 @@ namespace Splatnoob
             InitializeComponent();
         }
         
-
-
-
-    
         public void Button_parametre_Click(object sender, RoutedEventArgs e)
         {
             parametre fenetreParametre = new parametre();
             fenetreParametre.ShowDialog();
 
         }
+
         public void Button_start_Click(object sender, RoutedEventArgs e)
         {
             this.Close();

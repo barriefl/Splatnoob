@@ -24,7 +24,6 @@ namespace Splatnoob
     public partial class MainWindow : Window
     {
 
-
         // Timer.
         private DispatcherTimer minuteurJeu = new DispatcherTimer();
         private static double tempsInitial = 10;
@@ -70,7 +69,6 @@ namespace Splatnoob
         private int xO = COLONNE / 2;
         private int yO = LIGNE / 2;
 
-
         // Limites grille.
         private double maxX = COLONNE - 1;
         private double minX = 0;
@@ -110,8 +108,6 @@ namespace Splatnoob
             CreationRectangle();
             monCanvas.Loaded += (sender, e) => CreationGrille();
             Console.WriteLine("Création de la grille.");
-
-          
 
             // On actualise les stats.
             labCooRouge.Content = "x,y : " + x1 + "," + y1;

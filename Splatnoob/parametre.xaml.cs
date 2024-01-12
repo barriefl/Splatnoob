@@ -23,6 +23,7 @@ namespace Splatnoob
         private DispatcherTimer dispatcherTimer = new DispatcherTimer();
         private int TEMPSPARDEPLACAGE = 15;
         private int NBRSECMIN = 60;
+
         public parametre()
         {
             InitializeComponent();
