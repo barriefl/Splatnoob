@@ -9,18 +9,18 @@
     Width="450"
     Height="500"
     mc:Ignorable="d">
-    <Canvas>
+    <Canvas ContextMenuClosing="Canvas_ContextMenuClosing">
         <Button
             Margin="40,420,474,75"
             Background="#FFF97C25"
-            Click="Button_Click"
+            Click="Button_start_Click"
             Content="BONJOUR"
             FontSize="36" />
-        <Button
+        <Button x:Name="boutonparametre"
             Canvas.Left="230"
             Canvas.Top="420"
             Background="#FFF97C25"
-            Click="Button_Click"
+            Click="Button_parametre_Click"
             Content="Paramètres"
             FontSize="36" />
         <ComboBox Canvas.Left="160" Canvas.Top="255" Width="120">

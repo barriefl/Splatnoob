@@ -39,7 +39,17 @@ namespace Splatnoob
                 affichTps.Content = (tpsMin + ":" + tpsSec);
             else
                 affichTps.Content = (tpsMin + ":00");
-                   
+                    
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void Canvas_ContextMenuClosing(object sender, ContextMenuEventArgs e)
+        {
+            Application.Current.Shutdown();
         }
     }
 }

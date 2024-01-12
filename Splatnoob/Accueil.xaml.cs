@@ -23,10 +23,31 @@ namespace Splatnoob
         {
             InitializeComponent();
         }
+        
+            private int bouton;
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        public int Bouton
         {
+            get { return bouton; }
+            set { bouton = value; }
+        }
 
+    
+        public void Button_parametre_Click(object sender, RoutedEventArgs e)
+        {
+            bouton = 1;
+            this.Close();
+            
+        }
+        public void Button_start_Click(object sender, RoutedEventArgs e)
+        {
+            bouton = 2;
+            this.Close();
+        }
+
+        private void Canvas_ContextMenuClosing(object sender, ContextMenuEventArgs e)
+        {
+            Application.Current.Shutdown();
         }
     }
 }

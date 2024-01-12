@@ -23,6 +23,8 @@ namespace Splatnoob
     /// </summary>
     public partial class MainWindow : Window
     {
+
+
         // Timer.
         private DispatcherTimer minuteurJeu = new DispatcherTimer();
         private static double tempsInitial = 10;
@@ -67,6 +69,7 @@ namespace Splatnoob
         private int xO = COLONNE / 2;
         private int yO = LIGNE / 2;
 
+
         // Limites grille.
         private double maxX = COLONNE - 1;
         private double minX = 0;
@@ -84,25 +87,43 @@ namespace Splatnoob
             minuteurJeu.Tick += MoteurJeu;
             minuteurJeu.Interval = TimeSpan.FromMilliseconds(16);
 
-            // Chemin du skin.
-            fondSkin.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/fond.jpeg"));
+            //fenètre de dialogue
+            Accueil fenetreAccueil = new Accueil();
+            fenetreAccueil.ShowDialog();
+            int bouton = fenetreAccueil.Bouton;
+            while (bouton == 1)
+            {
+                parametre fenetreParametre = new parametre();
+                fenetreParametre.ShowDialog();
 
-            // On rempli le rectangle avec le skin.
-            rectFond.Fill = fondSkin;
+                Accueil fenetreAccueil2 = new Accueil();
+                fenetreAccueil2.ShowDialog();
+                bouton = fenetreAccueil.Bouton;
+            }
 
-            // Création des rectangles et on charge le Canvas pour que les coordonnées de la grille soient correcte.
-            CreationRectangle();
-            monCanvas.Loaded += (sender, e) => CreationGrille();
 
-            // On actualise les stats.
-            labCooRouge.Content = "x,y : " + x1 + "," + y1;
-            labCooBleu.Content = "x,y : " + x2 + "," + y2;
 
-            labTourRouge.Content = "Nb tours joués : " + nbTourRouge;
-            labTourBleu.Content = "Nb tours joués : " + nbTourBleu;
 
-            labNbPartiesGagneRouge.Content = "Parties gagnées : " + nbPartieGagneRouge;
-            labNbPartiesGagneBleu.Content = "Parties gagnées : " + nbPartieGagneBleu;
+
+             // Chemin du skin.
+             fondSkin.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/fond.jpeg"));
+
+             // On rempli le rectangle avec le skin.
+             rectFond.Fill = fondSkin;
+
+             // Création des rectangles et on charge le Canvas pour que les coordonnées de la grille soient correcte.
+             CreationRectangle();
+             monCanvas.Loaded += (sender, e) => CreationGrille();
+
+             // On actualise les stats.
+             labCooRouge.Content = "x,y : " + x1 + "," + y1;
+             labCooBleu.Content = "x,y : " + x2 + "," + y2;
+
+             labTourRouge.Content = "Nb tours joués : " + nbTourRouge;
+             labTourBleu.Content = "Nb tours joués : " + nbTourBleu;
+
+             labNbPartiesGagneRouge.Content = "Parties gagnées : " + nbPartieGagneRouge;
+             labNbPartiesGagneBleu.Content = "Parties gagnées : " + nbPartieGagneBleu;
         }
 
         private void CreationRectangle()
@@ -425,6 +446,11 @@ namespace Splatnoob
 
             // Et c'est reparti !
             labCommencer.Visibility = Visibility.Visible;
+        }
+
+        private void monCanvas_ContextMenuClosing(object sender, ContextMenuEventArgs e)
+        {
+            Application.Current.Shutdown();
         }
     }
 }

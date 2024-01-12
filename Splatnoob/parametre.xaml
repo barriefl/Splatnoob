@@ -10,7 +10,7 @@
     Height="450"
     Background="black"
     mc:Ignorable="d">
-    <Canvas>
+    <Canvas ContextMenuClosing="Canvas_ContextMenuClosing">
         <Label
             Canvas.Left="314"
             Canvas.Top="56"
@@ -25,7 +25,7 @@
             Background="#00DDDDDD"
             Content="X"
             FontSize="30"
-            Foreground="White" />
+            Foreground="White" Click="Button_Click" />
         <Slider x:Name="choisirTps" Canvas.Left="347" Canvas.Top="155" Width="120" SmallChange="1" Value="4" TickFrequency="10" Minimum="1" Maximum="12"/>
         <Label Content="temps total d'une partie" Height="40" Canvas.Left="147" Canvas.Top="155" Width="146" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center"/>
         <Label x:Name="affichTps" Content="affichage" Height="40" Canvas.Left="514" Canvas.Top="155" Width="165" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
