@@ -30,6 +30,7 @@ namespace Splatnoob
 
         // Skin.
         private ImageBrush fondSkin = new ImageBrush();
+        //private ImageBrush joueurRougeSkin = new ImageBrush();
 
         // Points.
         private Point PO;
@@ -74,7 +75,7 @@ namespace Splatnoob
         private double minY = 0; 
 
         // Tableau (grille).
-        private Rectangle[,] grille;
+        private Rectangle[,] grille5x5;
 
         public MainWindow()
         {
@@ -86,9 +87,11 @@ namespace Splatnoob
 
             // Chemin du skin.
             fondSkin.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/fond.jpeg"));
+            //joueurRougeSkin.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/SlimeRouge.jpg"));
 
             // On rempli le rectangle avec le skin.
             rectFond.Fill = fondSkin;
+            //joueur1.Fill = joueurRougeSkin;
 
             // Création des rectangles et on charge le Canvas pour que les coordonnées de la grille soient correcte.
             CreationRectangle();
@@ -108,12 +111,12 @@ namespace Splatnoob
         private void CreationRectangle()
         {
             // Création de la grille + propriétés des rectangles.
-            grille = new Rectangle[LIGNE, COLONNE];
+            grille5x5 = new Rectangle[LIGNE, COLONNE];
             for (int i = 0; i < LIGNE; i++)
             {
                 for (int j = 0; j < COLONNE; j++)
                 {
-                    grille[i, j] = new Rectangle
+                    grille5x5[i, j] = new Rectangle
                     {
                         Width = RECTANGLE_LARGEUR,
                         Height = RECTANGLE_HAUTEUR,
@@ -143,9 +146,9 @@ namespace Splatnoob
                     double x = coordonneesX + j * (RECTANGLE_LARGEUR + RECTANGLE_ESPACEMENT);
                     double y = coordonneesY + i * (RECTANGLE_HAUTEUR + RECTANGLE_ESPACEMENT);
 
-                    Canvas.SetTop(grille[i, j], y);
-                    Canvas.SetLeft(grille[i, j], x);
-                    monCanvas.Children.Add(grille[i, j]);
+                    Canvas.SetTop(grille5x5[i, j], y);
+                    Canvas.SetLeft(grille5x5[i, j], x);
+                    monCanvas.Children.Add(grille5x5[i, j]);
                 }
             }
             // Placement des joueurs dans l'espace.
