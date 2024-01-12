@@ -93,7 +93,16 @@ namespace Splatnoob
             joueurRougeSkin.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/SlimeRouge.png"));
             Console.WriteLine("Chargement des skins.");
 
-            //fenètre de dialogue
+            // Chemin du skin.
+            fondSkin.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/fond.jpeg"));
+            joueurRougeSkin.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/SlimeRouge.png"));
+
+            // On rempli le rectangle avec le skin.
+            rectFond.Fill = fondSkin;
+            joueur1.Fill = joueurRougeSkin;
+            Console.WriteLine("Skins chargés.");
+
+            // Fenêtre de dialogue.
             Accueil fenetreAccueil = new Accueil();
             fenetreAccueil.ShowDialog();
             int bouton = fenetreAccueil.Bouton;
@@ -106,36 +115,27 @@ namespace Splatnoob
                 fenetreAccueil2.ShowDialog();
             }
 
-             // Chemin du skin.
-             fondSkin.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/fond.jpeg"));
-
-            // On rempli le rectangle avec le skin.
-            rectFond.Fill = fondSkin;
-            joueur1.Fill = joueurRougeSkin;
-            Console.WriteLine("Skins chargés.");
-             // On rempli le rectangle avec le skin.
-             rectFond.Fill = fondSkin;
-
             // Création des rectangles et on charge le Canvas pour que les coordonnées de la grille soient correcte.
             CreationRectangle();
             monCanvas.Loaded += (sender, e) => CreationGrille();
             Console.WriteLine("Création de la grille.");
-             // Création des rectangles et on charge le Canvas pour que les coordonnées de la grille soient correcte.
-             CreationRectangle();
-             monCanvas.Loaded += (sender, e) => CreationGrille();
 
-             // On actualise les stats.
-             labCooRouge.Content = "x,y : " + x1 + "," + y1;
-             labCooBleu.Content = "x,y : " + x2 + "," + y2;
+            // Création des rectangles et on charge le Canvas pour que les coordonnées de la grille soient correcte.
+            CreationRectangle();
+            monCanvas.Loaded += (sender, e) => CreationGrille();
 
-             labTourRouge.Content = "Nb tours joués : " + nbTourRouge;
-             labTourBleu.Content = "Nb tours joués : " + nbTourBleu;
+            // On actualise les stats.
+            labCooRouge.Content = "x,y : " + x1 + "," + y1;
+            labCooBleu.Content = "x,y : " + x2 + "," + y2;
+
+            labTourRouge.Content = "Nb tours joués : " + nbTourRouge;
+            labTourBleu.Content = "Nb tours joués : " + nbTourBleu;
 
             labNbPartiesGagneRouge.Content = "Parties gagnées : " + nbPartieGagneRouge;
             labNbPartiesGagneBleu.Content = "Parties gagnées : " + nbPartieGagneBleu;
             Console.WriteLine("Actualisation des statistiques.");
-             labNbPartiesGagneRouge.Content = "Parties gagnées : " + nbPartieGagneRouge;
-             labNbPartiesGagneBleu.Content = "Parties gagnées : " + nbPartieGagneBleu;
+            labNbPartiesGagneRouge.Content = "Parties gagnées : " + nbPartieGagneRouge;
+            labNbPartiesGagneBleu.Content = "Parties gagnées : " + nbPartieGagneBleu;
         }
 
         private void CreationRectangle()
@@ -182,6 +182,7 @@ namespace Splatnoob
                 }
             }
             Console.WriteLine("Grille créée.");
+
             // Placement des joueurs dans l'espace.
             Canvas.SetZIndex(joueur1, POSITION_JOUEUR_Z);
             Canvas.SetZIndex(joueur2, POSITION_JOUEUR_Z);
