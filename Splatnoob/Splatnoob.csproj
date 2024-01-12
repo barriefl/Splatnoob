@@ -20,6 +20,12 @@
     <None Update="Images\fond.jpeg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Images\SlimeRouge.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\SlimeRouge.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
 	  
   </ItemGroup>
 

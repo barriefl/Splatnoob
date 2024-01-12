@@ -32,6 +32,7 @@ namespace Splatnoob
 
         // Skin.
         private ImageBrush fondSkin = new ImageBrush();
+        private ImageBrush joueurRougeSkin = new ImageBrush();
 
         // Points.
         private Point PO;
@@ -77,15 +78,20 @@ namespace Splatnoob
         private double minY = 0; 
 
         // Tableau (grille).
-        private Rectangle[,] grille;
+        private Rectangle[,] grille5x5;
 
         public MainWindow()
         {
             // Début du jeu.
             InitializeComponent();
-            WindowState = WindowState.Maximized;
+            Console.WriteLine("Démarrage du jeu.");
             minuteurJeu.Tick += MoteurJeu;
             minuteurJeu.Interval = TimeSpan.FromMilliseconds(16);
+
+            // Chemin du skin.
+            fondSkin.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/fond.jpeg"));
+            joueurRougeSkin.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/SlimeRouge.png"));
+            Console.WriteLine("Chargement des skins.");
 
             //fenètre de dialogue
             Accueil fenetreAccueil = new Accueil();
@@ -100,16 +106,20 @@ namespace Splatnoob
                 fenetreAccueil2.ShowDialog();
             }
 
-
-
-
-
              // Chemin du skin.
              fondSkin.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/fond.jpeg"));
 
+            // On rempli le rectangle avec le skin.
+            rectFond.Fill = fondSkin;
+            joueur1.Fill = joueurRougeSkin;
+            Console.WriteLine("Skins chargés.");
              // On rempli le rectangle avec le skin.
              rectFond.Fill = fondSkin;
 
+            // Création des rectangles et on charge le Canvas pour que les coordonnées de la grille soient correcte.
+            CreationRectangle();
+            monCanvas.Loaded += (sender, e) => CreationGrille();
+            Console.WriteLine("Création de la grille.");
              // Création des rectangles et on charge le Canvas pour que les coordonnées de la grille soient correcte.
              CreationRectangle();
              monCanvas.Loaded += (sender, e) => CreationGrille();
@@ -121,6 +131,9 @@ namespace Splatnoob
              labTourRouge.Content = "Nb tours joués : " + nbTourRouge;
              labTourBleu.Content = "Nb tours joués : " + nbTourBleu;
 
+            labNbPartiesGagneRouge.Content = "Parties gagnées : " + nbPartieGagneRouge;
+            labNbPartiesGagneBleu.Content = "Parties gagnées : " + nbPartieGagneBleu;
+            Console.WriteLine("Actualisation des statistiques.");
              labNbPartiesGagneRouge.Content = "Parties gagnées : " + nbPartieGagneRouge;
              labNbPartiesGagneBleu.Content = "Parties gagnées : " + nbPartieGagneBleu;
         }
@@ -128,12 +141,12 @@ namespace Splatnoob
         private void CreationRectangle()
         {
             // Création de la grille + propriétés des rectangles.
-            grille = new Rectangle[LIGNE, COLONNE];
+            grille5x5 = new Rectangle[LIGNE, COLONNE];
             for (int i = 0; i < LIGNE; i++)
             {
                 for (int j = 0; j < COLONNE; j++)
                 {
-                    grille[i, j] = new Rectangle
+                    grille5x5[i, j] = new Rectangle
                     {
                         Width = RECTANGLE_LARGEUR,
                         Height = RECTANGLE_HAUTEUR,
@@ -163,14 +176,16 @@ namespace Splatnoob
                     double x = coordonneesX + j * (RECTANGLE_LARGEUR + RECTANGLE_ESPACEMENT);
                     double y = coordonneesY + i * (RECTANGLE_HAUTEUR + RECTANGLE_ESPACEMENT);
 
-                    Canvas.SetTop(grille[i, j], y);
-                    Canvas.SetLeft(grille[i, j], x);
-                    monCanvas.Children.Add(grille[i, j]);
+                    Canvas.SetTop(grille5x5[i, j], y);
+                    Canvas.SetLeft(grille5x5[i, j], x);
+                    monCanvas.Children.Add(grille5x5[i, j]);
                 }
             }
+            Console.WriteLine("Grille créée.");
             // Placement des joueurs dans l'espace.
             Canvas.SetZIndex(joueur1, POSITION_JOUEUR_Z);
             Canvas.SetZIndex(joueur2, POSITION_JOUEUR_Z);
+            Console.WriteLine("Placement des joueurs dans l'espace.");
         }
 
         private void MouvementsJoueursEtVerifications(object sender, KeyEventArgs e)
@@ -287,6 +302,7 @@ namespace Splatnoob
                     labNbPartiesGagneBleu.Visibility = Visibility.Hidden;
 
                     statOuvert = false;
+                    Console.WriteLine("Statistiques fermées.");
                 }
                 else
                 {
@@ -299,17 +315,20 @@ namespace Splatnoob
                     labNbPartiesGagneBleu.Visibility = Visibility.Visible;
 
                     statOuvert = true;
+                    Console.WriteLine("Statistiques ouvertes.");
                 }
             }
             if (e.Key == Key.Space)
             {
                 labCommencer.Visibility = Visibility.Hidden;
                 minuteurJeu.Start();
+                Console.WriteLine("Début du minuteur.");
             }
 
-            // Création d’un rectangle joueur pour la détection de collision.
+            // Création de rectangles joueurs pour la détection de collision.
             Rect rectJoueur1 = new Rect(Canvas.GetLeft(joueur1), Canvas.GetTop(joueur1), joueur1.Width, joueur1.Height);
             Rect rectJoueur2 = new Rect(Canvas.GetLeft(joueur2), Canvas.GetTop(joueur2), joueur2.Width, joueur2.Height);
+            Console.WriteLine("Rect joueurs créés.");
 
             foreach (Rectangle x in monCanvas.Children.OfType<Rectangle>())
             {
@@ -333,6 +352,7 @@ namespace Splatnoob
                     labScoreBleu.Content = scoreBleu.ToString();
                 }
                 x.Tag = "rouge";
+                Console.WriteLine("Collision du joueur rouge.");
             }
         }
 
@@ -351,6 +371,7 @@ namespace Splatnoob
                     labScoreRouge.Content = scoreRouge.ToString();
                 }
                 x.Tag = "bleu";
+                Console.WriteLine("Collision du joueur bleu.");
             }
         }
 
@@ -359,23 +380,28 @@ namespace Splatnoob
             // On vérifie que le temps arrive à 0 et on fait des vérifications pour savoir qui est le gagnant.
             if (tempsJeu <= 0)
             {
+                Console.WriteLine("Vérification du score.");
                 if (scoreBleu > scoreRouge)
                 {
                     labBleuGagne.Visibility = Visibility.Visible;
                     nbPartieGagneBleu++;
+                    Console.WriteLine("Le joueur bleu gagne la partie.");
                 }
                 else if (scoreBleu < scoreRouge)
                 {
                     labRougeGagne.Visibility = Visibility.Visible;
                     nbPartieGagneRouge++;
+                    Console.WriteLine("Le joueur rouge gagne la partie.");
                 }
                 else
                 {
                     labPersonneGagne.Visibility = Visibility.Visible;
+                    Console.WriteLine("Match nul.");
                 }
                 Canvas.SetZIndex(rectFond, 2);
                 butRejouer.Visibility = Visibility.Visible;
                 minuteurJeu.Stop();
+                Console.WriteLine("Arrêt du minuteur.");
                 tempsJeu = 0;
             }
         }
@@ -395,19 +421,23 @@ namespace Splatnoob
             scoreRouge = RESET;
             labScoreBleu.Content = scoreBleu.ToString();
             labScoreRouge.Content = scoreRouge.ToString();
+            Console.WriteLine("Réinitialisation du score.");
 
             // On réinitialise les stats.
             nbTourBleu = RESET;
             nbTourRouge = RESET;
             labTourRouge.Content = "Nb tours joués : " + nbTourRouge;
             labTourBleu.Content = "Nb tours joués : " + nbTourBleu;
+            Console.WriteLine("Réinitialisation des statistiques.");
 
             // On actualise la stat du nombre de partie gagné.
             labNbPartiesGagneRouge.Content = "Parties gagnées : " + nbPartieGagneRouge;
             labNbPartiesGagneBleu.Content = "Parties gagnées : " + nbPartieGagneBleu;
+            Console.WriteLine("Actualisation du nombre de parties gagnées.");
 
             // On réinitialise le temps.
             tempsJeu = tempsInitial;
+            Console.WriteLine("Réinitialisation du temps.");
 
             // On réinitialise les carreaux et on remet les joueurs à leur place.
             foreach (Rectangle x in monCanvas.Children.OfType<Rectangle>())
@@ -426,6 +456,8 @@ namespace Splatnoob
                     x.Tag = "blanc";
                 }
             }
+            Console.WriteLine("Réinitialisation de la grille et des joueurs.");
+
             // On remet le fond à sa place.
             Canvas.SetZIndex(rectFond, 0);
 
@@ -436,6 +468,7 @@ namespace Splatnoob
             y2 = LIGNE - 1;
             labCooRouge.Content = "x,y : " + x1 + "," + y1;
             labCooBleu.Content = "x,y : " + x2 + "," + y2;
+            Console.WriteLine("Réinitialisation des coordonnées.");
 
             // On met en Hidden toutes les fenêtres pour restart le jeu.
             labBleuGagne.Visibility = Visibility.Hidden;
@@ -445,6 +478,7 @@ namespace Splatnoob
 
             // Et c'est reparti !
             labCommencer.Visibility = Visibility.Visible;
+            Console.WriteLine("Nouvelle partie.");
         }
 
         private void monCanvas_ContextMenuClosing(object sender, ContextMenuEventArgs e)
