@@ -23,8 +23,6 @@ namespace Splatnoob
     /// </summary>
     public partial class MainWindow : Window
     {
-
-
         // Timer.
         private DispatcherTimer minuteurJeu = new DispatcherTimer();
         private static double tempsInitial = 10;
@@ -105,24 +103,11 @@ namespace Splatnoob
             // Fenêtre de dialogue.
             Accueil fenetreAccueil = new Accueil();
             fenetreAccueil.ShowDialog();
-            int bouton = fenetreAccueil.Bouton;
-            while (bouton == 1)
-            {
-                parametre fenetreParametre = new parametre();
-                fenetreParametre.ShowDialog();
-
-                Accueil fenetreAccueil2 = new Accueil();
-                fenetreAccueil2.ShowDialog();
-            }
 
             // Création des rectangles et on charge le Canvas pour que les coordonnées de la grille soient correcte.
             CreationRectangle();
             monCanvas.Loaded += (sender, e) => CreationGrille();
             Console.WriteLine("Création de la grille.");
-
-            // Création des rectangles et on charge le Canvas pour que les coordonnées de la grille soient correcte.
-            CreationRectangle();
-            monCanvas.Loaded += (sender, e) => CreationGrille();
 
             // On actualise les stats.
             labCooRouge.Content = "x,y : " + x1 + "," + y1;
@@ -133,9 +118,10 @@ namespace Splatnoob
 
             labNbPartiesGagneRouge.Content = "Parties gagnées : " + nbPartieGagneRouge;
             labNbPartiesGagneBleu.Content = "Parties gagnées : " + nbPartieGagneBleu;
-            Console.WriteLine("Actualisation des statistiques.");
+            
             labNbPartiesGagneRouge.Content = "Parties gagnées : " + nbPartieGagneRouge;
             labNbPartiesGagneBleu.Content = "Parties gagnées : " + nbPartieGagneBleu;
+            Console.WriteLine("Actualisation des statistiques.");
         }
 
         private void CreationRectangle()
