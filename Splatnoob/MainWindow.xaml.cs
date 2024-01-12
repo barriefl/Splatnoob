@@ -75,7 +75,7 @@ namespace Splatnoob
         private double maxX = COLONNE - 1;
         private double minX = 0;
         private double maxY = LIGNE - 1;
-        private double minY = 0; 
+        private double minY = 0;
 
         // Tableau (grille).
         private Rectangle[,] grille5x5;

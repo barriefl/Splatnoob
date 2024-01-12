@@ -24,15 +24,26 @@ namespace Splatnoob
         private int TEMPSPARDEPLACAGE = 15;
         private int NBRSECMIN = 60;
 
+        private int Valeurtemps;
+
+        public double valeurtemps
+        {
+            get { return Valeurtemps; }
+            set { Valeurtemps = value; }
+        }
+
+
         public parametre()
         {
             InitializeComponent();
+            choisirTps.Value = valeurtemps;
             dispatcherTimer.Tick += actualisation;
             dispatcherTimer.Interval = TimeSpan.FromMilliseconds(16);
             dispatcherTimer.Start();
         }
         private void actualisation(object sender, EventArgs e)
         {
+            valeurtemps = choisirTps.Value;
             double tpsTotal = TEMPSPARDEPLACAGE * Math.Round(choisirTps.Value);
             double tpsMin = Math.Truncate(tpsTotal / NBRSECMIN);
             double tpsSec = (tpsTotal - (tpsMin * NBRSECMIN));
