@@ -105,24 +105,13 @@ namespace Splatnoob
             // Fenêtre de dialogue.
             Accueil fenetreAccueil = new Accueil();
             fenetreAccueil.ShowDialog();
-            int bouton = fenetreAccueil.Bouton;
-            while (bouton == 1)
-            {
-                parametre fenetreParametre = new parametre();
-                fenetreParametre.ShowDialog();
-
-                Accueil fenetreAccueil2 = new Accueil();
-                fenetreAccueil2.ShowDialog();
-            }
 
             // Création des rectangles et on charge le Canvas pour que les coordonnées de la grille soient correcte.
             CreationRectangle();
             monCanvas.Loaded += (sender, e) => CreationGrille();
             Console.WriteLine("Création de la grille.");
 
-            // Création des rectangles et on charge le Canvas pour que les coordonnées de la grille soient correcte.
-            CreationRectangle();
-            monCanvas.Loaded += (sender, e) => CreationGrille();
+          
 
             // On actualise les stats.
             labCooRouge.Content = "x,y : " + x1 + "," + y1;

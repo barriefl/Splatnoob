@@ -24,24 +24,18 @@ namespace Splatnoob
             InitializeComponent();
         }
         
-            private int bouton;
 
-        public int Bouton
-        {
-            get { return bouton; }
-            set { bouton = value; }
-        }
+
 
     
         public void Button_parametre_Click(object sender, RoutedEventArgs e)
         {
-            bouton = 1;
-            this.Close();
-            
+            parametre fenetreParametre = new parametre();
+            fenetreParametre.ShowDialog();
+
         }
         public void Button_start_Click(object sender, RoutedEventArgs e)
         {
-            bouton = 2;
             this.Close();
         }
 
