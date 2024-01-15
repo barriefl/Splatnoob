@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Reflection;
+using System.Security.Authentication;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -71,6 +72,19 @@ namespace Splatnoob
         private int xO = COLONNE / 2;
         private int yO = LIGNE / 2;
 
+        private String depHautJ1;
+        private String depBasJ1;
+        private String depGaucheJ1;
+        private String depDroiteJ1;
+        private Key ValKeyHautJ1;
+        private Key ValKeyGaucheJ1;
+        private Key ValKeyBasJ1;
+        private Key ValKeyDroiteJ1;
+        private Key ValKeyHautJ2;
+        private Key ValKeyGaucheJ2;
+        private Key ValKeyBasJ2;
+        private Key ValKeyDroiteJ2;
+
         // Limites grille.
         private double maxX = COLONNE - 1;
         private double minX = 0;
@@ -122,6 +136,15 @@ namespace Splatnoob
 
             tempsInitial = 10 * Math.Round(parametre.Valeurtemps);
             tempsJeu = tempsInitial;
+
+            ValKeyHautJ1 = parametre.KeyHautJ1;
+            ValKeyGaucheJ1 = parametre.KeyGaucheJ1;
+            ValKeyBasJ1 = parametre.KeyBasJ1;
+            ValKeyDroiteJ1 = parametre.KeyDroiteJ1;
+            ValKeyHautJ2 = parametre.KeyHautJ2;
+            ValKeyGaucheJ2 = parametre.KeyGaucheJ2;
+            ValKeyBasJ2 = parametre.KeyBasJ2;
+            ValKeyDroiteJ2 = parametre.KeyDroiteJ2;
         }
 
         private void CreationRectangle()
@@ -182,7 +205,16 @@ namespace Splatnoob
             // Joueur 1 - Z, Q, S, D. 
             Point J1 = new Point(x1, y1);
 
-            if (e.Key == Key.Z)
+
+            /*
+            while (e.Key != Key.None)
+            {
+                // NomLabel.Content("appuyez sur une touche pour modifier la valeur");
+            }
+            
+            */
+
+            if (e.Key == ValKeyHautJ1)
             {
                 if (y1 > minY && (y1 - 1 != y2 || x1 != x2) && tempsJeu < tempsInitial)
                 {
@@ -193,7 +225,7 @@ namespace Splatnoob
                     labTourRouge.Content = "Nb tours joués : " + nbTourRouge;
                 }
             }
-            if (e.Key == Key.Q)
+            if (e.Key == ValKeyGaucheJ1)
             {
                 if (x1 > minX && (y1 != y2 || x1 - 1 != x2) && tempsJeu < tempsInitial)
                 {
@@ -204,7 +236,7 @@ namespace Splatnoob
                     labTourRouge.Content = "Nb tours joués : " + nbTourRouge;
                 }
             }
-            if (e.Key == Key.S)
+            if (e.Key == ValKeyBasJ1)
             {
                 if (y1 < maxY && (y1 + 1 != y2 || x1 != x2) && tempsJeu < tempsInitial)
                 {
@@ -215,7 +247,7 @@ namespace Splatnoob
                     labTourRouge.Content = "Nb tours joués : " + nbTourRouge;
                 }
             }
-            if (e.Key == Key.D)
+            if (e.Key == ValKeyDroiteJ1)
             {
                 if (x1 < maxX && (y1 != y2 || x1 + 1 != x2) && tempsJeu < tempsInitial)
                 {
@@ -230,7 +262,7 @@ namespace Splatnoob
             // Joueur 2 - Up, Left, Down, Right.
             Point J2 = new Point(x2, y2);
 
-            if (e.Key == Key.Up)
+            if (e.Key == ValKeyHautJ2)
             {
                 if (y2 > minY && (y1 != y2 -1 || x1 != x2) && tempsJeu < tempsInitial)
                 {
@@ -241,7 +273,7 @@ namespace Splatnoob
                     labTourBleu.Content = "Nb tours joués : " + nbTourBleu;
                 }
             }
-            if (e.Key == Key.Left)
+            if (e.Key == ValKeyGaucheJ2)
             {
                 if (x2 > minX && (y1 != y2 || x1 != x2 - 1) && tempsJeu < tempsInitial)
                 {
@@ -252,7 +284,7 @@ namespace Splatnoob
                     labTourBleu.Content = "Nb tours joués : " + nbTourBleu;
                 }
             }
-            if (e.Key == Key.Down)
+            if (e.Key == ValKeyBasJ2)
             {
                 if (y2 < maxY && (y1 != y2 + 1 || x1 != x2) && tempsJeu < tempsInitial)
                 {
@@ -263,7 +295,7 @@ namespace Splatnoob
                     labTourBleu.Content = "Nb tours joués : " + nbTourBleu;
                 }
             }
-            if (e.Key == Key.Right)
+            if (e.Key == ValKeyDroiteJ2)
             {
                 if (x2 < maxX && (y1 != y2 || x1 != x2 + 1) && tempsJeu < tempsInitial)
                 {

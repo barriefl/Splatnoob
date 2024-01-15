@@ -17,7 +17,7 @@
         <Button x:Name="boutonparametre"
             Click="Button_parametre_Click"
             Content="Paramètres"
-            FontSize="36" Margin="225,361,34,21" Background="#00DDDDDD" Foreground="White" BorderBrush="Black" />
+            FontSize="36" Margin="225,361,23,21" Background="#00DDDDDD" Foreground="White" BorderBrush="Black" />
         <ComboBox Canvas.Left="160" Canvas.Top="255" Margin="132,226,164,201">
             <ComboBoxItem Content="1 joueurs"/>
             <ComboBoxItem Content="2 joueurs"/>
