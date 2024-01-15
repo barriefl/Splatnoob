@@ -32,6 +32,21 @@
     <None Update="Images\SlimeRouge.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Musiques\Apocalypse.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Musiques\Epic_Hybrid_Logo.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Musiques\Three_Two_One_Fight.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Musiques\Ultrasyd-Who_Cares.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Musiques\Wrong_Place.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
 	  
   </ItemGroup>
 

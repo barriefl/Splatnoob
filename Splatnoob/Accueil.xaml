@@ -16,16 +16,20 @@
             Click="Button_start_Click"
             Content="BONJOUR"
             FontSize="36" />
-        <Button x:Name="boutonparametre"
+        <Button
+            x:Name="boutonparametre"
             Canvas.Left="230"
             Canvas.Top="420"
             Background="#FFF97C25"
             Click="Button_parametre_Click"
             Content="Paramètres"
             FontSize="36" />
-        <ComboBox Canvas.Left="160" Canvas.Top="255" Width="120">
-            <ComboBoxItem Content="1 joueurs"/>
-            <ComboBoxItem Content="2 joueurs"/>
+        <ComboBox
+            Canvas.Left="160"
+            Canvas.Top="255"
+            Width="120">
+            <ComboBoxItem Content="1 joueurs" />
+            <ComboBoxItem Content="2 joueurs" />
         </ComboBox>
     </Canvas>
 </Window>

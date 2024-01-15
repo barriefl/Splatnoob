@@ -24,7 +24,7 @@ namespace Splatnoob
         private int TEMPSPARDEPLACAGE = 15;
         private int NBRSECMIN = 60;
 
-        private int Valeurtemps;
+        private double Valeurtemps;
 
         public double valeurtemps
         {

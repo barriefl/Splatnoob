@@ -23,27 +23,183 @@
             Width="40"
             Height="40"
             Background="#00DDDDDD"
+            Click="Button_Click"
             Content="X"
             FontSize="30"
-            Foreground="White" Click="Button_Click" />
-        <Slider x:Name="choisirTps" Canvas.Left="347" Canvas.Top="155" Width="120" SmallChange="1" TickFrequency="10" Minimum="1" Maximum="12"/>
-        <Label Content="temps total d'une partie" Height="40" Canvas.Left="147" Canvas.Top="155" Width="146" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Label x:Name="affichTps" Content="affichage" Height="40" Canvas.Left="514" Canvas.Top="155" Width="165" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <TextBox Height="17" Canvas.Left="260" TextWrapping="Wrap" Text="Z" Canvas.Top="205" Width="17"/>
-        <TextBox Height="17" Canvas.Left="260" TextWrapping="Wrap" Text="Q" Canvas.Top="250" Width="17"/>
-        <TextBox Height="17" Canvas.Left="260" TextWrapping="Wrap" Text="S" Canvas.Top="295" Width="17"/>
-        <TextBox Height="17" Canvas.Left="260" TextWrapping="Wrap" Text="D" Canvas.Top="340" Width="17"/>
-        <Label Content="joueur 1 déplacement ↑" Height="30" Canvas.Left="100" Canvas.Top="200" Width="135" Background="Black" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5"/>
-        <Label Content="joueur 1 déplacement ←" Height="30" Canvas.Left="100" Canvas.Top="245" Width="144" Background="Black" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Label Content="joueur 1 déplacement ↓" Height="30" Canvas.Left="100" Canvas.Top="290" Width="133" Background="Black" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Label Content="joueur 1 déplacement →" Height="30" Canvas.Left="100" Canvas.Top="335" Width="144" Background="Black" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <TextBox Height="17" Canvas.Left="460" TextWrapping="Wrap" Text="↑" Canvas.Top="205" Width="17" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <TextBox Height="17" Canvas.Left="460" TextWrapping="Wrap" Text="←" Canvas.Top="250" Width="17" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <TextBox Height="17" Canvas.Left="460" TextWrapping="Wrap" Text="↓" Canvas.Top="295" Width="17" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <TextBox Height="17" Canvas.Left="460" TextWrapping="Wrap" Text="→" Canvas.Top="340" Width="17" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <Label Content="joueur 2 déplacement ↑" Height="30" Canvas.Left="300" Canvas.Top="200" Width="135" Background="Black" Foreground="White" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <Label Content="joueur 2 déplacement ←" Height="30" Canvas.Left="300" Canvas.Top="245" Width="144" Background="Black" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <Label Content="joueur 2 déplacement ↓" Height="30" Canvas.Left="300" Canvas.Top="290" Width="133" Background="Black" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <Label Content="joueur 2 déplacement →" Height="30" Canvas.Left="300" Canvas.Top="335" Width="144" Background="Black" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            Foreground="White" />
+        <Slider
+            x:Name="choisirTps"
+            Canvas.Left="347"
+            Canvas.Top="155"
+            Width="120"
+            Maximum="12"
+            Minimum="1"
+            SmallChange="1"
+            TickFrequency="10" />
+        <Label
+            Canvas.Left="147"
+            Canvas.Top="155"
+            Width="146"
+            Height="40"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Content="temps total d'une partie"
+            Foreground="White" />
+        <Label
+            x:Name="affichTps"
+            Canvas.Left="514"
+            Canvas.Top="155"
+            Width="165"
+            Height="40"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Content="affichage"
+            Foreground="White" />
+        <TextBox
+            Canvas.Left="260"
+            Canvas.Top="205"
+            Width="17"
+            Height="17"
+            Text="Z"
+            TextWrapping="Wrap" />
+        <TextBox
+            Canvas.Left="260"
+            Canvas.Top="250"
+            Width="17"
+            Height="17"
+            Text="Q"
+            TextWrapping="Wrap" />
+        <TextBox
+            Canvas.Left="260"
+            Canvas.Top="295"
+            Width="17"
+            Height="17"
+            Text="S"
+            TextWrapping="Wrap" />
+        <TextBox
+            Canvas.Left="260"
+            Canvas.Top="340"
+            Width="17"
+            Height="17"
+            Text="D"
+            TextWrapping="Wrap" />
+        <Label
+            Canvas.Left="100"
+            Canvas.Top="200"
+            Width="135"
+            Height="30"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Background="Black"
+            Content="joueur 1 déplacement ↑"
+            Foreground="White"
+            RenderTransformOrigin="0.5,0.5" />
+        <Label
+            Canvas.Left="100"
+            Canvas.Top="245"
+            Width="144"
+            Height="30"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Background="Black"
+            Content="joueur 1 déplacement ←"
+            Foreground="White" />
+        <Label
+            Canvas.Left="100"
+            Canvas.Top="290"
+            Width="133"
+            Height="30"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Background="Black"
+            Content="joueur 1 déplacement ↓"
+            Foreground="White" />
+        <Label
+            Canvas.Left="100"
+            Canvas.Top="335"
+            Width="144"
+            Height="30"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Background="Black"
+            Content="joueur 1 déplacement →"
+            Foreground="White" />
+        <TextBox
+            Canvas.Left="460"
+            Canvas.Top="205"
+            Width="17"
+            Height="17"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Text="↑"
+            TextWrapping="Wrap" />
+        <TextBox
+            Canvas.Left="460"
+            Canvas.Top="250"
+            Width="17"
+            Height="17"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Text="←"
+            TextWrapping="Wrap" />
+        <TextBox
+            Canvas.Left="460"
+            Canvas.Top="295"
+            Width="17"
+            Height="17"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Text="↓"
+            TextWrapping="Wrap" />
+        <TextBox
+            Canvas.Left="460"
+            Canvas.Top="340"
+            Width="17"
+            Height="17"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Text="→"
+            TextWrapping="Wrap" />
+        <Label
+            Canvas.Left="300"
+            Canvas.Top="200"
+            Width="135"
+            Height="30"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Background="Black"
+            Content="joueur 2 déplacement ↑"
+            Foreground="White"
+            RenderTransformOrigin="0.5,0.5" />
+        <Label
+            Canvas.Left="300"
+            Canvas.Top="245"
+            Width="144"
+            Height="30"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Background="Black"
+            Content="joueur 2 déplacement ←"
+            Foreground="White" />
+        <Label
+            Canvas.Left="300"
+            Canvas.Top="290"
+            Width="133"
+            Height="30"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Background="Black"
+            Content="joueur 2 déplacement ↓"
+            Foreground="White" />
+        <Label
+            Canvas.Left="300"
+            Canvas.Top="335"
+            Width="144"
+            Height="30"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Background="Black"
+            Content="joueur 2 déplacement →"
+            Foreground="White" />
     </Canvas>
 </Window>
