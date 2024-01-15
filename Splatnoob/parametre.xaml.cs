@@ -21,15 +21,15 @@ namespace Splatnoob
     public partial class parametre : Window
     {
         private DispatcherTimer dispatcherTimer = new DispatcherTimer();
-        private int TEMPSPARDEPLACAGE = 15;
+        private int TEMPSPARDEPLACAGE = 10;
         private int NBRSECMIN = 60;
 
-        private int Valeurtemps;
+        public static double valeurtemps = 1;
 
-        public double valeurtemps
+        public static double Valeurtemps
         {
-            get { return Valeurtemps; }
-            set { Valeurtemps = value; }
+            get { return valeurtemps; }
+            set { valeurtemps = value; }
         }
 
 

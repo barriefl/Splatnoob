@@ -27,8 +27,8 @@ namespace Splatnoob
     {
         // Timer.
         private DispatcherTimer minuteurJeu = new DispatcherTimer();
-        private static double tempsInitial = 10;
-        private double tempsJeu = tempsInitial;
+        private static double tempsInitial;
+        private double tempsJeu;
 
         // Skin.
         private ImageBrush fondSkin = new ImageBrush();
@@ -119,6 +119,9 @@ namespace Splatnoob
             labNbPartiesGagneRouge.Content = "Parties gagnées : " + nbPartieGagneRouge;
             labNbPartiesGagneBleu.Content = "Parties gagnées : " + nbPartieGagneBleu;
             Console.WriteLine("Actualisation des statistiques.");
+
+            tempsInitial = 10 * Math.Round(parametre.Valeurtemps);
+            tempsJeu = tempsInitial;
         }
 
         private void CreationRectangle()
