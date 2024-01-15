@@ -9,27 +9,18 @@
     Width="450"
     Height="500"
     mc:Ignorable="d">
-    <Canvas ContextMenuClosing="Canvas_ContextMenuClosing">
-        <Button
-            Margin="40,420,474,75"
-            Background="#FFF97C25"
+    <Grid ContextMenuClosing="Canvas_ContextMenuClosing" Background="black">
+        <Button x:Name="boutonstart"
             Click="Button_start_Click"
             Content="BONJOUR"
-            FontSize="36" />
-        <Button
-            x:Name="boutonparametre"
-            Canvas.Left="230"
-            Canvas.Top="420"
-            Background="#FFF97C25"
+            FontSize="36" Margin="0,361,266,21" Background="#00DDDDDD" Foreground="White" BorderBrush="Black"/>
+        <Button x:Name="boutonparametre"
             Click="Button_parametre_Click"
             Content="Paramètres"
             FontSize="36" />
-        <ComboBox
-            Canvas.Left="160"
-            Canvas.Top="255"
-            Width="120">
-            <ComboBoxItem Content="1 joueurs" />
-            <ComboBoxItem Content="2 joueurs" />
+        <ComboBox Canvas.Left="160" Canvas.Top="255" Width="120">
+            <ComboBoxItem Content="1 joueurs"/>
+            <ComboBoxItem Content="2 joueurs"/>
         </ComboBox>
-    </Canvas>
+    </Grid>
 </Window>

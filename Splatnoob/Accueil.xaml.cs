@@ -28,7 +28,6 @@ namespace Splatnoob
         {
             parametre fenetreParametre = new parametre();
             fenetreParametre.ShowDialog();
-
         }
 
         public void Button_start_Click(object sender, RoutedEventArgs e)
