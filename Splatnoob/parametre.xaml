@@ -142,49 +142,65 @@
             x:Name="bHautJ1"
             Canvas.Left="260"
             Canvas.Top="202"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
             Click="Click_HautJ1"
-            Content="Button" HorizontalAlignment="Left" VerticalAlignment="Center" />
+            Content="Button" />
         <Button
             x:Name="bGaucheJ1"
             Canvas.Left="260"
             Canvas.Top="247"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
             Click="Click_GaucheJ1"
-            Content="Button" HorizontalAlignment="Center" VerticalAlignment="Top" />
+            Content="Button" />
         <Button
             x:Name="bBasJ1"
             Canvas.Left="260"
             Canvas.Top="292"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
             Click="Click_BasJ1"
-            Content="Button" HorizontalAlignment="Center" VerticalAlignment="Top" />
+            Content="Button" />
         <Button
             x:Name="bDroiteJ1"
             Canvas.Left="260"
             Canvas.Top="337"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
             Click="Click_DroiteJ1"
-            Content="Button" HorizontalAlignment="Center" VerticalAlignment="Top" />
+            Content="Button" />
         <Button
             x:Name="bHautJ2"
             Canvas.Left="460"
             Canvas.Top="202"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
             Click="Click_HautJ2"
-            Content="Button" HorizontalAlignment="Left" VerticalAlignment="Center" />
+            Content="Button" />
         <Button
             x:Name="bGaucheJ2"
             Canvas.Left="460"
             Canvas.Top="247"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
             Click="Click_GaucheJ2"
-            Content="Button" HorizontalAlignment="Center" VerticalAlignment="Top" />
+            Content="Button" />
         <Button
             x:Name="bBasJ2"
             Canvas.Left="460"
             Canvas.Top="292"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
             Click="Click_BasJ2"
-            Content="Button" HorizontalAlignment="Center" VerticalAlignment="Top" />
+            Content="Button" />
         <Button
             x:Name="bDroiteJ2"
             Canvas.Left="460"
             Canvas.Top="337"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
             Click="Click_DroiteJ2"
-            Content="Button" HorizontalAlignment="Center" VerticalAlignment="Top" />
+            Content="Button" />
     </Canvas>
 </Window>
