@@ -22,8 +22,8 @@ namespace Splatnoob
     {
         private DispatcherTimer dispatcherTimer = new DispatcherTimer();
         
-        private int TEMPSPARDEPLACAGE = 10;
-        private int NBRSECMIN = 60;
+        private const int TEMPSPARDEPLACAGE = 10;
+        private const int NBRSECMIN = 60;
 
         public static Key keyHautJ1 = Key.Z;
         public static Key KeyHautJ1

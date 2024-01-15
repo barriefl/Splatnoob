@@ -29,6 +29,7 @@ namespace Splatnoob
         // Timer.
         private DispatcherTimer minuteurJeu = new DispatcherTimer();
         private DispatcherTimer timer = new DispatcherTimer();
+        private DispatcherTimer robotTimer = new DispatcherTimer();
         private static double tempsInitial;
         private double tempsJeu;
 
@@ -91,6 +92,8 @@ namespace Splatnoob
         private Key ValKeyBasJ2;
         private Key ValKeyDroiteJ2;
 
+        Accueil fenetreAccueil = new Accueil();
+
         // Limites grille.
         private double maxX = COLONNE - 1;
         private double minX = 0;
@@ -112,6 +115,9 @@ namespace Splatnoob
             timer.Tick += Timer;
             timer.Interval = TimeSpan.FromSeconds(1);
 
+            robotTimer.Tick += AdversaireTimer;
+            robotTimer.Interval = TimeSpan.FromMilliseconds(150);
+
             // Chemin des skins.
             fondSkin.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/fond.jpeg"));
             joueurRougeSkin.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/SlimeRouge.png"));
@@ -120,9 +126,11 @@ namespace Splatnoob
 
             // Chemin des musiques.
             musiqueFond.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Musiques/Ultrasyd-Who_Cares.mp3"));
+            musiqueAccueil.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Musiques/Apocalypse.mp3"));
 
             // Volume des musiques.
             musiqueFond.Volume = 0.2;
+            musiqueAccueil.Volume = 0.5;
             Console.WriteLine("Chargement de la musique.");
 
             // On rempli les rectangles avec les skins.
@@ -132,8 +140,9 @@ namespace Splatnoob
             Console.WriteLine("Skins chargés.");
 
             // Fenêtre de dialogue.
-            Accueil fenetreAccueil = new Accueil();
+            musiqueAccueil.Play();
             fenetreAccueil.ShowDialog();
+            musiqueAccueil.Stop();
 
             // Création des rectangles et on charge le Canvas pour que les coordonnées de la grille soient correcte.
             CreationRectangle();
@@ -192,8 +201,8 @@ namespace Splatnoob
             double hauteurTotale = LIGNE * (RECTANGLE_HAUTEUR + RECTANGLE_ESPACEMENT) - RECTANGLE_ESPACEMENT;
 
             // Coordonnées pour centrer la grille.
-            double coordonneesX = (rectFond.ActualWidth - largeurTotale) /2;
-            double coordonneesY = (rectFond.ActualHeight - hauteurTotale) /2;
+            double coordonneesX = (rectFond.ActualWidth - largeurTotale) / 2;
+            double coordonneesY = (rectFond.ActualHeight - hauteurTotale) / 2;
 
             for (int i = 0; i < LIGNE; i++)
             {
@@ -281,7 +290,7 @@ namespace Splatnoob
 
             if (e.Key == ValKeyHautJ2)
             {
-                if (y2 > minY && (y1 != y2 -1 || x1 != x2) && tempsJeu < tempsInitial)
+                if (y2 > minY && (y1 != y2 - 1 || x1 != x2) && tempsJeu < tempsInitial)
                 {
                     Canvas.SetTop(joueur2, Canvas.GetTop(joueur2) - pasJoueur);
                     y2 -= 1;
@@ -364,6 +373,8 @@ namespace Splatnoob
 
                 musiqueFond.Play();
                 Console.WriteLine("Début de la musique et des sons.");
+
+                robotTimer.Start();
             }
 
             // Création de rectangles joueurs pour la détection de collision.
@@ -441,8 +452,11 @@ namespace Splatnoob
                 }
                 Canvas.SetZIndex(rectFond, 2);
                 butRejouer.Visibility = Visibility.Visible;
+                butMenu.Visibility = Visibility.Visible;
+
                 minuteurJeu.Stop();
                 timer.Stop();
+                robotTimer.Stop();
                 Console.WriteLine("Arrêt du minuteur.");
                 tempsJeu = 0;
             }
@@ -524,6 +538,7 @@ namespace Splatnoob
             labRougeGagne.Visibility = Visibility.Hidden;
             labPersonneGagne.Visibility = Visibility.Hidden;
             butRejouer.Visibility = Visibility.Hidden;
+            butMenu.Visibility = Visibility.Hidden;
 
             // Et c'est reparti !
             labCommencer.Visibility = Visibility.Visible;
@@ -537,26 +552,84 @@ namespace Splatnoob
 
         private void AdversaireIntelligent()
         {
-            // On calcule la direction pour se rapprocher du joueur rouge.
-            int directionX = Math.Sign(x1 - x2);
-            int directionY = Math.Sign(y1 - y2);
+            // On cherche la case blanche non occupée la plus proche.
+            int blancDeltaX = 0;
+            int blancDeltaY = 0;
+            double distanceBlanche = double.MaxValue;
 
-            // On déplace le joueur bleu en fonction de la direction.
-            if (directionX != 0)
+            // On cherche la case rouge non occupée la plus proche.
+            int rougeDeltaX = 0;
+            int rougeDeltaY = 0;
+            double distanceRouge = double.MaxValue;
+
+            for (int i = 0; i < LIGNE; i++)
             {
-                if (x2 + directionX >= minX && x2 + directionX <= maxX)
+                for (int j = 0; j < COLONNE; j++)
                 {
-                    Canvas.SetLeft(joueur2, Canvas.GetLeft(joueur2) + pasJoueur * directionX);
-                    x2 += directionX;
+                    if ((string)grille5x5[i, j].Tag == "blanc")
+                    {
+                        double distance = Math.Sqrt(Math.Pow(j - x2, 2) + Math.Pow(i - y2, 2));
+                        if (distance < distanceBlanche)
+                        {
+                            blancDeltaX = j - x2;
+                            blancDeltaY = i - y2;
+                            distanceBlanche = distance;
+                        }
+                    }
+                    else if ((string)grille5x5[i, j].Tag == "rouge")
+                    {
+                        double distance = Math.Sqrt(Math.Pow(j - x2, 2) + Math.Pow(i - y2, 2));
+                        if (distance < distanceRouge)
+                        {
+                            rougeDeltaX = j - x2;
+                            rougeDeltaY = i - y2;
+                            distanceRouge = distance;
+                        }
+                    }
                 }
             }
-            if (directionY != 0)
+
+            // On cherche la meilleure solution entre la case blanche et la case rouge.
+            int deltaX, deltaY;
+
+            if (distanceBlanche < distanceRouge)
             {
-                if (y2 + directionY >= minY && y2 + directionY <= maxY)
-                {
-                    Canvas.SetTop(joueur2, Canvas.GetTop(joueur2) + pasJoueur * directionY);
-                    y2 += directionY;
-                }
+                deltaX = blancDeltaX;
+                deltaY = blancDeltaY;
+            }
+            else
+            {
+                deltaX = rougeDeltaX;
+                deltaY = rougeDeltaY;
+            }
+
+            // On déplace le robot en fonction de la nouvelle position calculée.
+            int newPosX = x2 + Math.Sign(deltaX);
+            int newPosY = y2 + Math.Sign(deltaY);
+
+            if (newPosX >= minX && newPosX <= maxX && newPosY >= minY && newPosY <= maxY &&
+                (string)grille5x5[newPosY, newPosX].Tag != "bleu")
+            {
+                Canvas.SetLeft(joueur2, Canvas.GetLeft(joueur2) + pasJoueur * Math.Sign(deltaX));
+                Canvas.SetTop(joueur2, Canvas.GetTop(joueur2) + pasJoueur * Math.Sign(deltaY));
+
+                x2 = newPosX;
+                y2 = newPosY;
+            }
+        }
+
+        private void butMenu_Click(object sender, RoutedEventArgs e)
+        {
+            butMenu.Visibility = Visibility.Hidden;
+            fenetreAccueil.Show();
+        }
+
+        private void AdversaireTimer(object sender, EventArgs e)
+        {
+            if (fenetreAccueil.unJoueur == true)
+            {
+                Console.WriteLine("1 joueur.");
+                AdversaireIntelligent();
             }
         }
     }

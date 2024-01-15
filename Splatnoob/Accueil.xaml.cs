@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -19,6 +20,8 @@ namespace Splatnoob
     /// </summary>
     public partial class Accueil : Window
     {
+        public bool unJoueur = false;
+        public bool deuxJoueurs = false;
         public Accueil()
         {
             InitializeComponent();
@@ -32,12 +35,25 @@ namespace Splatnoob
 
         public void Button_start_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            this.Hide();
         }
 
         private void Canvas_ContextMenuClosing(object sender, ContextMenuEventArgs e)
         {
             Application.Current.Shutdown();
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            switch (comChoixJoueurs.SelectedIndex)
+            {
+                case 0:
+                    unJoueur = true;
+                    break;
+                case 1:
+                    deuxJoueurs = true;
+                    break;
+            }
         }
     }
 }

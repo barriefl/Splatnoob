@@ -33,10 +33,12 @@
             Canvas.Left="156"
             Canvas.Top="155"
             Width="120"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
             Maximum="12"
             Minimum="1"
             SmallChange="1"
-            TickFrequency="10" HorizontalAlignment="Left" VerticalAlignment="Center" />
+            TickFrequency="10" />
         <Label
             Canvas.Left="10"
             Canvas.Top="150"
@@ -201,30 +203,36 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Top"
             Click="Click_DroiteJ2"
-            Content="Button" HorizontalAlignment="Center" VerticalAlignment="Top" />
+            Content="Button" />
         <Slider
             x:Name="choisirSons"
             Canvas.Left="480"
             Canvas.Top="155"
             Width="120"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
             Maximum="100"
             Minimum="0"
             SmallChange="1"
-            TickFrequency="10" HorizontalAlignment="Left" VerticalAlignment="Center" />
+            TickFrequency="10" />
         <Label
             Canvas.Left="400"
             Canvas.Top="150"
             Width="146"
             Height="40"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
             Content="son du jeu"
-            Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" />
+            Foreground="White" />
         <Label
             x:Name="affichSons"
             Canvas.Left="605"
             Canvas.Top="150"
             Width="164"
             Height="40"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
             Content="affichage"
-            Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" />
+            Foreground="White" />
     </Canvas>
 </Window>
