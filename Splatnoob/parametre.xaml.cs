@@ -90,11 +90,17 @@ namespace Splatnoob
             get { return valeurtemps; }
             set { valeurtemps = value; }
         }
-
+        public static double valeursons = 100;
+        public static double Valeursons
+        {
+            get { return valeursons; }
+            set { valeursons = value; }
+        }
         public parametre()
         {
             InitializeComponent();
             choisirTps.Value = valeurtemps;
+            choisirSons.Value = valeursons;
             dispatcherTimer.Tick += actualisation;
             dispatcherTimer.Interval = TimeSpan.FromMilliseconds(16);
             dispatcherTimer.Start();
@@ -106,6 +112,8 @@ namespace Splatnoob
             double tpsTotal = TEMPSPARDEPLACAGE * Math.Round(choisirTps.Value);
             double tpsMin = Math.Truncate(tpsTotal / NBRSECMIN);
             double tpsSec = (tpsTotal - (tpsMin * NBRSECMIN));
+            valeursons = Math.Round(choisirSons.Value);
+            affichSons.Content = (valeursons + "%");
             if (tpsSec != 0)
                 affichTps.Content = (tpsMin + ":" + tpsSec);
             else
@@ -248,6 +256,7 @@ namespace Splatnoob
             }
             if (boutonGaucheJ2)
             {
+                KeyGaucheJ2 = e.Key;
                 boutonGaucheJ2 = false;
             }
             if (boutonBasJ2)

@@ -30,29 +30,29 @@
             Foreground="White" />
         <Slider
             x:Name="choisirTps"
-            Canvas.Left="347"
+            Canvas.Left="156"
             Canvas.Top="155"
             Width="120"
             Maximum="12"
             Minimum="1"
             SmallChange="1"
-            TickFrequency="10" />
+            TickFrequency="10" HorizontalAlignment="Left" VerticalAlignment="Center" />
         <Label
-            Canvas.Left="147"
-            Canvas.Top="155"
+            Canvas.Left="10"
+            Canvas.Top="150"
             Width="146"
             Height="40"
             HorizontalAlignment="Left"
-            VerticalAlignment="Center"
+            VerticalAlignment="Top"
             Content="temps total d'une partie"
             Foreground="White" />
         <Label
             x:Name="affichTps"
-            Canvas.Left="514"
-            Canvas.Top="155"
-            Width="165"
+            Canvas.Left="284"
+            Canvas.Top="148"
+            Width="164"
             Height="40"
-            HorizontalAlignment="Center"
+            HorizontalAlignment="Left"
             VerticalAlignment="Center"
             Content="affichage"
             Foreground="White" />
@@ -201,6 +201,30 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Top"
             Click="Click_DroiteJ2"
-            Content="Button" />
+            Content="Button" HorizontalAlignment="Center" VerticalAlignment="Top" />
+        <Slider
+            x:Name="choisirSons"
+            Canvas.Left="480"
+            Canvas.Top="155"
+            Width="120"
+            Maximum="100"
+            Minimum="0"
+            SmallChange="1"
+            TickFrequency="10" HorizontalAlignment="Left" VerticalAlignment="Center" />
+        <Label
+            Canvas.Left="400"
+            Canvas.Top="150"
+            Width="146"
+            Height="40"
+            Content="son du jeu"
+            Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <Label
+            x:Name="affichSons"
+            Canvas.Left="605"
+            Canvas.Top="150"
+            Width="164"
+            Height="40"
+            Content="affichage"
+            Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" />
     </Canvas>
 </Window>
