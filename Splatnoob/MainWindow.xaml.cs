@@ -28,8 +28,14 @@ namespace Splatnoob
     {
         // Timer.
         private DispatcherTimer minuteurJeu = new DispatcherTimer();
+        private DispatcherTimer timer = new DispatcherTimer();
         private static double tempsInitial;
         private double tempsJeu;
+
+        // Sons.
+        private MediaPlayer musiqueFond = new MediaPlayer();
+        private MediaPlayer musiqueParametres = new MediaPlayer();
+        private MediaPlayer musiqueAccueil = new MediaPlayer();
 
         // Skin.
         private ImageBrush fondSkin = new ImageBrush();
@@ -99,16 +105,27 @@ namespace Splatnoob
             // Début du jeu.
             InitializeComponent();
             Console.WriteLine("Démarrage du jeu.");
+
             minuteurJeu.Tick += MoteurJeu;
             minuteurJeu.Interval = TimeSpan.FromMilliseconds(16);
 
-            // Chemin du skin.
+            timer.Tick += Timer;
+            timer.Interval = TimeSpan.FromSeconds(1);
+
+            // Chemin des skins.
             fondSkin.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/fond.jpeg"));
             joueurRougeSkin.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/SlimeRouge.png"));
             joueurBleuSkin.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/SlimeBleu.png"));
             Console.WriteLine("Chargement des skins.");
 
-            // On rempli le rectangle avec le skin.
+            // Chemin des musiques.
+            musiqueFond.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Musiques/Ultrasyd-Who_Cares.mp3"));
+
+            // Volume des musiques.
+            musiqueFond.Volume = 0.2;
+            Console.WriteLine("Chargement de la musique.");
+
+            // On rempli les rectangles avec les skins.
             rectFond.Fill = fondSkin;
             joueur1.Fill = joueurRougeSkin;
             joueur2.Fill = joueurBleuSkin;
@@ -340,8 +357,13 @@ namespace Splatnoob
             if (e.Key == Key.Space)
             {
                 labCommencer.Visibility = Visibility.Hidden;
+
                 minuteurJeu.Start();
+                timer.Start();
                 Console.WriteLine("Début du minuteur.");
+
+                musiqueFond.Play();
+                Console.WriteLine("Début de la musique et des sons.");
             }
 
             // Création de rectangles joueurs pour la détection de collision.
@@ -420,6 +442,7 @@ namespace Splatnoob
                 Canvas.SetZIndex(rectFond, 2);
                 butRejouer.Visibility = Visibility.Visible;
                 minuteurJeu.Stop();
+                timer.Stop();
                 Console.WriteLine("Arrêt du minuteur.");
                 tempsJeu = 0;
             }
@@ -427,14 +450,20 @@ namespace Splatnoob
 
         private void MoteurJeu(object sender, EventArgs e)
         {
-            tempsJeu = Math.Round(tempsJeu - 0.016, 2);
-            labTemps.Content = tempsJeu.ToString();
-
             TestGagnant();
+        }
+
+        private void Timer(object sender, EventArgs e)
+        {
+            tempsJeu = tempsJeu - 1;
+            labTemps.Content = tempsJeu.ToString();
         }
 
         private void butRejouer_Click(object sender, RoutedEventArgs e)
         {
+            // On arrête la musique.
+            musiqueFond.Stop();
+
             // On réinitialise le score.
             scoreBleu = RESET;
             scoreRouge = RESET;
@@ -456,6 +485,7 @@ namespace Splatnoob
 
             // On réinitialise le temps.
             tempsJeu = tempsInitial;
+            labTemps.Content = tempsJeu;
             Console.WriteLine("Réinitialisation du temps.");
 
             // On réinitialise les carreaux et on remet les joueurs à leur place.
@@ -503,6 +533,31 @@ namespace Splatnoob
         private void monCanvas_ContextMenuClosing(object sender, ContextMenuEventArgs e)
         {
             Application.Current.Shutdown();
+        }
+
+        private void AdversaireIntelligent()
+        {
+            // On calcule la direction pour se rapprocher du joueur rouge.
+            int directionX = Math.Sign(x1 - x2);
+            int directionY = Math.Sign(y1 - y2);
+
+            // On déplace le joueur bleu en fonction de la direction.
+            if (directionX != 0)
+            {
+                if (x2 + directionX >= minX && x2 + directionX <= maxX)
+                {
+                    Canvas.SetLeft(joueur2, Canvas.GetLeft(joueur2) + pasJoueur * directionX);
+                    x2 += directionX;
+                }
+            }
+            if (directionY != 0)
+            {
+                if (y2 + directionY >= minY && y2 + directionY <= maxY)
+                {
+                    Canvas.SetTop(joueur2, Canvas.GetTop(joueur2) + pasJoueur * directionY);
+                    y2 += directionY;
+                }
+            }
         }
     }
 }
