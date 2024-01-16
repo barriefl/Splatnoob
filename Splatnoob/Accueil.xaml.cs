@@ -22,8 +22,9 @@ namespace Splatnoob
     {
         public bool unJoueur = false;
         public bool deuxJoueurs = false;
-        private MediaPlayer musiqueAccueil = new MediaPlayer();
-        private double volume;
+        public bool modeFacile = false;
+        public bool modeNormal = false;
+        public bool modeDifficile = false;
         public Accueil()
         {
             InitializeComponent();
@@ -43,8 +44,18 @@ namespace Splatnoob
 
         public void Button_start_Click(object sender, RoutedEventArgs e)
         {
-            musiqueAccueil.Stop();
-            this.Hide();
+            if (unJoueur == false && deuxJoueurs == false)
+            {
+                labAttentionJoueurs.Visibility = Visibility.Visible;
+            }
+            else if ((modeFacile == false && modeNormal == false && modeNormal == false) && unJoueur == true)
+            {
+                labAttentionDifficulte.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                this.Hide();
+            }   
         }
 
         private void Canvas_ContextMenuClosing(object sender, ContextMenuEventArgs e)
@@ -53,17 +64,48 @@ namespace Splatnoob
             Application.Current.Shutdown();
         }
 
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void but1Joueur_Click(object sender, RoutedEventArgs e)
         {
-            switch (comChoixJoueurs.SelectedIndex)
-            {
-                case 0:
-                    unJoueur = true;
-                    break;
-                case 1:
-                    deuxJoueurs = true;
-                    break;
-            }
+            butFacile.Visibility = Visibility.Visible;
+            butNormal.Visibility = Visibility.Visible;
+            butDifficile.Visibility = Visibility.Visible;
+            labAttentionJoueurs.Visibility = Visibility.Hidden;
+            unJoueur = true;
+            deuxJoueurs = false;
+        }
+
+        private void butFacile_Click(object sender, RoutedEventArgs e)
+        {
+            modeFacile = true;
+            modeNormal = false;
+            modeDifficile = false;
+            labAttentionDifficulte.Visibility = Visibility.Hidden;
+        }
+
+        private void butNormal_Click(object sender, RoutedEventArgs e)
+        {
+            modeFacile = false;
+            modeNormal = true;
+            modeDifficile = false;
+            labAttentionDifficulte.Visibility = Visibility.Hidden;
+        }
+
+        private void butDifficile_Click(object sender, RoutedEventArgs e)
+        {
+            modeFacile = false;
+            modeNormal = false; 
+            modeDifficile = true;
+            labAttentionDifficulte.Visibility = Visibility.Hidden;
+        }
+
+        private void but2Joueurs_Click(object sender, RoutedEventArgs e)
+        {
+            unJoueur = false;
+            deuxJoueurs = true;
+            butFacile.Visibility = Visibility.Hidden;
+            butNormal.Visibility = Visibility.Hidden;
+            butDifficile.Visibility = Visibility.Hidden;
+            labAttentionJoueurs.Visibility = Visibility.Hidden;
         }
     }
 }
