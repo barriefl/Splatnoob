@@ -13,11 +13,11 @@
     mc:Ignorable="d" WindowStartupLocation="CenterScreen" WindowState="Maximized" ResizeMode="NoResize">
     <Canvas ContextMenuClosing="Canvas_ContextMenuClosing">
         <Label
-            Canvas.Left="807"
-            Canvas.Top="80"
-            Content="Paramètres"
-            FontSize="36"
-            Foreground="White" />
+            Canvas.Left="740"
+            Canvas.Top="77"
+            Content="PARAMETRES"
+            FontSize="48"
+            Foreground="White" FontWeight="Bold" />
         <Button
             Canvas.Left="1791"
             Canvas.Top="962"
@@ -40,14 +40,10 @@
             SmallChange="1"
             TickFrequency="10" RenderTransformOrigin="0.745,1.53" />
         <Label
-            Canvas.Left="121"
-            Canvas.Top="265"
-            Width="274"
-            Height="40"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Top"
-            Content="temps total d'une partie"
-            Foreground="White" FontSize="24" />
+            Canvas.Left="128"
+            Canvas.Top="270"
+            Content="TEMPS D'UNE PARTIE"
+            Foreground="White" FontSize="24" FontWeight="Bold" />
         <Label
             x:Name="affichTps"
             Canvas.Left="605"
@@ -135,14 +131,10 @@
             SmallChange="1"
             TickFrequency="10" />
         <Label
-            Canvas.Left="1162"
-            Canvas.Top="265"
-            Width="146"
-            Height="40"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Center"
-            Content="son du jeu"
-            Foreground="White" FontSize="24" />
+            Canvas.Left="1142"
+            Canvas.Top="270"
+            Content="SON DU JEU"
+            Foreground="White" FontSize="24" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" />
         <Label
             x:Name="affichSons"
             Canvas.Left="1514"
@@ -153,12 +145,12 @@
             VerticalAlignment="Center"
             Content="affichage"
             Foreground="White" FontSize="24" />
-        <Label Content="Déplacement joueur 1" Height="56" Canvas.Left="322" Canvas.Top="408" Width="245" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20"/>
+        <Label Content="DEPLACEMENT JOUEUR 1" Canvas.Left="303" Canvas.Top="437" Foreground="White" FontSize="20" FontWeight="Bold"/>
         <Label Content="↑" Height="35" Canvas.Left="418" Canvas.Top="485" Width="35" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18"/>
         <Label Content="→" Height="35" Canvas.Left="542" Canvas.Top="608" Width="35" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18"/>
         <Label Content="↓" Height="35" Canvas.Left="418" Canvas.Top="671" Width="35" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18"/>
         <Label Content="←" Height="35" Canvas.Left="289" Canvas.Top="608" Width="36" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18"/>
-        <Label Content="Déplacement joueur 2" Height="56" Canvas.Left="1230" Canvas.Top="408" Width="246" Foreground="White" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Label Content="DEPLACEMENT JOUEUR 2" Canvas.Left="1211" Canvas.Top="447" Foreground="White" FontSize="20" FontWeight="Bold"/>
         <Label Content="↑" Height="35" Canvas.Left="1326" Canvas.Top="485" Width="34" Foreground="White" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Center"/>
         <Label Content="→" Height="35" Canvas.Left="1449" Canvas.Top="608" Width="35" Foreground="White" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Center"/>
         <Label Content="←" Height="35" Canvas.Left="1199" Canvas.Top="608" Width="36" Foreground="White" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Center"/>
