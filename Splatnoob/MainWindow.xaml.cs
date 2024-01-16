@@ -274,7 +274,7 @@ namespace Splatnoob
             // Joueur 2 - Up, Left, Down, Right.
             Point J2 = new Point(x2, y2);
 
-            if (e.Key == ValKeyHautJ2)
+            if (e.Key == ValKeyHautJ2 && fenetreAccueil.deuxJoueurs == true)
             {
                 if (y2 > minY && (y1 != y2 - 1 || x1 != x2) && tempsJeu < tempsInitial)
                 {
@@ -285,7 +285,7 @@ namespace Splatnoob
                     labTourBleu.Content = "Nb tours joués : " + nbTourBleu;
                 }
             }
-            if (e.Key == ValKeyGaucheJ2)
+            if (e.Key == ValKeyGaucheJ2 && fenetreAccueil.deuxJoueurs == true)
             {
                 if (x2 > minX && (y1 != y2 || x1 != x2 - 1) && tempsJeu < tempsInitial)
                 {
@@ -296,7 +296,7 @@ namespace Splatnoob
                     labTourBleu.Content = "Nb tours joués : " + nbTourBleu;
                 }
             }
-            if (e.Key == ValKeyBasJ2)
+            if (e.Key == ValKeyBasJ2 && fenetreAccueil.deuxJoueurs == true)
             {
                 if (y2 < maxY && (y1 != y2 + 1 || x1 != x2) && tempsJeu < tempsInitial)
                 {
@@ -307,7 +307,7 @@ namespace Splatnoob
                     labTourBleu.Content = "Nb tours joués : " + nbTourBleu;
                 }
             }
-            if (e.Key == ValKeyDroiteJ2)
+            if (e.Key == ValKeyDroiteJ2 && fenetreAccueil.deuxJoueurs == true)
             {
                 if (x2 < maxX && (y1 != y2 || x1 != x2 + 1) && tempsJeu < tempsInitial)
                 {
