@@ -153,18 +153,18 @@ namespace Splatnoob
             labNbPartiesGagneBleu.Content = "Parties gagnées : " + nbPartieGagneBleu;
             Console.WriteLine("Actualisation des statistiques.");
 
-            tempsInitial = 10 * Math.Round(parametre.Valeurtemps);
+            tempsInitial = 10 * Math.Round(Parametre.Valeurtemps);
             tempsJeu = tempsInitial;
 
-            ValKeyHautJ1 = parametre.KeyHautJ1;
-            ValKeyGaucheJ1 = parametre.KeyGaucheJ1;
-            ValKeyBasJ1 = parametre.KeyBasJ1;
-            ValKeyDroiteJ1 = parametre.KeyDroiteJ1;
-            ValKeyHautJ2 = parametre.KeyHautJ2;
-            ValKeyGaucheJ2 = parametre.KeyGaucheJ2;
-            ValKeyBasJ2 = parametre.KeyBasJ2;
-            ValKeyDroiteJ2 = parametre.KeyDroiteJ2;
-            volume = parametre.valeursons;
+            ValKeyHautJ1 = Parametre.KeyHautJ1;
+            ValKeyGaucheJ1 = Parametre.KeyGaucheJ1;
+            ValKeyBasJ1 = Parametre.KeyBasJ1;
+            ValKeyDroiteJ1 = Parametre.KeyDroiteJ1;
+            ValKeyHautJ2 = Parametre.KeyHautJ2;
+            ValKeyGaucheJ2 = Parametre.KeyGaucheJ2;
+            ValKeyBasJ2 = Parametre.KeyBasJ2;
+            ValKeyDroiteJ2 = Parametre.KeyDroiteJ2;
+            volume = Parametre.valeursons;
             musiqueFond.Volume = volume/CONVERTION_VOLUME_DECIMALE;
         }
 

@@ -9,6 +9,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Aurore_Boreale.jpg" />
+    <None Remove="Ciel_Bleu.jpg" />
+    <None Remove="Eau.jpg" />
+    <None Remove="fond.jpeg" />
+    <None Remove="Herbe.jpg" />
+    <None Remove="Nebuleuse.jpg" />
     <None Remove="qm5w5d34.mef~" />
   </ItemGroup>
 
@@ -17,7 +23,31 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Aurore_Boreale.jpg" />
+    <Resource Include="Ciel_Bleu.jpg" />
+    <Resource Include="Eau.jpg" />
+    <Resource Include="fond.jpeg" />
+    <Resource Include="Herbe.jpg" />
+    <Resource Include="Nebuleuse.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Images\Aurore_Boreale.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Ciel_Bleu.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Eau.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Images\fond.jpeg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Herbe.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\Nebuleuse.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Images\SlimeBleu.png">
