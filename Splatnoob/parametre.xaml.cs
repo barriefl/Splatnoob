@@ -16,14 +16,14 @@ using System.Windows.Threading;
 namespace Splatnoob
 {
     /// <summary>
-    /// Logique d'interaction pour parametre.xaml
+    /// Logique d'interaction pour Parametre.xaml
     /// </summary>
-    public partial class parametre : Window
+    public partial class Parametre : Window
     {
         private DispatcherTimer dispatcherTimer = new DispatcherTimer();
         
-        private const int TEMPSPARDEPLACAGE = 10;
-        private const int NBRSECMIN = 60;
+        private const int TEMPS_PAR_DEPLACAGE = 10;
+        private const int NBR_SEC_MIN = 60;
 
         public static Key keyHautJ1 = Key.Z;
         public static Key KeyHautJ1
@@ -99,7 +99,7 @@ namespace Splatnoob
 
         private MediaPlayer musiqueParametres = new MediaPlayer();
 
-        public parametre()
+        public Parametre()
         {
             InitializeComponent();
             choisirTps.Value = valeurtemps;
@@ -114,9 +114,9 @@ namespace Splatnoob
         private void actualisation(object sender, EventArgs e)
         {
             valeurtemps = choisirTps.Value;
-            double tpsTotal = TEMPSPARDEPLACAGE * Math.Round(choisirTps.Value);
-            double tpsMin = Math.Truncate(tpsTotal / NBRSECMIN);
-            double tpsSec = (tpsTotal - (tpsMin * NBRSECMIN));
+            double tpsTotal = TEMPS_PAR_DEPLACAGE * Math.Round(choisirTps.Value);
+            double tpsMin = Math.Truncate(tpsTotal / NBR_SEC_MIN);
+            double tpsSec = (tpsTotal - (tpsMin * NBR_SEC_MIN));
 
             valeursons = Math.Round(choisirSons.Value);
             affichSons.Content = (valeursons + "%");

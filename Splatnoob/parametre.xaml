@@ -1,5 +1,5 @@
 ﻿<Window
-    x:Class="Splatnoob.parametre"
+    x:Class="Splatnoob.Parametre"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -13,14 +13,14 @@
     mc:Ignorable="d" WindowStartupLocation="CenterScreen" WindowState="Maximized" ResizeMode="NoResize">
     <Canvas ContextMenuClosing="Canvas_ContextMenuClosing">
         <Label
-            Canvas.Left="807"
-            Canvas.Top="80"
-            Content="Paramètres"
-            FontSize="36"
-            Foreground="White" />
+            Canvas.Left="740"
+            Canvas.Top="77"
+            Content="PARAMETRES"
+            FontSize="48"
+            Foreground="White" FontWeight="Bold" />
         <Button
-            Canvas.Left="1791"
-            Canvas.Top="962"
+            Canvas.Left="1720"
+            Canvas.Top="904"
             Width="80"
             Height="80"
             Background="#00DDDDDD"
@@ -30,7 +30,7 @@
             Foreground="White" />
         <Slider
             x:Name="choisirTps"
-            Canvas.Left="400"
+            Canvas.Left="436"
             Canvas.Top="282"
             Width="200"
             HorizontalAlignment="Left"
@@ -40,92 +40,84 @@
             SmallChange="1"
             TickFrequency="10" RenderTransformOrigin="0.745,1.53" />
         <Label
-            Canvas.Left="121"
+            Canvas.Left="174"
             Canvas.Top="265"
-            Width="274"
-            Height="40"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Top"
-            Content="temps total d'une partie"
-            Foreground="White" FontSize="24" />
+            Content="TEMPS D'UNE PARTIE"
+            Foreground="White" FontSize="24" FontWeight="Bold" />
         <Label
             x:Name="affichTps"
-            Canvas.Left="605"
+            Canvas.Left="641"
             Canvas.Top="265"
-            Width="164"
-            Height="40"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Center"
             Content="affichage"
-            Foreground="White" FontSize="24" />
+            Foreground="White" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Center" />
         <Button
             x:Name="bHautJ1"
-            Canvas.Left="393"
-            Canvas.Top="523"
+            Canvas.Left="258"
+            Canvas.Top="485"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Click="Click_HautJ1"
             Content="Button" Height="71" Width="71" Background="#FFDDDDDD" FontSize="24" />
         <Button
             x:Name="bGaucheJ1"
-            Canvas.Left="322"
-            Canvas.Top="594"
+            Canvas.Left="187"
+            Canvas.Top="556"
             HorizontalAlignment="Left"
-            VerticalAlignment="Center"
+            VerticalAlignment="Top"
             Click="Click_GaucheJ1"
             Content="Button" Height="71" Width="71" FontSize="24" />
         <Button
             x:Name="bBasJ1"
-            Canvas.Left="393"
-            Canvas.Top="594"
+            Canvas.Left="258"
+            Canvas.Top="556"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Click="Click_BasJ1"
             Content="Button" Width="71" Height="71" FontSize="24" />
         <Button
             x:Name="bDroiteJ1"
-            Canvas.Left="464"
-            Canvas.Top="594"
+            Canvas.Left="329"
+            Canvas.Top="556"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Click="Click_DroiteJ1"
             Content="Button" Height="71" Width="71" FontSize="24" />
         <Button
             x:Name="bHautJ2"
-            Canvas.Left="1302"
-            Canvas.Top="523"
+            Canvas.Left="596"
+            Canvas.Top="485"
             HorizontalAlignment="Left"
             VerticalAlignment="Center"
             Click="Click_HautJ2"
             Content="Button"
-            Width="70" Height="71" FontSize="24" />
+            Width="71" Height="71" FontSize="24" />
         <Button
             x:Name="bGaucheJ2"
-            Canvas.Left="1230"
-            Canvas.Top="594"
+            Canvas.Left="525"
+            Canvas.Top="556"
             HorizontalAlignment="Left"
             VerticalAlignment="Center"
             Click="Click_GaucheJ2"
-            Content="Button" Height="71" Width="72" FontSize="24" />
+            Content="Button" Height="71" Width="71" FontSize="24" />
         <Button
             x:Name="bBasJ2"
-            Canvas.Left="1302"
-            Canvas.Top="594"
+            Canvas.Left="596"
+            Canvas.Top="556"
             HorizontalAlignment="Left"
             VerticalAlignment="Center"
             Click="Click_BasJ2"
-            Content="Button" Height="71" Width="70" FontSize="24" />
+            Content="Button" Height="71" Width="71" FontSize="24" />
         <Button
             x:Name="bDroiteJ2"
-            Canvas.Left="1372"
-            Canvas.Top="594"
+            Canvas.Left="667"
+            Canvas.Top="556"
             HorizontalAlignment="Left"
             VerticalAlignment="Center"
             Click="Click_DroiteJ2"
-            Content="Button" Height="71" Width="72" FontSize="24" />
+            Content="Button" Height="71" Width="71" FontSize="24" />
         <Slider
             x:Name="choisirSons"
-            Canvas.Left="1308"
+            Canvas.Left="1237"
             Canvas.Top="282"
             Width="200"
             HorizontalAlignment="Left"
@@ -135,33 +127,56 @@
             SmallChange="1"
             TickFrequency="10" />
         <Label
-            Canvas.Left="1162"
-            Canvas.Top="265"
-            Width="146"
-            Height="40"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Center"
-            Content="son du jeu"
-            Foreground="White" FontSize="24" />
+            Canvas.Left="1067"
+            Canvas.Top="270"
+            Content="SON DU JEU"
+            Foreground="White" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" />
         <Label
             x:Name="affichSons"
-            Canvas.Left="1514"
+            Canvas.Left="1449"
             Canvas.Top="265"
-            Width="164"
-            Height="40"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Center"
             Content="affichage"
-            Foreground="White" FontSize="24" />
-        <Label Content="Déplacement joueur 1" Height="56" Canvas.Left="322" Canvas.Top="408" Width="245" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20"/>
-        <Label Content="↑" Height="35" Canvas.Left="418" Canvas.Top="485" Width="35" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18"/>
-        <Label Content="→" Height="35" Canvas.Left="542" Canvas.Top="608" Width="35" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18"/>
-        <Label Content="↓" Height="35" Canvas.Left="418" Canvas.Top="671" Width="35" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18"/>
-        <Label Content="←" Height="35" Canvas.Left="289" Canvas.Top="608" Width="36" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18"/>
-        <Label Content="Déplacement joueur 2" Height="56" Canvas.Left="1230" Canvas.Top="408" Width="246" Foreground="White" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Label Content="↑" Height="35" Canvas.Left="1326" Canvas.Top="485" Width="34" Foreground="White" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Label Content="→" Height="35" Canvas.Left="1449" Canvas.Top="608" Width="35" Foreground="White" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Label Content="←" Height="35" Canvas.Left="1199" Canvas.Top="608" Width="36" Foreground="White" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Label Content="↓" Height="35" Canvas.Left="1326" Canvas.Top="671" Width="34" Foreground="White" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            Foreground="White" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Center" />
+        <Label Content="DEPLACEMENT JOUEUR 1" Canvas.Left="174" Canvas.Top="394" Foreground="White" FontSize="20" FontWeight="Bold"/>
+        <Label Content="↑" Canvas.Left="283" Canvas.Top="447" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18"/>
+        <Label Content="→" Canvas.Left="407" Canvas.Top="570" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18"/>
+        <Label Content="↓" Canvas.Left="283" Canvas.Top="633" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18"/>
+        <Label Content="←" Canvas.Left="154" Canvas.Top="570" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18" Height="33.7"/>
+        <Label Content="DEPLACEMENT JOUEUR 2" Canvas.Left="496" Canvas.Top="394" Foreground="White" FontSize="20" FontWeight="Bold"/>
+        <Label Content="↑" Canvas.Left="622" Canvas.Top="447" Foreground="White" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Label Content="→" Canvas.Left="743" Canvas.Top="570" Foreground="White" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Label Content="←" Canvas.Left="494" Canvas.Top="570" Foreground="White" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Label Content="↓" Canvas.Left="622" Canvas.Top="633" Foreground="White" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Label Content="FOND DU JEU" Canvas.Left="1267" Canvas.Top="394" Foreground="White" FontSize="20" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Rectangle x:Name="recFond2" Height="125" Canvas.Left="1275" Stroke="Black" Canvas.Top="502" Width="125">
+            <Rectangle.Fill>
+                <ImageBrush ImageSource="/Aurore_Boreale.jpg"/>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Rectangle x:Name="recFond3" Height="125" Canvas.Left="1431" Stroke="Black" Canvas.Top="502" Width="125" HorizontalAlignment="Left" VerticalAlignment="Center">
+            <Rectangle.Fill>
+                <ImageBrush ImageSource="/Ciel_Bleu.jpg"/>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Rectangle x:Name="recFond1" Height="125" Canvas.Left="1114" Stroke="Black" Canvas.Top="502" Width="125" HorizontalAlignment="Left" VerticalAlignment="Center">
+            <Rectangle.Fill>
+                <ImageBrush ImageSource="/fond.jpeg"/>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Rectangle x:Name="recFond4" Height="125" Canvas.Left="1114" Stroke="Black" Canvas.Top="662" Width="125" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Rectangle.Fill>
+                <ImageBrush ImageSource="/Nebuleuse.jpg"/>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Rectangle x:Name="recFond5" Height="125" Canvas.Left="1275" Stroke="Black" Canvas.Top="662" Width="125" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Rectangle.Fill>
+                <ImageBrush ImageSource="/Eau.jpg"/>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Rectangle x:Name="recFond6" Height="125" Canvas.Left="1431" Stroke="Black" Canvas.Top="662" Width="125" HorizontalAlignment="Left" VerticalAlignment="Center">
+            <Rectangle.Fill>
+                <ImageBrush ImageSource="/Herbe.jpg"/>
+            </Rectangle.Fill>
+        </Rectangle>
     </Canvas>
 </Window>

@@ -38,9 +38,9 @@ namespace Splatnoob
         public void Button_parametre_Click(object sender, RoutedEventArgs e)
         {
             musiqueAccueil.Stop();
-            parametre fenetreParametre = new parametre();
+            Parametre fenetreParametre = new Parametre();
             fenetreParametre.ShowDialog();
-            volume = parametre.valeursons;
+            volume = Parametre.valeursons;
             musiqueAccueil.Volume = volume / MainWindow.CONVERTION_VOLUME_DECIMALE;
             musiqueAccueil.Play();
         }
