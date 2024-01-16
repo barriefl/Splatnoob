@@ -54,6 +54,9 @@ namespace Splatnoob
         private const int RECTANGLE_HAUTEUR = 75;
         private const int RECTANGLE_ESPACEMENT = 5;
         private const int POSITION_JOUEUR_Z = 1;
+        private const int VITESSE_TICK_FACILE = 400;
+        private const int VITESSE_TICK_NORMALE = 200;
+        private const int VITESSE_TICK_DIFFICILE = 100;
 
         public const int CONVERTION_VOLUME_DECIMALE = 100;
 
@@ -77,6 +80,8 @@ namespace Splatnoob
         private int y2 = LIGNE - 1;
         private int xO = COLONNE / 2;
         private int yO = LIGNE / 2;
+
+        private int difficulté;
 
         private Key ValKeyHautJ1;
         private Key ValKeyGaucheJ1;
@@ -112,9 +117,6 @@ namespace Splatnoob
             timer.Tick += Timer;
             timer.Interval = TimeSpan.FromSeconds(1);
 
-            robotTimer.Tick += AdversaireTimer;
-            robotTimer.Interval = TimeSpan.FromMilliseconds(150);
-
             // Chemin des skins.
             joueurRougeSkin.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/SlimeRouge.png"));
             joueurBleuSkin.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/SlimeBleu.png"));
@@ -136,7 +138,20 @@ namespace Splatnoob
             // Fenêtre de dialogue.
             Console.WriteLine("Ouverture de la fenêtre d'accueil.");
             fenetreAccueil.ShowDialog();
-            
+
+            // Difficulté
+            if (fenetreAccueil.unJoueur == true)
+            {
+                if (fenetreAccueil.modeFacile == true)
+                    difficulté = VITESSE_TICK_FACILE;
+                else if (fenetreAccueil.modeNormal == true)
+                    difficulté = VITESSE_TICK_NORMALE;
+                else
+                    difficulté = VITESSE_TICK_DIFFICILE;
+                robotTimer.Tick += AdversaireTimer;
+                robotTimer.Interval = TimeSpan.FromMilliseconds(difficulté);
+            }
+
             // Création des rectangles et on charge le Canvas pour que les coordonnées de la grille soient correcte.
             CreationRectangle();
             monCanvas.Loaded += (sender, e) => CreationGrille();
@@ -164,6 +179,7 @@ namespace Splatnoob
             ValKeyGaucheJ2 = Parametre.KeyGaucheJ2;
             ValKeyBasJ2 = Parametre.KeyBasJ2;
             ValKeyDroiteJ2 = Parametre.KeyDroiteJ2;
+
             volume = Parametre.valeursons;
             musiqueFond.Volume = volume / CONVERTION_VOLUME_DECIMALE;
 
@@ -294,7 +310,7 @@ namespace Splatnoob
             // Joueur 2 - Up, Left, Down, Right.
             Point J2 = new Point(x2, y2);
 
-            if (e.Key == ValKeyHautJ2)
+            if (e.Key == ValKeyHautJ2 && fenetreAccueil.deuxJoueurs == true)
             {
                 if (y2 > minY && (y1 != y2 - 1 || x1 != x2) && tempsJeu < tempsInitial)
                 {
@@ -305,7 +321,7 @@ namespace Splatnoob
                     labTourBleu.Content = "Nb tours joués : " + nbTourBleu;
                 }
             }
-            if (e.Key == ValKeyGaucheJ2)
+            if (e.Key == ValKeyGaucheJ2 && fenetreAccueil.deuxJoueurs == true)
             {
                 if (x2 > minX && (y1 != y2 || x1 != x2 - 1) && tempsJeu < tempsInitial)
                 {
@@ -316,7 +332,7 @@ namespace Splatnoob
                     labTourBleu.Content = "Nb tours joués : " + nbTourBleu;
                 }
             }
-            if (e.Key == ValKeyBasJ2)
+            if (e.Key == ValKeyBasJ2 && fenetreAccueil.deuxJoueurs == true)
             {
                 if (y2 < maxY && (y1 != y2 + 1 || x1 != x2) && tempsJeu < tempsInitial)
                 {
@@ -327,7 +343,7 @@ namespace Splatnoob
                     labTourBleu.Content = "Nb tours joués : " + nbTourBleu;
                 }
             }
-            if (e.Key == ValKeyDroiteJ2)
+            if (e.Key == ValKeyDroiteJ2 && fenetreAccueil.deuxJoueurs == true)
             {
                 if (x2 < maxX && (y1 != y2 || x1 != x2 + 1) && tempsJeu < tempsInitial)
                 {
@@ -381,17 +397,6 @@ namespace Splatnoob
                 Console.WriteLine("Début de la musique et des sons.");
 
                 robotTimer.Start();
-            }
-
-            // Création de rectangles joueurs pour la détection de collision.
-            Rect rectJoueur1 = new Rect(Canvas.GetLeft(joueur1), Canvas.GetTop(joueur1), joueur1.Width, joueur1.Height);
-            Rect rectJoueur2 = new Rect(Canvas.GetLeft(joueur2), Canvas.GetTop(joueur2), joueur2.Width, joueur2.Height);
-            Console.WriteLine("Rect joueurs créés.");
-
-            foreach (Rectangle x in monCanvas.Children.OfType<Rectangle>())
-            {
-                TestCollisionJoueur1(x, rectJoueur1);
-                TestCollisionJoueur2(x, rectJoueur2);
             }
         }
 
@@ -471,6 +476,16 @@ namespace Splatnoob
         private void MoteurJeu(object sender, EventArgs e)
         {
             TestGagnant();
+            // Création de rectangles joueurs pour la détection de collision.
+            Rect rectJoueur1 = new Rect(Canvas.GetLeft(joueur1), Canvas.GetTop(joueur1), joueur1.Width, joueur1.Height);
+            Rect rectJoueur2 = new Rect(Canvas.GetLeft(joueur2), Canvas.GetTop(joueur2), joueur2.Width, joueur2.Height);
+            Console.WriteLine("Rect joueurs créés.");
+
+            foreach (Rectangle x in monCanvas.Children.OfType<Rectangle>())
+            {
+                TestCollisionJoueur1(x, rectJoueur1);
+                TestCollisionJoueur2(x, rectJoueur2);
+            }
         }
 
         private void Timer(object sender, EventArgs e)
@@ -582,7 +597,7 @@ namespace Splatnoob
                             distanceBlanche = distance;
                         }
                     }
-                    else if ((string)grille5x5[i, j].Tag == "rouge")
+                    else if ((string)grille5x5[i, j].Tag == "rouge" && (i != y1 || j != x1))
                     {
                         double distance = Math.Sqrt(Math.Pow(j - x2, 2) + Math.Pow(i - y2, 2));
                         if (distance < distanceRouge)
@@ -618,7 +633,6 @@ namespace Splatnoob
             {
                 Canvas.SetLeft(joueur2, Canvas.GetLeft(joueur2) + pasJoueur * Math.Sign(deltaX));
                 Canvas.SetTop(joueur2, Canvas.GetTop(joueur2) + pasJoueur * Math.Sign(deltaY));
-
                 x2 = newPosX;
                 y2 = newPosY;
             }
