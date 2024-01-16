@@ -8,7 +8,7 @@
         FocusManager.FocusedElement="{Binding ElementName=myCanvas}"
         WindowStartupLocation="CenterScreen"
         Title="Splatnoob" Height="450" Width="800"  
-        KeyDown="MouvementsJoueursEtVerifications" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Black" WindowState="Maximized">
+        KeyDown="MouvementsJoueursEtVerifications" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Black" WindowState="Maximized" ResizeMode="NoResize">
     <Canvas x:Name="monCanvas" Background="Black" Focusable="True" HorizontalAlignment="Center" Width="800" Height="434" VerticalAlignment="Center">
         <Rectangle x:Name="rectFond" Height="434" Stroke="Black" Width="800"/>
         <Rectangle x:Name="joueur1" Height="25" Canvas.Left="228" Canvas.Top="45" Width="25" HorizontalAlignment="Left" VerticalAlignment="Center" Fill="#FF640000" Tag="joueur"/>
