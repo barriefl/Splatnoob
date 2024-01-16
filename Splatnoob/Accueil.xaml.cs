@@ -25,6 +25,9 @@ namespace Splatnoob
         public bool modeFacile = false;
         public bool modeNormal = false;
         public bool modeDifficile = false;
+
+        private MediaPlayer musiqueAccueil = new MediaPlayer();
+        private double volume;
         public Accueil()
         {
             InitializeComponent();

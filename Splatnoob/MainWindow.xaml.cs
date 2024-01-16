@@ -165,7 +165,6 @@ namespace Splatnoob
             ValKeyBasJ2 = parametre.KeyBasJ2;
             ValKeyDroiteJ2 = parametre.KeyDroiteJ2;
             volume = parametre.valeursons;
-
             musiqueFond.Volume = volume/CONVERTION_VOLUME_DECIMALE;
         }
 
