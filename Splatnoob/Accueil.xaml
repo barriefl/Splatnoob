@@ -13,15 +13,11 @@
         <Button x:Name="boutonstart"
             Click="Button_start_Click"
             Content="NOUVELLE PARTIE"
-            FontSize="72" Background="#00DDDDDD" Foreground="White" BorderBrush="Black" Canvas.Top="799" FontFamily="Cascadia Code SemiBold" Canvas.Left="146" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            FontSize="72" Background="#00DDDDDD" Foreground="White" BorderBrush="Black" Canvas.Top="799" FontFamily="Cascadia Code SemiBold" Canvas.Left="110" HorizontalAlignment="Left" VerticalAlignment="Center"/>
         <Button x:Name="boutonparametre"
             Click="Button_parametre_Click"
             Content="PARAMETRES"
-            FontSize="72" Background="#00DDDDDD" Foreground="White" BorderBrush="Black" Canvas.Left="1254" Canvas.Top="799" FontFamily="Cascadia Code SemiBold" HorizontalAlignment="Left" VerticalAlignment="Center" />
-        <ComboBox x:Name="comChoixJoueurs" SelectionChanged="ComboBox_SelectionChanged" Canvas.Left="817" Canvas.Top="452" SelectedIndex="0" Foreground="White" BorderBrush="#FF2D2D2D" FontSize="36" Padding="50,20,50,20" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" FontWeight="Bold" ScrollViewer.VerticalScrollBarVisibility="Disabled" Background="#FF4A4A4A">
-            <ComboBoxItem Content="1 JOUEUR" Foreground="White" Background="Black"/>
-            <ComboBoxItem Content="2 JOUEURS" Foreground="White" Background="Black"/>
-        </ComboBox>
+            FontSize="72" Background="#00DDDDDD" Foreground="White" BorderBrush="Black" Canvas.Left="1169" Canvas.Top="799" FontFamily="Cascadia Code SemiBold" HorizontalAlignment="Left" VerticalAlignment="Center" />
         <Label Content="SplatNoob" Canvas.Left="554" Canvas.Top="130" FontFamily="Ravie" FontSize="100" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Label.Foreground>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -43,5 +39,12 @@
                 </LinearGradientBrush>
             </Label.Foreground>
         </Label>
+        <Button x:Name="but1Joueur" Content="1 JOUEUR" Canvas.Left="490" Canvas.Top="358" Foreground="White" BorderBrush="#FF3A3A3A" Background="#FF464646" FontSize="48" FontWeight="Bold" Padding="50,20,50,20" HorizontalAlignment="Left" VerticalAlignment="Center" Click="but1Joueur_Click"/>
+        <Button x:Name="but2Joueurs" Content="2 JOUEURS" Canvas.Left="975" Canvas.Top="358" Foreground="White" BorderBrush="#FF3A3A3A" Background="#FF464646" FontSize="48" FontWeight="Bold" Padding="50,20,50,20" HorizontalAlignment="Left" VerticalAlignment="Center" Click="but2Joueurs_Click"/>
+        <Label x:Name="labAttentionJoueurs" Content="VEUILLEZ SELECTIONNER VOTRE MODE" Canvas.Left="561" Canvas.Top="492" Foreground="Red" FontSize="36" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Hidden"/>
+        <Button x:Name="butFacile" Content="FACILE" Canvas.Left="428" Canvas.Top="575" Foreground="White" BorderBrush="#FF3A3A3A" Background="#FF464646" FontSize="48" FontWeight="Bold" Padding="50,20,50,20" HorizontalAlignment="Left" VerticalAlignment="Center" Click="butFacile_Click" Visibility="Hidden"/>
+        <Button x:Name="butNormal" Content="NORMAL" Canvas.Left="726" Canvas.Top="575" Foreground="White" BorderBrush="#FF3A3A3A" Background="#FF464646" FontSize="48" FontWeight="Bold" Padding="50,20,50,20" HorizontalAlignment="Left" VerticalAlignment="Center" Click="butNormal_Click" Visibility="Hidden"/>
+        <Button x:Name="butDifficile" Content="DIFFICILE" Canvas.Left="1078" Canvas.Top="575" Foreground="White" BorderBrush="#FF3A3A3A" Background="#FF464646" FontSize="48" FontWeight="Bold" Padding="50,20,50,20" HorizontalAlignment="Left" VerticalAlignment="Center" RenderTransformOrigin="0.173,0.511" Click="butDifficile_Click" Visibility="Hidden"/>
+        <Label x:Name="labAttentionDifficulte" Content="VEUILLEZ SELECTIONNER VOTRE MODE" Canvas.Left="543" Canvas.Top="706" Foreground="Red" FontSize="36" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden"/>
     </Canvas>
 </Window>
