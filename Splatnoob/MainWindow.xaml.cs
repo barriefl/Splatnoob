@@ -35,8 +35,6 @@ namespace Splatnoob
 
         // Sons.
         private MediaPlayer musiqueFond = new MediaPlayer();
-        private MediaPlayer musiqueParametres = new MediaPlayer();
-        private MediaPlayer musiqueAccueil = new MediaPlayer();
 
         // Skin.
         private ImageBrush fondSkin = new ImageBrush();
@@ -57,6 +55,8 @@ namespace Splatnoob
         private const int RECTANGLE_HAUTEUR = 75;
         private const int RECTANGLE_ESPACEMENT = 5;
         private const int POSITION_JOUEUR_Z = 1;
+
+        public const int CONVERTION_VOLUME_DECIMALE = 100;
 
         // Booléens.
         private bool statOuvert = false;
@@ -79,10 +79,6 @@ namespace Splatnoob
         private int xO = COLONNE / 2;
         private int yO = LIGNE / 2;
 
-        private String depHautJ1;
-        private String depBasJ1;
-        private String depGaucheJ1;
-        private String depDroiteJ1;
         private Key ValKeyHautJ1;
         private Key ValKeyGaucheJ1;
         private Key ValKeyBasJ1;
@@ -93,6 +89,8 @@ namespace Splatnoob
         private Key ValKeyDroiteJ2;
 
         Accueil fenetreAccueil = new Accueil();
+
+        private double volume;
 
         // Limites grille.
         private double maxX = COLONNE - 1;
@@ -126,11 +124,8 @@ namespace Splatnoob
 
             // Chemin des musiques.
             musiqueFond.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Musiques/Ultrasyd-Who_Cares.mp3"));
-            musiqueAccueil.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Musiques/Apocalypse.mp3"));
 
             // Volume des musiques.
-            musiqueFond.Volume = 0.2;
-            musiqueAccueil.Volume = 0.5;
             Console.WriteLine("Chargement de la musique.");
 
             // On rempli les rectangles avec les skins.
@@ -140,9 +135,7 @@ namespace Splatnoob
             Console.WriteLine("Skins chargés.");
 
             // Fenêtre de dialogue.
-            musiqueAccueil.Play();
             fenetreAccueil.ShowDialog();
-            musiqueAccueil.Stop();
 
             // Création des rectangles et on charge le Canvas pour que les coordonnées de la grille soient correcte.
             CreationRectangle();
@@ -171,6 +164,9 @@ namespace Splatnoob
             ValKeyGaucheJ2 = parametre.KeyGaucheJ2;
             ValKeyBasJ2 = parametre.KeyBasJ2;
             ValKeyDroiteJ2 = parametre.KeyDroiteJ2;
+            volume = parametre.valeursons;
+
+            musiqueFond.Volume = volume/CONVERTION_VOLUME_DECIMALE;
         }
 
         private void CreationRectangle()
@@ -230,15 +226,6 @@ namespace Splatnoob
 
             // Joueur 1 - Z, Q, S, D. 
             Point J1 = new Point(x1, y1);
-
-
-            /*
-            while (e.Key != Key.None)
-            {
-                // NomLabel.Content("appuyez sur une touche pour modifier la valeur");
-            }
-            
-            */
 
             if (e.Key == ValKeyHautJ1)
             {
