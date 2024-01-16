@@ -57,6 +57,7 @@ namespace Splatnoob
             }
             else
             {
+                musiqueAccueil.Stop();
                 this.Hide();
             }   
         }
