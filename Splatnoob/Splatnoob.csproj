@@ -9,26 +9,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Aurore_Boreale.jpg" />
-    <None Remove="Ciel_Bleu.jpg" />
-    <None Remove="Eau.jpg" />
-    <None Remove="fond.jpeg" />
-    <None Remove="Herbe.jpg" />
-    <None Remove="Nebuleuse.jpg" />
     <None Remove="qm5w5d34.mef~" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="Images\OIG.ico" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="Aurore_Boreale.jpg" />
-    <Resource Include="Ciel_Bleu.jpg" />
-    <Resource Include="Eau.jpg" />
-    <Resource Include="fond.jpeg" />
-    <Resource Include="Herbe.jpg" />
-    <Resource Include="Nebuleuse.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -41,10 +26,13 @@
     <None Update="Images\Eau.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Images\fond.jpeg">
+    <None Update="Images\Espace.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Images\Herbe.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\menu.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Images\Nebuleuse.jpg">

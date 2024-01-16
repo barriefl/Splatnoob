@@ -37,7 +37,6 @@ namespace Splatnoob
         private MediaPlayer musiqueFond = new MediaPlayer();
 
         // Skin.
-        private ImageBrush fondSkin = new ImageBrush();
         private ImageBrush joueurRougeSkin = new ImageBrush();
         private ImageBrush joueurBleuSkin = new ImageBrush();
 
@@ -117,9 +116,10 @@ namespace Splatnoob
             robotTimer.Interval = TimeSpan.FromMilliseconds(150);
 
             // Chemin des skins.
-            fondSkin.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/fond.jpeg"));
             joueurRougeSkin.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/SlimeRouge.png"));
             joueurBleuSkin.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/SlimeBleu.png"));
+
+            
             Console.WriteLine("Chargement des skins.");
 
             // Chemin des musiques.
@@ -129,14 +129,14 @@ namespace Splatnoob
             Console.WriteLine("Chargement de la musique.");
 
             // On rempli les rectangles avec les skins.
-            rectFond.Fill = fondSkin;
             joueur1.Fill = joueurRougeSkin;
             joueur2.Fill = joueurBleuSkin;
             Console.WriteLine("Skins chargés.");
 
             // Fenêtre de dialogue.
+            Console.WriteLine("Ouverture de la fenêtre d'accueil.");
             fenetreAccueil.ShowDialog();
-
+            
             // Création des rectangles et on charge le Canvas pour que les coordonnées de la grille soient correcte.
             CreationRectangle();
             monCanvas.Loaded += (sender, e) => CreationGrille();
@@ -165,7 +165,27 @@ namespace Splatnoob
             ValKeyBasJ2 = Parametre.KeyBasJ2;
             ValKeyDroiteJ2 = Parametre.KeyDroiteJ2;
             volume = Parametre.valeursons;
-            musiqueFond.Volume = volume/CONVERTION_VOLUME_DECIMALE;
+            musiqueFond.Volume = volume / CONVERTION_VOLUME_DECIMALE;
+
+            Parametre fenetreParametre = new Parametre();
+
+            /*
+            fenetreParametre.espaceFond.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/Espace.jpg"));
+            fenetreParametre.auroreBorealeFond.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/Aurore_Boreale.jpg"));
+            fenetreParametre.cielBleuFond.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/Ciel_Bleu.jpg"));
+            fenetreParametre.nebuleuseFond.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/Nebuleuse.jpg"));
+            fenetreParametre.eauFond.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/Eau.jpg"));
+            fenetreParametre.herbeFond.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/Herbe.jpg"));
+            */
+
+            for(int i = 0; i < 6; i++)
+            {
+            if(fenetreParametre.fonds[i] == true)
+                {
+                    Console.WriteLine(i);
+                    rectFond.Fill = fenetreParametre.Brushfond[i];
+                }
+            }
         }
 
         private void CreationRectangle()
