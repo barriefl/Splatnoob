@@ -6,21 +6,42 @@
     xmlns:local="clr-namespace:Splatnoob"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Accueil"
-    Width="450"
-    Height="500"
-    mc:Ignorable="d" WindowStartupLocation="CenterScreen">
-    <Grid ContextMenuClosing="Canvas_ContextMenuClosing" Background="black">
+    Width="1800"
+    Height="1000"
+    mc:Ignorable="d" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+    <Canvas ContextMenuClosing="Canvas_ContextMenuClosing" Background="black">
         <Button x:Name="boutonstart"
             Click="Button_start_Click"
-            Content="BONJOUR"
-            FontSize="36" Margin="0,361,266,21" Background="#00DDDDDD" Foreground="White" BorderBrush="Black"/>
+            Content="NOUVELLE PARTIE"
+            FontSize="72" Background="#00DDDDDD" Foreground="White" BorderBrush="Black" Canvas.Top="799" FontFamily="Cascadia Code SemiBold" Canvas.Left="146" HorizontalAlignment="Center" VerticalAlignment="Top"/>
         <Button x:Name="boutonparametre"
             Click="Button_parametre_Click"
-            Content="Paramètres"
-            FontSize="36" Margin="225,361,23,21" Background="#00DDDDDD" Foreground="White" BorderBrush="Black" />
-        <ComboBox x:Name="comChoixJoueurs" Margin="132,226,164,201" VerticalAlignment="Top" Height="80" SelectionChanged="ComboBox_SelectionChanged">
-            <ComboBoxItem Content="1 joueurs"/>
-            <ComboBoxItem Content="2 joueurs"/>
+            Content="PARAMETRES"
+            FontSize="72" Background="#00DDDDDD" Foreground="White" BorderBrush="Black" Canvas.Left="1254" Canvas.Top="799" FontFamily="Cascadia Code SemiBold" HorizontalAlignment="Left" VerticalAlignment="Center" />
+        <ComboBox x:Name="comChoixJoueurs" SelectionChanged="ComboBox_SelectionChanged" Canvas.Left="817" Canvas.Top="452" SelectedIndex="0" Foreground="White" BorderBrush="#FF2D2D2D" FontSize="36" Padding="50,20,50,20" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" FontWeight="Bold" ScrollViewer.VerticalScrollBarVisibility="Disabled" Background="#FF4A4A4A">
+            <ComboBoxItem Content="1 JOUEUR" Foreground="White" Background="Black"/>
+            <ComboBoxItem Content="2 JOUEURS" Foreground="White" Background="Black"/>
         </ComboBox>
-    </Grid>
+        <Label Content="SplatNoob" Canvas.Left="554" Canvas.Top="130" FontFamily="Ravie" FontSize="100" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Label.Foreground>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <LinearGradientBrush.RelativeTransform>
+                        <TransformGroup>
+                            <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                            <SkewTransform CenterX="0.5" CenterY="0.5"/>
+                            <RotateTransform Angle="-90" CenterX="0.5" CenterY="0.5"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </LinearGradientBrush.RelativeTransform>
+                    <GradientStop Color="Blue" Offset="0.003"/>
+                    <GradientStop Color="Red" Offset="1"/>
+                    <GradientStop Color="#FFFDFDFD" Offset="0.5"/>
+                    <GradientStop Color="Blue" Offset="0.25"/>
+                    <GradientStop Color="Red" Offset="0.75"/>
+                    <GradientStop Color="White" Offset="0.38"/>
+                    <GradientStop Color="White" Offset="0.62"/>
+                </LinearGradientBrush>
+            </Label.Foreground>
+        </Label>
+    </Canvas>
 </Window>
