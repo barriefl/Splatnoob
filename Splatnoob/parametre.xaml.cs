@@ -105,7 +105,7 @@ namespace Splatnoob
             choisirTps.Value = valeurtemps;
             choisirSons.Value = valeursons;
             dispatcherTimer.Tick += actualisation;
-            dispatcherTimer.Interval = TimeSpan.FromMilliseconds(16);
+            dispatcherTimer.Interval = TimeSpan.FromMilliseconds(50);
             dispatcherTimer.Start();
             musiqueParametres.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Musiques/Wrong_Place.mp3"));
             musiqueParametres.Play();
