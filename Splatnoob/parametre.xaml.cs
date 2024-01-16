@@ -96,6 +96,9 @@ namespace Splatnoob
             get { return valeursons; }
             set { valeursons = value; }
         }
+
+        private MediaPlayer musiqueParametres = new MediaPlayer();
+
         public parametre()
         {
             InitializeComponent();
@@ -104,6 +107,8 @@ namespace Splatnoob
             dispatcherTimer.Tick += actualisation;
             dispatcherTimer.Interval = TimeSpan.FromMilliseconds(16);
             dispatcherTimer.Start();
+            musiqueParametres.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Musiques/Wrong_Place.mp3"));
+            musiqueParametres.Play();
         }
 
         private void actualisation(object sender, EventArgs e)
@@ -112,12 +117,15 @@ namespace Splatnoob
             double tpsTotal = TEMPSPARDEPLACAGE * Math.Round(choisirTps.Value);
             double tpsMin = Math.Truncate(tpsTotal / NBRSECMIN);
             double tpsSec = (tpsTotal - (tpsMin * NBRSECMIN));
+
             valeursons = Math.Round(choisirSons.Value);
             affichSons.Content = (valeursons + "%");
+
             if (tpsSec != 0)
                 affichTps.Content = (tpsMin + ":" + tpsSec);
             else
                 affichTps.Content = (tpsMin + ":00");
+
             bHautJ1.Content = keyHautJ1;
             bGaucheJ1.Content = keyGaucheJ1;
             bBasJ1.Content = keyBasJ1;
@@ -126,15 +134,19 @@ namespace Splatnoob
             bGaucheJ2.Content = keyGaucheJ2;
             bBasJ2.Content = keyBasJ2;
             bDroiteJ2.Content = keyDroiteJ2;
+
+            musiqueParametres.Volume = valeursons/ MainWindow.CONVERTION_VOLUME_DECIMALE;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            musiqueParametres.Stop();
             this.Close();
         }
 
         private void Canvas_ContextMenuClosing(object sender, ContextMenuEventArgs e)
         {
+            musiqueParametres.Stop();
             Application.Current.Shutdown();
         }
 

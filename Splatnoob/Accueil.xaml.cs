@@ -22,24 +22,34 @@ namespace Splatnoob
     {
         public bool unJoueur = false;
         public bool deuxJoueurs = false;
+        private MediaPlayer musiqueAccueil = new MediaPlayer();
+        private double volume;
         public Accueil()
         {
             InitializeComponent();
+            musiqueAccueil.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Musiques/Apocalypse.mp3"));
+            musiqueAccueil.Play();
         }
         
         public void Button_parametre_Click(object sender, RoutedEventArgs e)
         {
+            musiqueAccueil.Stop();
             parametre fenetreParametre = new parametre();
             fenetreParametre.ShowDialog();
+            volume = parametre.valeursons;
+            musiqueAccueil.Volume = volume / MainWindow.CONVERTION_VOLUME_DECIMALE;
+            musiqueAccueil.Play();
         }
 
         public void Button_start_Click(object sender, RoutedEventArgs e)
         {
+            musiqueAccueil.Stop();
             this.Hide();
         }
 
         private void Canvas_ContextMenuClosing(object sender, ContextMenuEventArgs e)
         {
+            musiqueAccueil.Stop();
             Application.Current.Shutdown();
         }
 
