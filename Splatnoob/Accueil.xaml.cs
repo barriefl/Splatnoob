@@ -51,7 +51,7 @@ namespace Splatnoob
             {
                 labAttentionJoueurs.Visibility = Visibility.Visible;
             }
-            else if ((modeFacile == false && modeNormal == false && modeNormal == false) && unJoueur == true)
+            else if ((modeFacile == false && modeNormal == false && modeDifficile == false) && unJoueur == true)
             {
                 labAttentionDifficulte.Visibility = Visibility.Visible;
             }
@@ -75,6 +75,8 @@ namespace Splatnoob
             labAttentionJoueurs.Visibility = Visibility.Hidden;
             unJoueur = true;
             deuxJoueurs = false;
+            but1Joueur.BorderBrush = Brushes.White;
+            but2Joueurs.BorderBrush = Brushes.Black;
         }
 
         private void butFacile_Click(object sender, RoutedEventArgs e)
@@ -83,6 +85,9 @@ namespace Splatnoob
             modeNormal = false;
             modeDifficile = false;
             labAttentionDifficulte.Visibility = Visibility.Hidden;
+            butFacile.BorderBrush = Brushes.White;
+            butNormal.BorderBrush = Brushes.Black;
+            butDifficile.BorderBrush = Brushes.Black;
         }
 
         private void butNormal_Click(object sender, RoutedEventArgs e)
@@ -91,6 +96,9 @@ namespace Splatnoob
             modeNormal = true;
             modeDifficile = false;
             labAttentionDifficulte.Visibility = Visibility.Hidden;
+            butFacile.BorderBrush = Brushes.Black;
+            butNormal.BorderBrush = Brushes.White;
+            butDifficile.BorderBrush = Brushes.Black;
         }
 
         private void butDifficile_Click(object sender, RoutedEventArgs e)
@@ -99,6 +107,9 @@ namespace Splatnoob
             modeNormal = false; 
             modeDifficile = true;
             labAttentionDifficulte.Visibility = Visibility.Hidden;
+            butFacile.BorderBrush = Brushes.Black;
+            butNormal.BorderBrush = Brushes.Black;
+            butDifficile.BorderBrush = Brushes.White;
         }
 
         private void but2Joueurs_Click(object sender, RoutedEventArgs e)
@@ -109,6 +120,8 @@ namespace Splatnoob
             butNormal.Visibility = Visibility.Hidden;
             butDifficile.Visibility = Visibility.Hidden;
             labAttentionJoueurs.Visibility = Visibility.Hidden;
+            but1Joueur.BorderBrush = Brushes.Black;
+            but2Joueurs.BorderBrush = Brushes.White;
         }
     }
 }
