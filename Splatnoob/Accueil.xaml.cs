@@ -31,6 +31,7 @@ namespace Splatnoob
         public Accueil()
         {
             InitializeComponent();
+            Console.WriteLine("Démarrage fenêtre accueil.");
             musiqueAccueil.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Musiques/Apocalypse.mp3"));
             musiqueAccueil.Play();
         }
@@ -39,6 +40,7 @@ namespace Splatnoob
         {
             musiqueAccueil.Stop();
             Parametre fenetreParametre = new Parametre();
+            Console.WriteLine("Ouverture fenêtre paramètre.");
             fenetreParametre.ShowDialog();
             volume = Parametre.valeursons;
             musiqueAccueil.Volume = volume / MainWindow.CONVERTION_VOLUME_DECIMALE;

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -21,7 +22,21 @@ namespace Splatnoob
     public partial class Parametre : Window
     {
         private DispatcherTimer dispatcherTimer = new DispatcherTimer();
-        
+
+        public ImageBrush[] Brushfond = new ImageBrush[6];
+        public string[] SourceImageBrush = new string[6] { "Images/Espace.jpg", "Images/Aurore_Boreale.jpg", "Images/Ciel_Bleu.jpg", "Images/Nebuleuse.jpg", "Images/Eau.jpg", "Images/Herbe.jpg" };
+
+        /*
+        public ImageBrush espaceFond = new ImageBrush();
+        public ImageBrush auroreBorealeFond = new ImageBrush();
+        public ImageBrush cielBleuFond = new ImageBrush();
+        public ImageBrush nebuleuseFond = new ImageBrush();
+        public ImageBrush eauFond = new ImageBrush();
+        public ImageBrush herbeFond = new ImageBrush();
+        */
+
+        public bool[] fonds = new bool[6];
+
         public const int TEMPS_PAR_DEPLACAGE = 10;
         private const int NBR_SEC_MIN = 60;
 
@@ -102,6 +117,35 @@ namespace Splatnoob
         public Parametre()
         {
             InitializeComponent();
+            Console.WriteLine("Démarrage fenêtre paramètre.");
+            for (int i = 0; i < 6; i++)
+            {
+                fonds[i] = false;
+
+                //Console.WriteLine(SourceImageBrush[i]);
+                //Console.WriteLine(fonds[i]);
+
+                Brushfond[i] = new ImageBrush();
+                Brushfond[i].ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + SourceImageBrush[i]));
+            }
+            fonds[0] = true;
+            /*
+            espaceFond.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/Espace.jpg"));
+            auroreBorealeFond.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/Aurore_Boreale.jpg"));
+            cielBleuFond.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/Ciel_Bleu.jpg"));
+            nebuleuseFond.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/Nebuleuse.jpg"));
+            eauFond.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/Eau.jpg"));
+            herbeFond.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/Herbe.jpg"));
+            */
+
+            butFond1.Background = Brushfond[0]; //espaceFond;
+            butFond2.Background = Brushfond[1]; //auroreBorealeFond;
+            butFond3.Background = Brushfond[2]; //cielBleuFond;
+            butFond4.Background = Brushfond[3]; //nebuleuseFond;
+            butFond5.Background = Brushfond[4]; //eauFond;
+            butFond6.Background = Brushfond[5]; //herbeFond;
+            
+
             choisirTps.Value = valeurtemps;
             choisirSons.Value = valeursons;
             dispatcherTimer.Tick += actualisation;
@@ -109,7 +153,7 @@ namespace Splatnoob
             dispatcherTimer.Start();
             musiqueParametres.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Musiques/Wrong_Place.mp3"));
             musiqueParametres.Play();
-            MainWindow.actualiser = true;
+
         }
 
         private void actualisation(object sender, EventArgs e)
@@ -282,6 +326,107 @@ namespace Splatnoob
                 KeyDroiteJ2 = e.Key;
                 boutonDroiteJ2 = false;
             }
+        }
+
+        private void butFond1_Click(object sender, RoutedEventArgs e)
+        {
+            fonds[0] = true;
+            int[] tab = new int[]{ 1, 2, 3, 4, 5};
+            foreach (int i in tab)
+            {
+                fonds[i] = false;
+            }
+            butFond1.BorderBrush = Brushes.White;
+            butFond2.BorderBrush = Brushes.Black;
+            butFond3.BorderBrush = Brushes.Black;
+            butFond4.BorderBrush = Brushes.Black;
+            butFond5.BorderBrush = Brushes.Black;
+            butFond6.BorderBrush = Brushes.Black;
+            
+        }
+
+        private void butFond2_Click(object sender, RoutedEventArgs e)
+        {
+            fonds[1] = true;
+            int[] tab = new int[] {0, 2, 3, 4, 5 };
+            foreach (int i in tab)
+            {
+                fonds[i] = false;
+            }
+            butFond1.BorderBrush = Brushes.Black;
+            butFond2.BorderBrush = Brushes.White;
+            butFond3.BorderBrush = Brushes.Black;
+            butFond4.BorderBrush = Brushes.Black;
+            butFond5.BorderBrush = Brushes.Black;
+            butFond6.BorderBrush = Brushes.Black;
+            
+        }
+
+        private void butFond3_Click(object sender, RoutedEventArgs e)
+        {
+            fonds[2] = true;
+            int[] tab = new int[] { 0, 1, 3, 4, 5 };
+            foreach (int i in tab)
+            {
+                fonds[i] = false;
+            }
+            butFond1.BorderBrush = Brushes.Black;
+            butFond2.BorderBrush = Brushes.Black;
+            butFond3.BorderBrush = Brushes.White;
+            butFond4.BorderBrush = Brushes.Black;
+            butFond5.BorderBrush = Brushes.Black;
+            butFond6.BorderBrush = Brushes.Black;
+            
+        }
+
+        private void butFond4_Click(object sender, RoutedEventArgs e)
+        {
+            fonds[3] = true;
+            int[] tab = new int[] { 0, 1, 2, 4, 5 };
+            foreach (int i in tab)
+            {
+                fonds[i] = false;
+            }
+            butFond1.BorderBrush = Brushes.Black;
+            butFond2.BorderBrush = Brushes.Black;
+            butFond3.BorderBrush = Brushes.Black;
+            butFond4.BorderBrush = Brushes.White; 
+            butFond5.BorderBrush = Brushes.Black;
+            butFond6.BorderBrush = Brushes.Black;
+            Console.WriteLine(fonds[3]);
+        }
+
+        private void butFond5_Click(object sender, RoutedEventArgs e)
+        {
+            fonds[4] = true;
+            int[] tab = new int[] { 0, 1, 2, 3, 5 };
+            foreach (int i in tab)
+            {
+                fonds[i] = false;
+            }
+            butFond1.BorderBrush = Brushes.Black;
+            butFond2.BorderBrush = Brushes.Black;
+            butFond3.BorderBrush = Brushes.Black;
+            butFond4.BorderBrush = Brushes.Black;
+            butFond5.BorderBrush = Brushes.White;
+            butFond6.BorderBrush = Brushes.Black;
+            
+        }
+
+        private void butFond6_Click(object sender, RoutedEventArgs e)
+        {
+            fonds[5] = true;
+            int[] tab = new int[] { 0, 1, 2, 3, 4 };
+            foreach (int i in tab)
+            {
+                fonds[i] = false;
+            }
+            butFond1.BorderBrush = Brushes.Black;
+            butFond2.BorderBrush = Brushes.Black;
+            butFond3.BorderBrush = Brushes.Black;
+            butFond4.BorderBrush = Brushes.Black;
+            butFond5.BorderBrush = Brushes.Black;
+            butFond6.BorderBrush = Brushes.White;
         }
     }
 }

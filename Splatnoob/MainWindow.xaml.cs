@@ -37,7 +37,6 @@ namespace Splatnoob
         private MediaPlayer musiqueFond = new MediaPlayer();
 
         // Skin.
-        private ImageBrush fondSkin = new ImageBrush();
         private ImageBrush joueurRougeSkin = new ImageBrush();
         private ImageBrush joueurBleuSkin = new ImageBrush();
 
@@ -127,9 +126,10 @@ namespace Splatnoob
             timer.Interval = TimeSpan.FromSeconds(1);
 
             // Chemin des skins.
-            fondSkin.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/fond.jpeg"));
             joueurRougeSkin.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/SlimeRouge.png"));
             joueurBleuSkin.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/SlimeBleu.png"));
+
+            
             Console.WriteLine("Chargement des skins.");
 
             // Chemin des musiques.
@@ -139,12 +139,12 @@ namespace Splatnoob
             Console.WriteLine("Chargement de la musique.");
 
             // On rempli les rectangles avec les skins.
-            rectFond.Fill = fondSkin;
             joueur1.Fill = joueurRougeSkin;
             joueur2.Fill = joueurBleuSkin;
             Console.WriteLine("Skins chargés.");
 
             // Fenêtre de dialogue.
+            Console.WriteLine("Ouverture de la fenêtre d'accueil.");
             fenetreAccueil.ShowDialog();
 
             // Création des rectangles et on charge le Canvas pour que les coordonnées de la grille soient correcte.
@@ -155,6 +155,8 @@ namespace Splatnoob
             //on actualise
             actualisation();
 
+            labTourRouge.Content = "Nb tours joués : " + nbTourRouge;
+            labTourBleu.Content = "Nb tours joués : " + nbTourBleu;
 
         }
 
