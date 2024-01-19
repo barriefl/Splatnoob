@@ -22,7 +22,7 @@ namespace Splatnoob
     {
         private DispatcherTimer dispatcherTimer = new DispatcherTimer();
         
-        private const int TEMPS_PAR_DEPLACAGE = 10;
+        public const int TEMPS_PAR_DEPLACAGE = 10;
         private const int NBR_SEC_MIN = 60;
 
         public static Key keyHautJ1 = Key.Z;
@@ -109,6 +109,7 @@ namespace Splatnoob
             dispatcherTimer.Start();
             musiqueParametres.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Musiques/Wrong_Place.mp3"));
             musiqueParametres.Play();
+            MainWindow.actualiser = true;
         }
 
         private void actualisation(object sender, EventArgs e)

@@ -84,14 +84,14 @@ namespace Splatnoob
 
         private int difficulté;
 
-        private Key ValKeyHautJ1;
-        private Key ValKeyGaucheJ1;
-        private Key ValKeyBasJ1;
-        private Key ValKeyDroiteJ1;
-        private Key ValKeyHautJ2;
-        private Key ValKeyGaucheJ2;
-        private Key ValKeyBasJ2;
-        private Key ValKeyDroiteJ2;
+        private Key valKeyHautJ1;
+        private Key valKeyGaucheJ1;
+        private Key valKeyBasJ1;
+        private Key valKeyDroiteJ1;
+        private Key valKeyHautJ2;
+        private Key valKeyGaucheJ2;
+        private Key valKeyBasJ2;
+        private Key valKeyDroiteJ2;
 
         Accueil fenetreAccueil = new Accueil();
 
@@ -105,6 +105,14 @@ namespace Splatnoob
 
         // Tableau (grille).
         private Rectangle[,] grille5x5;
+
+        //Variable actualiser
+        public static bool actualiser = true;
+        public static bool Actualiser
+        {
+            get { return actualiser; }
+            set { actualiser = value; }
+        }
 
         public MainWindow()
         {
@@ -139,47 +147,15 @@ namespace Splatnoob
             // Fenêtre de dialogue.
             fenetreAccueil.ShowDialog();
 
-            //création du robot
-            if (fenetreAccueil.unJoueur == true)
-            {
-                if (fenetreAccueil.modeFacile == true)
-                    difficulté = VITESSE_TICK_FACILE;
-                else if (fenetreAccueil.modeNormal == true)
-                    difficulté = VITESSE_TICK_NORMALE;
-                else
-                    difficulté = VITESSE_TICK_DIFFICILE;
-                robotTimer.Tick += AdversaireTimer;
-                robotTimer.Interval = TimeSpan.FromMilliseconds(difficulté);
-            }
             // Création des rectangles et on charge le Canvas pour que les coordonnées de la grille soient correcte.
             CreationRectangle();
             monCanvas.Loaded += (sender, e) => CreationGrille();
             Console.WriteLine("Création de la grille.");
 
-            // On actualise les stats.
-            labCooRouge.Content = "x,y : " + x1 + "," + y1;
-            labCooBleu.Content = "x,y : " + x2 + "," + y2;
+            //on actualise
+            actualisation();
 
-            labTourRouge.Content = "Nb tours joués : " + nbTourRouge;
-            labTourBleu.Content = "Nb tours joués : " + nbTourBleu;
 
-            labNbPartiesGagneRouge.Content = "Parties gagnées : " + nbPartieGagneRouge;
-            labNbPartiesGagneBleu.Content = "Parties gagnées : " + nbPartieGagneBleu;
-            Console.WriteLine("Actualisation des statistiques.");
-
-            tempsInitial = 10 * Math.Round(Parametre.Valeurtemps);
-            tempsJeu = tempsInitial;
-
-            ValKeyHautJ1 = Parametre.KeyHautJ1;
-            ValKeyGaucheJ1 = Parametre.KeyGaucheJ1;
-            ValKeyBasJ1 = Parametre.KeyBasJ1;
-            ValKeyDroiteJ1 = Parametre.KeyDroiteJ1;
-            ValKeyHautJ2 = Parametre.KeyHautJ2;
-            ValKeyGaucheJ2 = Parametre.KeyGaucheJ2;
-            ValKeyBasJ2 = Parametre.KeyBasJ2;
-            ValKeyDroiteJ2 = Parametre.KeyDroiteJ2;
-            volume = Parametre.valeursons;
-            musiqueFond.Volume = volume/CONVERTION_VOLUME_DECIMALE;
         }
 
         private void CreationRectangle()
@@ -240,7 +216,7 @@ namespace Splatnoob
             // Joueur 1 - Z, Q, S, D. 
             Point J1 = new Point(x1, y1);
 
-            if (e.Key == ValKeyHautJ1)
+            if (e.Key == valKeyHautJ1)
             {
                 if (y1 > minY && (y1 - 1 != y2 || x1 != x2) && tempsJeu < tempsInitial)
                 {
@@ -251,7 +227,7 @@ namespace Splatnoob
                     labTourRouge.Content = "Nb tours joués : " + nbTourRouge;
                 }
             }
-            if (e.Key == ValKeyGaucheJ1)
+            if (e.Key == valKeyGaucheJ1)
             {
                 if (x1 > minX && (y1 != y2 || x1 - 1 != x2) && tempsJeu < tempsInitial)
                 {
@@ -262,7 +238,7 @@ namespace Splatnoob
                     labTourRouge.Content = "Nb tours joués : " + nbTourRouge;
                 }
             }
-            if (e.Key == ValKeyBasJ1)
+            if (e.Key == valKeyBasJ1)
             {
                 if (y1 < maxY && (y1 + 1 != y2 || x1 != x2) && tempsJeu < tempsInitial)
                 {
@@ -273,7 +249,7 @@ namespace Splatnoob
                     labTourRouge.Content = "Nb tours joués : " + nbTourRouge;
                 }
             }
-            if (e.Key == ValKeyDroiteJ1)
+            if (e.Key == valKeyDroiteJ1)
             {
                 if (x1 < maxX && (y1 != y2 || x1 + 1 != x2) && tempsJeu < tempsInitial)
                 {
@@ -288,7 +264,7 @@ namespace Splatnoob
             // Joueur 2 - Up, Left, Down, Right.
             Point J2 = new Point(x2, y2);
 
-            if (e.Key == ValKeyHautJ2 && fenetreAccueil.deuxJoueurs == true)
+            if (e.Key == valKeyHautJ2 && fenetreAccueil.deuxJoueurs == true)
             {
                 if (y2 > minY && (y1 != y2 - 1 || x1 != x2) && tempsJeu < tempsInitial)
                 {
@@ -299,7 +275,7 @@ namespace Splatnoob
                     labTourBleu.Content = "Nb tours joués : " + nbTourBleu;
                 }
             }
-            if (e.Key == ValKeyGaucheJ2 && fenetreAccueil.deuxJoueurs == true)
+            if (e.Key == valKeyGaucheJ2 && fenetreAccueil.deuxJoueurs == true)
             {
                 if (x2 > minX && (y1 != y2 || x1 != x2 - 1) && tempsJeu < tempsInitial)
                 {
@@ -310,7 +286,7 @@ namespace Splatnoob
                     labTourBleu.Content = "Nb tours joués : " + nbTourBleu;
                 }
             }
-            if (e.Key == ValKeyBasJ2 && fenetreAccueil.deuxJoueurs == true)
+            if (e.Key == valKeyBasJ2 && fenetreAccueil.deuxJoueurs == true)
             {
                 if (y2 < maxY && (y1 != y2 + 1 || x1 != x2) && tempsJeu < tempsInitial)
                 {
@@ -321,7 +297,7 @@ namespace Splatnoob
                     labTourBleu.Content = "Nb tours joués : " + nbTourBleu;
                 }
             }
-            if (e.Key == ValKeyDroiteJ2 && fenetreAccueil.deuxJoueurs == true)
+            if (e.Key == valKeyDroiteJ2 && fenetreAccueil.deuxJoueurs == true)
             {
                 if (x2 < maxX && (y1 != y2 || x1 != x2 + 1) && tempsJeu < tempsInitial)
                 {
@@ -619,7 +595,48 @@ namespace Splatnoob
         private void butMenu_Click(object sender, RoutedEventArgs e)
         {
             butMenu.Visibility = Visibility.Hidden;
-            fenetreAccueil.Show();
+            fenetreAccueil.ShowDialog();
+            actualisation();
+        }
+
+        private void actualisation()
+        {
+            //création du robot
+            if (fenetreAccueil.unJoueur == true)
+            {
+                if (fenetreAccueil.modeFacile == true)
+                    difficulté = VITESSE_TICK_FACILE;
+                else if (fenetreAccueil.modeNormal == true)
+                    difficulté = VITESSE_TICK_NORMALE;
+                else
+                    difficulté = VITESSE_TICK_DIFFICILE;
+                robotTimer.Tick += AdversaireTimer;
+                robotTimer.Interval = TimeSpan.FromMilliseconds(difficulté);
+            }
+            // On actualise les stats.
+            labCooRouge.Content = "x,y : " + x1 + "," + y1;
+            labCooBleu.Content = "x,y : " + x2 + "," + y2;
+
+            labTourRouge.Content = "Nb tours joués : " + nbTourRouge;
+            labTourBleu.Content = "Nb tours joués : " + nbTourBleu;
+
+            labNbPartiesGagneRouge.Content = "Parties gagnées : " + nbPartieGagneRouge;
+            labNbPartiesGagneBleu.Content = "Parties gagnées : " + nbPartieGagneBleu;
+            Console.WriteLine("Actualisation des statistiques.");
+
+            tempsInitial = Parametre.TEMPS_PAR_DEPLACAGE * Math.Round(Parametre.Valeurtemps);
+            tempsJeu = tempsInitial;
+
+            valKeyHautJ1 = Parametre.keyHautJ1;
+            valKeyGaucheJ1 = Parametre.keyGaucheJ1;
+            valKeyBasJ1 = Parametre.keyBasJ1;
+            valKeyDroiteJ1 = Parametre.keyDroiteJ1;
+            valKeyHautJ2 = Parametre.keyHautJ2;
+            valKeyGaucheJ2 = Parametre.keyGaucheJ2;
+            valKeyBasJ2 = Parametre.keyBasJ2;
+            valKeyDroiteJ2 = Parametre.keyDroiteJ2;
+            volume = Parametre.valeursons;
+            musiqueFond.Volume = volume / CONVERTION_VOLUME_DECIMALE;
         }
 
         private void AdversaireTimer(object sender, EventArgs e)
