@@ -108,7 +108,9 @@ namespace Alpha
             // Début du jeu.
             InitializeComponent();
             fenetreAccueil.ShowDialog();
+#if DEBUG
             Console.WriteLine("Démarrage du jeu.");
+#endif
 
             // Minuterie - Moteur du jeu.
             minuterieJeu.Tick += MoteurJeu;
@@ -123,12 +125,16 @@ namespace Alpha
             // Chemin des skins.
             joueurRougeSkin.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/SlimeRouge.png"));
             joueurBleuSkin.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/SlimeBleu.png"));
+#if DEBUG
             Console.WriteLine("Jeu - Chargement des skins joueurs...");
+#endif
 
             // On rempli les rectangles avec les skins.
             joueur1.Fill = joueurRougeSkin;
             joueur2.Fill = joueurBleuSkin;
+#if DEBUG
             Console.WriteLine("Jeu - Skins chargés.");
+#endif
         }
         private void MoteurJeu(object sender, EventArgs e)
         {
@@ -198,7 +204,9 @@ namespace Alpha
                     monCanvas.Children.Add(grille[i, j]);
                 }
             }
+#if DEBUG
             Console.WriteLine("Jeu - Grille créée.");
+#endif
         }
 
         private void MouvementsJoueursEtVerifications(object sender, KeyEventArgs e)
@@ -297,7 +305,9 @@ namespace Alpha
                     labNbPartiesGagneBleu.Visibility = Visibility.Hidden;
 
                     statOuvert = false;
+#if DEBUG
                     Console.WriteLine("Jeu - Statistiques fermées.");
+#endif
                 }
                 else
                 {
@@ -310,7 +320,9 @@ namespace Alpha
                     labNbPartiesGagneBleu.Visibility = Visibility.Visible;
 
                     statOuvert = true;
+#if DEBUG
                     Console.WriteLine("Jeu - Statistiques ouvertes.");
+#endif
                 }
             }
             if (e.Key == Key.Space)
@@ -318,17 +330,23 @@ namespace Alpha
                 labCommencer.Visibility = Visibility.Hidden;
 
                 minuterieJeu.Start();
+#if DEBUG
                 Console.WriteLine("Démarrage du timer 'MoteurJeu'.");
+#endif
 
                 if (fenetreAccueil.unJoueur == true)
                 {
                     robotTimer.Start();
+#if DEBUG
                     Console.WriteLine("Démarrage du timer 'robotTimer'.");
+#endif
                 }
                 
                 musiqueJeu.Play();
                 musiqueJeu.MediaEnded += (sender, e) => musiqueJeu.Position = TimeSpan.Zero;
+#if DEBUG
                 Console.WriteLine("Lancement de la musique 'Ultrasyd-Who_Cares.mp3'.");
+#endif
             }
         }
 
@@ -349,7 +367,9 @@ namespace Alpha
                         labScoreBleu.Content = scoreBleu.ToString();
                     }
                     x.Tag = "rouge";
+#if DEBUG
                     Console.WriteLine("Jeu - Collision du joueur rouge.");
+#endif
                 }
                 else if (!estJoueur1 && (string)x.Tag != "bleu")
                 {
@@ -362,7 +382,9 @@ namespace Alpha
                         labScoreRouge.Content = scoreRouge.ToString();
                     }
                     x.Tag = "bleu";
+#if DEBUG
                     Console.WriteLine("Jeu - Collision du joueur bleu.");
+#endif
                 }    
             }
         }
@@ -372,23 +394,31 @@ namespace Alpha
             // On vérifie que le temps arrive à 0 et on fait des vérifications pour savoir qui est le gagnant.
             if (tempsJeu <= 0)
             {
+#if DEBUG
                 Console.WriteLine("Jeu - Vérification du score...");
+#endif
                 if (scoreBleu > scoreRouge)
                 {
                     labBleuGagne.Visibility = Visibility.Visible;
                     nbPartieGagneBleu++;
+#if DEBUG
                     Console.WriteLine("Jeu - Le joueur bleu gagne la partie.");
+#endif
                 }
                 else if (scoreBleu < scoreRouge)
                 {
                     labRougeGagne.Visibility = Visibility.Visible;
                     nbPartieGagneRouge++;
+#if DEBUG
                     Console.WriteLine("Jeu - Le joueur rouge gagne la partie.");
+#endif
                 }
                 else
                 {
                     labPersonneGagne.Visibility = Visibility.Visible;
+#if DEBUG
                     Console.WriteLine("Jeu - Match nul.");
+#endif
                 }
                 Canvas.SetZIndex(rectFond, 2);
                 butRejouer.Visibility = Visibility.Visible;
@@ -396,7 +426,9 @@ namespace Alpha
 
                 minuterieJeu.Stop();
                 robotTimer.Stop();
+#if DEBUG
                 Console.WriteLine("Arrêt du minuteur 'minuterieJeu' et 'robotTimer'.");
+#endif
                 tempsJeu = 0;
             }
         }
@@ -478,24 +510,32 @@ namespace Alpha
             scoreRouge = 0;
             labScoreBleu.Content = scoreBleu.ToString();
             labScoreRouge.Content = scoreRouge.ToString();
+#if DEBUG
             Console.WriteLine("Jeu - Scores réinitialisés.");
+#endif
 
             // On réinitialise les stats.
             nbTourBleu = 0;
             nbTourRouge = 0;
             labTourRouge.Content = "Nb tours joués : " + nbTourRouge;
             labTourBleu.Content = "Nb tours joués : " + nbTourBleu;
+#if DEBUG
             Console.WriteLine("Jeu - Statistiques réinitialisées.");
+#endif
 
             // On actualise la stat du nombre de partie gagné.
             labNbPartiesGagneRouge.Content = "Parties gagnées : " + nbPartieGagneRouge;
             labNbPartiesGagneBleu.Content = "Parties gagnées : " + nbPartieGagneBleu;
+#if DEBUG
             Console.WriteLine("Jeu - Nombre de parties gagnées actualisées.");
+#endif
 
             // On réinitialise le temps.
             tempsJeu = tempsInitial;
             labTemps.Content = tempsJeu.ToString();
+#if DEBUG
             Console.WriteLine("Jeu - Temps réinitialisé.");
+#endif
 
             // On réinitialise les carreaux et on remet les joueurs à leur place.
             foreach (System.Windows.Shapes.Rectangle x in monCanvas.Children.OfType<System.Windows.Shapes.Rectangle>())
@@ -525,7 +565,9 @@ namespace Alpha
                     x.Tag = "blanc";
                 }
             }
+#if DEBUG
             Console.WriteLine("Jeu - Grille et joueurs réinitialisés.");
+#endif
 
             // On remet le fond à sa place.
             Canvas.SetZIndex(rectFond, 0);
@@ -537,7 +579,9 @@ namespace Alpha
             y2 = nbLigne - 1;
             labCooRouge.Content = "x,y : " + x1 + "," + y1;
             labCooBleu.Content = "x,y : " + x2 + "," + y2;
+#if DEBUG
             Console.WriteLine("Jeu - Coordonnées réinitialisées.");
+#endif
 
             // On met en Hidden toutes les fenêtres pour restart le jeu.
             labBleuGagne.Visibility = Visibility.Hidden;
@@ -553,7 +597,9 @@ namespace Alpha
         private void Rejouer(object sender, RoutedEventArgs e)
         {
             Reinitialisation();
+#if DEBUG
             Console.WriteLine("Jeu - Rejouer.");
+#endif
         }
 
         private void NouveauxParametres()
@@ -640,12 +686,16 @@ namespace Alpha
             {
                 rectFond.Fill = fenetreAccueil.herbeFond;
             }
+#if DEBUG
             Console.WriteLine("Jeu - Remplissage du fond.");
+#endif
 
             // Création des rectangles et on charge le Canvas pour que les coordonnées de la grille soient correcte.
             CreationRectangle();
             monCanvas.Loaded += (sender, e) => CreationGrille();
+#if DEBUG
             Console.WriteLine("Jeu - Création de la grille.");
+#endif
 
             // On actualise les stats.
             labCooRouge.Content = "x,y : " + x1 + "," + y1;
@@ -656,7 +706,9 @@ namespace Alpha
 
             labNbPartiesGagneRouge.Content = "Parties gagnées : " + nbPartieGagneRouge;
             labNbPartiesGagneBleu.Content = "Parties gagnées : " + nbPartieGagneBleu;
+#if DEBUG
             Console.WriteLine("Statistiques actualisées.");
+#endif
 
             // Temps.
             tempsInitial = 10 * Math.Round(Accueil.valeurTemps);
@@ -672,7 +724,9 @@ namespace Alpha
             ValKeyGaucheJ2 = Accueil.KeyGaucheJ2;
             ValKeyBasJ2 = Accueil.KeyBasJ2;
             ValKeyDroiteJ2 = Accueil.KeyDroiteJ2;
+#if DEBUG
             Console.WriteLine("Jeu - Touches redéfinient.");
+#endif
         }
 
         private void SupprimerGrille()
@@ -699,7 +753,9 @@ namespace Alpha
 
         private void Menu(object sender, RoutedEventArgs e)
         {
+#if DEBUG
             Console.WriteLine("Jeu - Retour au menu.");
+#endif
             musiqueJeu.Stop();
             Accueil.musiqueAccueil.Play();
             Accueil.musiqueAccueil.MediaEnded += (sender, e) => Accueil.musiqueAccueil.Position = TimeSpan.Zero;
@@ -710,7 +766,9 @@ namespace Alpha
                 NouveauxParametres();
                 CreationGrille();
                 Reinitialisation();
+#if DEBUG
                 Console.WriteLine("Jeu - Nouvelle partie.");
+#endif
                 fenetreAccueil.nouvellePartie = false;    
             }
         }
