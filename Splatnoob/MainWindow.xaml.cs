@@ -105,14 +105,6 @@ namespace Splatnoob
         // Tableau (grille).
         private Rectangle[,] grille5x5;
 
-        //Variable actualiser
-        public static bool actualiser = true;
-        public static bool Actualiser
-        {
-            get { return actualiser; }
-            set { actualiser = value; }
-        }
-
         public MainWindow()
         {
             // Début du jeu.
