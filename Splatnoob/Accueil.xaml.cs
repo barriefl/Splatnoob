@@ -579,5 +579,10 @@ namespace Alpha
             grille7x7 = true;
             Console.WriteLine("Paramètres - Grille 7x7 choisi.");
         }
+
+        private void FermerAccueil(object sender, ContextMenuEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

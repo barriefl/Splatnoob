@@ -714,5 +714,11 @@ namespace Alpha
                 fenetreAccueil.nouvellePartie = false;    
             }
         }
+
+        private void FermerMainWindow(object sender, ContextMenuEventArgs e)
+        {
+            fenetreAccueil.Close();
+            this.Close();
+        }
     }
 }

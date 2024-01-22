@@ -12,7 +12,7 @@
     ResizeMode="NoResize"
     WindowStartupLocation="CenterScreen"
     WindowState="Maximized"
-    mc:Ignorable="d" KeyDown="ToucheBas">
+    mc:Ignorable="d" KeyDown="ToucheBas" ContextMenuClosing="FermerAccueil">
     <Grid>
         <Canvas
             x:Name="canvasParametre"
