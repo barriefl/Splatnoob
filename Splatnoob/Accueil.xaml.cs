@@ -134,7 +134,9 @@ namespace Alpha
         {
             // Lancement page d'accueil & paramètres.
             InitializeComponent();
+#if DEBUG
             Console.WriteLine("Démarrage de la fenêtre 'Accueil'.");
+#endif
 
             // On attribue la valeur 'temps' et 'son' aux sliders.
             slidChoisirTps.Value = valeurTemps;
@@ -151,7 +153,9 @@ namespace Alpha
             nebuleuseFond.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/Nebuleuse.jpg"));
             eauFond.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/Eau.jpg"));
             herbeFond.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/Herbe.jpg"));
+#if DEBUG
             Console.WriteLine("Paramètres - Chargement des fonds...");
+#endif
 
             // On rempli nos boutons avec les fonds.
             butFond1.Background = espaceFond;
@@ -160,12 +164,16 @@ namespace Alpha
             butFond4.Background = nebuleuseFond;
             butFond5.Background = eauFond;
             butFond6.Background = herbeFond;
+#if DEBUG
             Console.WriteLine("Paramètres - Fonds chargés.");
+#endif
 
             // Lancement de la musique.
             musiqueAccueil.Play();
             musiqueAccueil.MediaEnded += (sender, e) => musiqueAccueil.Position = TimeSpan.Zero;
+#if DEBUG
             Console.WriteLine("Accueil - Lancement de la musique 'Apocalypse.mp3'.");
+#endif
         }
 
         private void Mode1Joueur (object sender, RoutedEventArgs e)
@@ -178,7 +186,9 @@ namespace Alpha
             labAttentionJoueurs.Visibility = Visibility.Hidden;
             but1Joueur.BorderBrush = Brushes.White;
             but2Joueurs.BorderBrush = Brushes.Black;
+#if DEBUG
             Console.WriteLine("Accueil - Mode 1 joueur choisi.");
+#endif
         }
 
 
@@ -192,7 +202,9 @@ namespace Alpha
             labAttentionJoueurs.Visibility = Visibility.Hidden;
             but1Joueur.BorderBrush = Brushes.Black;
             but2Joueurs.BorderBrush = Brushes.White;
+#if DEBUG
             Console.WriteLine("Accueil - Mode 2 joueurs choisi.");
+#endif
         }
 
         private void ModeFacile (object sender, RoutedEventArgs e)
@@ -204,7 +216,9 @@ namespace Alpha
             butFacile.BorderBrush = Brushes.White;
             butNormal.BorderBrush = Brushes.Black;
             butDifficile.BorderBrush = Brushes.Black;
+#if DEBUG
             Console.WriteLine("Accueil - Mode facile choisi.");
+#endif
         }
 
         private void ModeNormal (object sender, RoutedEventArgs e)
@@ -216,7 +230,9 @@ namespace Alpha
             butFacile.BorderBrush = Brushes.Black;
             butNormal.BorderBrush = Brushes.White;
             butDifficile.BorderBrush = Brushes.Black;
+#if DEBUG
             Console.WriteLine("Accueil - Mode normal choisi.");
+#endif
         }
 
         private void ModeDifficile (object sender, RoutedEventArgs e)
@@ -228,7 +244,9 @@ namespace Alpha
             butFacile.BorderBrush = Brushes.Black;
             butNormal.BorderBrush = Brushes.Black;
             butDifficile.BorderBrush = Brushes.White;
+#if DEBUG
             Console.WriteLine("Accueil - Mode difficile choisi.");
+#endif
         }
 
         private void NouvellePartie (object sender, RoutedEventArgs e)
@@ -236,18 +254,24 @@ namespace Alpha
             if (unJoueur == false && deuxJoueurs == false)
             {
                 labAttentionJoueurs.Visibility = Visibility.Visible;
+#if DEBUG
                 Console.WriteLine("Accueil - Erreur, il faut choisir un mode 1/2 joueur(s).");
+#endif
             }
             else if ((modeFacile == false && modeNormal == false && modeDifficile == false) && unJoueur == true)
             {
                 labAttentionDifficulte.Visibility = Visibility.Visible;
+#if DEBUG
                 Console.WriteLine("Accueil - Erreur, il faut choisir un niveau de difficulté.");
+#endif
             }
             else
             {
                 nouvellePartie = true;
                 musiqueAccueil.Stop();
+#if DEBUG
                 Console.WriteLine("Accueil - Arrêt de la musique 'Apocalypse.mp3'." + "\nAccueil - Lancement du jeu.");
+#endif
                 this.Hide();
             }
         }      
@@ -257,16 +281,21 @@ namespace Alpha
             timer.Tick += Actualisation;
             timer.Interval = TimeSpan.FromMilliseconds(150);
             timer.Start();
+#if DEBUG
             Console.WriteLine("Démarrage du timer 'Actualisation'.");
-
+#endif
+#if DEBUG
             Console.WriteLine("Accueil - Affichage des paramètres.");
+#endif
             canvasAccueil.Visibility = Visibility.Hidden;
             canvasParametre.Visibility = Visibility.Visible;
 
             musiqueAccueil.Stop();
             musiqueParametres.Play();
             musiqueParametres.MediaEnded += (sender, e) => musiqueParametres.Position = TimeSpan.Zero;
+#if DEBUG
             Console.WriteLine("Paramètres - Lancement de la musique 'Wrong_Place.mp3'.");
+#endif
         }
 
         private void RetourAccueil (object sender, RoutedEventArgs e)
@@ -274,7 +303,9 @@ namespace Alpha
             timer.Stop();
             musiqueParametres.Stop();
             musiqueAccueil.Play();
+#if DEBUG
             Console.WriteLine("Paramètres - Arrêt de la musique 'Wrong_Place.mp3'." + "\nParamètres - Affichage de l'accueil." + "\nParamètres - Arrêt du timer 'Actualisation'." + "\nAccueil - Lancement de la musique 'Apocalypse.mp3'.");
+#endif
             canvasAccueil.Visibility = Visibility.Visible;
             canvasParametre.Visibility = Visibility.Hidden;
         }
@@ -413,49 +444,65 @@ namespace Alpha
             {
                 KeyHautJ1 = e.Key;
                 boutonHautJ1 = false;
-                Console.WriteLine("Paramètres - Touche haut du joueur 1 changée par: " + e.Key);
+#if DEBUG
+                Console.WriteLine("Paramètres - Touche droite du joueur 2 changée par: " + e.Key);
+#endif
             }
             if (boutonGaucheJ1)
             {
                 KeyGaucheJ1 = e.Key;
                 boutonGaucheJ1 = false;
-                Console.WriteLine("Paramètres - Touche gauche du joueur 1 changée par: " + e.Key);
+#if DEBUG
+                Console.WriteLine("Paramètres - Touche droite du joueur 2 changée par: " + e.Key);
+#endif
             }
             if (boutonBasJ1)
             {
                 KeyBasJ1 = e.Key;
                 boutonBasJ1 = false;
-                Console.WriteLine("Paramètres - Touche bas du joueur 1 changée par: " + e.Key);
+#if DEBUG
+                Console.WriteLine("Paramètres - Touche droite du joueur 2 changée par: " + e.Key);
+#endif
             }
             if (boutonDroiteJ1)
             {
                 KeyDroiteJ1 = e.Key;
                 boutonDroiteJ1 = false;
-                Console.WriteLine("Paramètres - Touche droite du joueur 1 changée par: " + e.Key);
+#if DEBUG
+                Console.WriteLine("Paramètres - Touche droite du joueur 2 changée par: " + e.Key);
+#endif
             }
             if (boutonHautJ2)
             {
                 KeyHautJ2 = e.Key;
                 boutonHautJ2 = false;
-                Console.WriteLine("Paramètres - Touche haut du joueur 2 changée par: " + e.Key);
+#if DEBUG
+                Console.WriteLine("Paramètres - Touche droite du joueur 2 changée par: " + e.Key);
+#endif
             }
             if (boutonGaucheJ2)
             {
                 KeyGaucheJ2 = e.Key;
                 boutonGaucheJ2 = false;
-                Console.WriteLine("Paramètres - Touche gauche du joueur 2 changée par: " + e.Key);
+#if DEBUG
+                Console.WriteLine("Paramètres - Touche droite du joueur 2 changée par: " + e.Key);
+#endif
             }
             if (boutonBasJ2)
             {
                 KeyBasJ2 = e.Key;
                 boutonBasJ2 = false;
-                Console.WriteLine("Paramètres - Touche bas du joueur 2 changée par: " + e.Key);
+#if DEBUG
+                Console.WriteLine("Paramètres - Touche droite du joueur 2 changée par: " + e.Key);
+#endif
             }
             if (boutonDroiteJ2)
             {
                 KeyDroiteJ2 = e.Key;
                 boutonDroiteJ2 = false;
+#if DEBUG
                 Console.WriteLine("Paramètres - Touche droite du joueur 2 changée par: " + e.Key);
+#endif
             }
         }
 
@@ -473,7 +520,9 @@ namespace Alpha
             butFond4.BorderBrush = Brushes.Black;
             butFond5.BorderBrush = Brushes.Black;
             butFond6.BorderBrush = Brushes.Black;
+#if DEBUG
             Console.WriteLine("Paramètres - Fond choisi: Espace.jpg");
+#endif
         }
 
         private void FondAuroreBoreale (object sender, RoutedEventArgs e)
@@ -490,7 +539,9 @@ namespace Alpha
             butFond4.BorderBrush = Brushes.Black;
             butFond5.BorderBrush = Brushes.Black;
             butFond6.BorderBrush = Brushes.Black;
+#if DEBUG
             Console.WriteLine("Paramètres - Fond choisi: Aurore_Boreale.jpg");
+#endif
         }
 
         private void FondCielBleu (object sender, RoutedEventArgs e)
@@ -507,7 +558,9 @@ namespace Alpha
             butFond4.BorderBrush = Brushes.Black;
             butFond5.BorderBrush = Brushes.Black;
             butFond6.BorderBrush = Brushes.Black;
+#if DEBUG
             Console.WriteLine("Paramètres - Fond choisi: Ciel_Bleu.jpg");
+#endif
         }
 
         private void FondNebuleuse (object sender, RoutedEventArgs e)
@@ -524,7 +577,9 @@ namespace Alpha
             butFond4.BorderBrush = Brushes.White;
             butFond5.BorderBrush = Brushes.Black;
             butFond6.BorderBrush = Brushes.Black;
+#if DEBUG
             Console.WriteLine("Paramètres - Fond choisi: Nebuleuse.jpg");
+#endif
         }
 
         private void FondEau (object sender, RoutedEventArgs e)
@@ -541,7 +596,9 @@ namespace Alpha
             butFond4.BorderBrush = Brushes.Black;
             butFond5.BorderBrush = Brushes.White;
             butFond6.BorderBrush = Brushes.Black;
+#if DEBUG
             Console.WriteLine("Paramètres - Fond choisi: Eau.jpg");
+# endif
         }
 
         private void FondHerbe (object sender, RoutedEventArgs e)
@@ -558,7 +615,9 @@ namespace Alpha
             butFond4.BorderBrush = Brushes.Black;
             butFond5.BorderBrush = Brushes.Black;
             butFond6.BorderBrush = Brushes.White;
+#if DEBUG
             Console.WriteLine("Paramètres - Fond choisi: Herbe.jpg");
+#endif
         }
 
         private void Grille5x5 (object sender, RoutedEventArgs e)
@@ -567,7 +626,9 @@ namespace Alpha
             butGrille7x7.BorderBrush = Brushes.Black;
             grille5x5 = true;
             grille7x7 = false;
+#if DEBUG
             Console.WriteLine("Paramètres - Grille 5x5 choisi.");
+#endif
         }
 
         private void Grille7x7 (object sender, RoutedEventArgs e)
@@ -576,7 +637,9 @@ namespace Alpha
             butGrille7x7.BorderBrush = Brushes.White;
             grille5x5 = false;
             grille7x7 = true;
+#if DEBUG
             Console.WriteLine("Paramètres - Grille 7x7 choisi.");
+#endif
         }
 
         private void FermerAccueil(object sender, ContextMenuEventArgs e)
