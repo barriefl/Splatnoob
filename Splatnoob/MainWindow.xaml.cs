@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
-using System.Numerics;
-using System.Reflection;
-using System.Security.Authentication;
+using System.Reflection.Metadata;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -15,48 +12,47 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
-namespace Splatnoob
+namespace Alpha
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Logique d'interaction pour MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
+        // Fenêtre.
+        Accueil fenetreAccueil = new Accueil();
+
         // Timer.
-        private DispatcherTimer minuteurJeu = new DispatcherTimer();
-        private DispatcherTimer timer = new DispatcherTimer();
+        private DispatcherTimer minuterieJeu = new DispatcherTimer();
         private DispatcherTimer robotTimer = new DispatcherTimer();
-        private static double tempsInitial;
-        private double tempsJeu;
 
         // Sons.
-        private MediaPlayer musiqueFond = new MediaPlayer();
+        private MediaPlayer musiqueJeu = new MediaPlayer();
 
         // Skin.
         private ImageBrush joueurRougeSkin = new ImageBrush();
         private ImageBrush joueurBleuSkin = new ImageBrush();
 
-        // Points.
-        private Point PO;
-        private Point J1;
-        private Point J2;
-
         // Constantes.
-        private const int RESET = 0;
-
-        private const int LIGNE = 5;
-        private const int COLONNE = 5;
         private const int RECTANGLE_LARGEUR = 75;
         private const int RECTANGLE_HAUTEUR = 75;
         private const int RECTANGLE_ESPACEMENT = 5;
-        private const int POSITION_JOUEUR_Z = 1;
-        private const int VITESSE_TICK_FACILE = 400;
-        private const int VITESSE_TICK_NORMALE = 200;
-        private const int VITESSE_TICK_DIFFICILE = 100;
+
+        private const int VITESSE_TICK_FACILE = 350;
+        private const int VITESSE_TICK_NORMALE = 250;
+        private const int VITESSE_TICK_DIFFICILE = 200;
+
+        private const int SET_LEFT_J1_5X5 = 728;
+        private const int SET_TOP_J1_5X5 = 320;
+        private const int SET_LEFT_J2_5X5 = 1048;
+        private const int SET_TOP_J2_5X5 = 640;
+        private const int SET_LEFT_J1_7X7 = 648;
+        private const int SET_TOP_J1_7X7 = 240;
+        private const int SET_LEFT_J2_7X7 = 1128;
+        private const int SET_TOP_J2_7X7 = 720;
 
         public const int CONVERTION_VOLUME_DECIMALE = 100;
 
@@ -64,6 +60,9 @@ namespace Splatnoob
         private bool statOuvert = false;
 
         // Variables.
+        private static int nbLigne;
+        private static int nbColonne;
+
         private int scoreRouge = 0;
         private int scoreBleu = 0;
 
@@ -74,93 +73,97 @@ namespace Splatnoob
         private int nbPartieGagneBleu = 0;
 
         private int pasJoueur = 80;
-        private int x1 = LIGNE - LIGNE;
-        private int y1 = COLONNE - COLONNE;
-        private int x2 = COLONNE - 1;
-        private int y2 = LIGNE - 1;
-        private int xO = COLONNE / 2;
-        private int yO = LIGNE / 2;
 
-        private int difficulté;
+        private int x1;
+        private int y1;
+        private int x2;
+        private int y2;
 
-        private Key valKeyHautJ1;
-        private Key valKeyGaucheJ1;
-        private Key valKeyBasJ1;
-        private Key valKeyDroiteJ1;
-        private Key valKeyHautJ2;
-        private Key valKeyGaucheJ2;
-        private Key valKeyBasJ2;
-        private Key valKeyDroiteJ2;
+        private int difficulte;
+        public static double volume;
 
-        Accueil fenetreAccueil = new Accueil();
+        private static double tempsInitial;
+        private double tempsJeu;
 
-        private double volume;
+        // Keys.
+        private Key ValKeyHautJ1;
+        private Key ValKeyGaucheJ1;
+        private Key ValKeyBasJ1;
+        private Key ValKeyDroiteJ1;
+        private Key ValKeyHautJ2;
+        private Key ValKeyGaucheJ2;
+        private Key ValKeyBasJ2;
+        private Key ValKeyDroiteJ2;
 
         // Limites grille.
-        private double maxX = COLONNE - 1;
-        private double minX = 0;
-        private double maxY = LIGNE - 1;
-        private double minY = 0;
+        private double maxX;
+        private double minX;
+        private double maxY;
+        private double minY;
 
         // Tableau (grille).
-        private Rectangle[,] grille5x5;
-
+        private System.Windows.Shapes.Rectangle[,] grille = null;
         public MainWindow()
         {
             // Début du jeu.
             InitializeComponent();
+            fenetreAccueil.ShowDialog();
             Console.WriteLine("Démarrage du jeu.");
 
-            minuteurJeu.Tick += MoteurJeu;
-            minuteurJeu.Interval = TimeSpan.FromMilliseconds(16);
+            // Minuterie - Moteur du jeu.
+            minuterieJeu.Tick += MoteurJeu;
+            minuterieJeu.Interval = TimeSpan.FromMilliseconds(16);
 
-            timer.Tick += Timer;
-            timer.Interval = TimeSpan.FromSeconds(1);
+            // On actualise et on change le jeu en fonction des paramètres.
+            NouveauxParametres();
+
+            // Chemin musique.
+            musiqueJeu.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Musiques/Ultrasyd-Who_Cares.mp3"));
 
             // Chemin des skins.
             joueurRougeSkin.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/SlimeRouge.png"));
             joueurBleuSkin.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Images/SlimeBleu.png"));
-
-            
-            Console.WriteLine("Chargement des skins.");
-
-            // Chemin des musiques.
-            musiqueFond.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Musiques/Ultrasyd-Who_Cares.mp3"));
-
-            // Volume des musiques.
-            Console.WriteLine("Chargement de la musique.");
+            Console.WriteLine("Jeu - Chargement des skins joueurs...");
 
             // On rempli les rectangles avec les skins.
             joueur1.Fill = joueurRougeSkin;
             joueur2.Fill = joueurBleuSkin;
-            Console.WriteLine("Skins chargés.");
+            Console.WriteLine("Jeu - Skins chargés.");
+        }
+        private void MoteurJeu(object sender, EventArgs e)
+        {
+            tempsJeu = Math.Round(tempsJeu - 0.016, 2);
+            labTemps.Content = tempsJeu.ToString();
 
-            // Fenêtre de dialogue.
-            Console.WriteLine("Ouverture de la fenêtre d'accueil.");
-            fenetreAccueil.ShowDialog();
+            TestGagnant();
 
-            // Création des rectangles et on charge le Canvas pour que les coordonnées de la grille soient correcte.
-            CreationRectangle();
-            monCanvas.Loaded += (sender, e) => CreationGrille();
-            Console.WriteLine("Création de la grille.");
+            // Création de Rect joueurs pour la détection de collision.
+            Rect rectJoueur1 = new Rect(Canvas.GetLeft(joueur1), Canvas.GetTop(joueur1), joueur1.Width, joueur1.Height);
+            Rect rectJoueur2 = new Rect(Canvas.GetLeft(joueur2), Canvas.GetTop(joueur2), joueur2.Width, joueur2.Height);
+            //Console.WriteLine("Jeu - Rect joueurs créés."); Je désactive celui là pour éviter de polluer la console.
 
-            //on actualise
-            actualisation();
+            foreach (System.Windows.Shapes.Rectangle x in monCanvas.Children.OfType<System.Windows.Shapes.Rectangle>())
+            {
+                TestCollisionJoueur(x, rectJoueur1, true);
+                TestCollisionJoueur(x, rectJoueur2, false);
+            }
+        }
 
-            labTourRouge.Content = "Nb tours joués : " + nbTourRouge;
-            labTourBleu.Content = "Nb tours joués : " + nbTourBleu;
-
+        private void AdversaireTimer(object sender, EventArgs e)
+        {
+            //Console.WriteLine("1 joueur."); Je désactive celui là pour éviter de polluer la console.
+            AdversaireIntelligent();
         }
 
         private void CreationRectangle()
         {
             // Création de la grille + propriétés des rectangles.
-            grille5x5 = new Rectangle[LIGNE, COLONNE];
-            for (int i = 0; i < LIGNE; i++)
+            grille = new System.Windows.Shapes.Rectangle[nbLigne, nbColonne];
+            for (int i = 0; i < nbLigne; i++)
             {
-                for (int j = 0; j < COLONNE; j++)
+                for (int j = 0; j < nbColonne; j++)
                 {
-                    grille5x5[i, j] = new Rectangle
+                    grille[i, j] = new System.Windows.Shapes.Rectangle
                     {
                         Width = RECTANGLE_LARGEUR,
                         Height = RECTANGLE_HAUTEUR,
@@ -176,132 +179,109 @@ namespace Splatnoob
         private void CreationGrille()
         {
             // Variables pour les coordonnées.
-            double largeurTotale = COLONNE * (RECTANGLE_LARGEUR + RECTANGLE_ESPACEMENT) - RECTANGLE_ESPACEMENT;
-            double hauteurTotale = LIGNE * (RECTANGLE_HAUTEUR + RECTANGLE_ESPACEMENT) - RECTANGLE_ESPACEMENT;
+            double largeurTotale = nbColonne * (RECTANGLE_LARGEUR + RECTANGLE_ESPACEMENT) - RECTANGLE_ESPACEMENT;
+            double hauteurTotale = nbLigne * (RECTANGLE_HAUTEUR + RECTANGLE_ESPACEMENT) - RECTANGLE_ESPACEMENT;
 
             // Coordonnées pour centrer la grille.
             double coordonneesX = (rectFond.ActualWidth - largeurTotale) / 2;
             double coordonneesY = (rectFond.ActualHeight - hauteurTotale) / 2;
 
-            for (int i = 0; i < LIGNE; i++)
+            for (int i = 0; i < nbLigne; i++)
             {
-                for (int j = 0; j < COLONNE; j++)
+                for (int j = 0; j < nbColonne; j++)
                 {
                     double x = coordonneesX + j * (RECTANGLE_LARGEUR + RECTANGLE_ESPACEMENT);
                     double y = coordonneesY + i * (RECTANGLE_HAUTEUR + RECTANGLE_ESPACEMENT);
 
-                    Canvas.SetTop(grille5x5[i, j], y);
-                    Canvas.SetLeft(grille5x5[i, j], x);
-                    monCanvas.Children.Add(grille5x5[i, j]);
+                    Canvas.SetTop(grille[i, j], y);
+                    Canvas.SetLeft(grille[i, j], x);
+                    monCanvas.Children.Add(grille[i, j]);
                 }
             }
-            Console.WriteLine("Grille créée.");
-
-            // Placement des joueurs dans l'espace.
-            Canvas.SetZIndex(joueur1, POSITION_JOUEUR_Z);
-            Canvas.SetZIndex(joueur2, POSITION_JOUEUR_Z);
-            Console.WriteLine("Placement des joueurs dans l'espace.");
+            Console.WriteLine("Jeu - Grille créée.");
         }
 
         private void MouvementsJoueursEtVerifications(object sender, KeyEventArgs e)
         {
-            Point PO = new Point(xO, yO);
-
             // Joueur 1 - Z, Q, S, D. 
-            Point J1 = new Point(x1, y1);
-
-            if (e.Key == valKeyHautJ1)
+            if (e.Key == ValKeyHautJ1)
             {
                 if (y1 > minY && (y1 - 1 != y2 || x1 != x2) && tempsJeu < tempsInitial)
                 {
                     Canvas.SetTop(joueur1, Canvas.GetTop(joueur1) - pasJoueur);
                     y1 -= 1;
-                    labCooRouge.Content = "x,y : " + x1 + "," + y1;
                     nbTourRouge++;
-                    labTourRouge.Content = "Nb tours joués : " + nbTourRouge;
                 }
             }
-            if (e.Key == valKeyGaucheJ1)
+            if (e.Key == ValKeyGaucheJ1)
             {
                 if (x1 > minX && (y1 != y2 || x1 - 1 != x2) && tempsJeu < tempsInitial)
                 {
                     Canvas.SetLeft(joueur1, Canvas.GetLeft(joueur1) - pasJoueur);
                     x1 -= 1;
-                    labCooRouge.Content = "x,y : " + x1 + "," + y1;
                     nbTourRouge++;
-                    labTourRouge.Content = "Nb tours joués : " + nbTourRouge;
                 }
             }
-            if (e.Key == valKeyBasJ1)
+            if (e.Key == ValKeyBasJ1)
             {
                 if (y1 < maxY && (y1 + 1 != y2 || x1 != x2) && tempsJeu < tempsInitial)
                 {
                     Canvas.SetTop(joueur1, Canvas.GetTop(joueur1) + pasJoueur);
                     y1 += 1;
-                    labCooRouge.Content = "x,y : " + x1 + "," + y1;
                     nbTourRouge++;
-                    labTourRouge.Content = "Nb tours joués : " + nbTourRouge;
                 }
             }
-            if (e.Key == valKeyDroiteJ1)
+            if (e.Key == ValKeyDroiteJ1)
             {
                 if (x1 < maxX && (y1 != y2 || x1 + 1 != x2) && tempsJeu < tempsInitial)
                 {
                     Canvas.SetLeft(joueur1, Canvas.GetLeft(joueur1) + pasJoueur);
                     x1 += 1;
-                    labCooRouge.Content = "x,y : " + x1 + "," + y1;
                     nbTourRouge++;
-                    labTourRouge.Content = "Nb tours joués : " + nbTourRouge;
                 }
             }
+            labCooRouge.Content = "x,y : " + x1 + "," + y1;
+            labTourRouge.Content = "Nb tours joués : " + nbTourRouge;
 
             // Joueur 2 - Up, Left, Down, Right.
-            Point J2 = new Point(x2, y2);
-
-            if (e.Key == valKeyHautJ2 && fenetreAccueil.deuxJoueurs == true)
+            if (e.Key == ValKeyHautJ2 && fenetreAccueil.deuxJoueurs == true)
             {
                 if (y2 > minY && (y1 != y2 - 1 || x1 != x2) && tempsJeu < tempsInitial)
                 {
                     Canvas.SetTop(joueur2, Canvas.GetTop(joueur2) - pasJoueur);
                     y2 -= 1;
-                    labCooBleu.Content = "x,y : " + x2 + "," + y2;
                     nbTourBleu++;
-                    labTourBleu.Content = "Nb tours joués : " + nbTourBleu;
                 }
             }
-            if (e.Key == valKeyGaucheJ2 && fenetreAccueil.deuxJoueurs == true)
+            if (e.Key == ValKeyGaucheJ2 && fenetreAccueil.deuxJoueurs == true)
             {
                 if (x2 > minX && (y1 != y2 || x1 != x2 - 1) && tempsJeu < tempsInitial)
                 {
                     Canvas.SetLeft(joueur2, Canvas.GetLeft(joueur2) - pasJoueur);
                     x2 -= 1;
-                    labCooBleu.Content = "x,y : " + x2 + "," + y2;
                     nbTourBleu++;
-                    labTourBleu.Content = "Nb tours joués : " + nbTourBleu;
                 }
             }
-            if (e.Key == valKeyBasJ2 && fenetreAccueil.deuxJoueurs == true)
+            if (e.Key == ValKeyBasJ2 && fenetreAccueil.deuxJoueurs == true)
             {
                 if (y2 < maxY && (y1 != y2 + 1 || x1 != x2) && tempsJeu < tempsInitial)
                 {
                     Canvas.SetTop(joueur2, Canvas.GetTop(joueur2) + pasJoueur);
                     y2 += 1;
-                    labCooBleu.Content = "x,y : " + x2 + "," + y2;
                     nbTourBleu++;
-                    labTourBleu.Content = "Nb tours joués : " + nbTourBleu;
                 }
             }
-            if (e.Key == valKeyDroiteJ2 && fenetreAccueil.deuxJoueurs == true)
+            if (e.Key == ValKeyDroiteJ2 && fenetreAccueil.deuxJoueurs == true)
             {
                 if (x2 < maxX && (y1 != y2 || x1 != x2 + 1) && tempsJeu < tempsInitial)
                 {
                     Canvas.SetLeft(joueur2, Canvas.GetLeft(joueur2) + pasJoueur);
                     x2 += 1;
-                    labCooBleu.Content = "x,y : " + x2 + "," + y2;
                     nbTourBleu++;
-                    labTourBleu.Content = "Nb tours joués : " + nbTourBleu;
                 }
             }
+            labCooBleu.Content = "x,y : " + x2 + "," + y2;
+            labTourBleu.Content = "Nb tours joués : " + nbTourBleu;
 
             // Autre.
             if (e.Key == Key.F1)
@@ -317,7 +297,7 @@ namespace Splatnoob
                     labNbPartiesGagneBleu.Visibility = Visibility.Hidden;
 
                     statOuvert = false;
-                    Console.WriteLine("Statistiques fermées.");
+                    Console.WriteLine("Jeu - Statistiques fermées.");
                 }
                 else
                 {
@@ -330,59 +310,60 @@ namespace Splatnoob
                     labNbPartiesGagneBleu.Visibility = Visibility.Visible;
 
                     statOuvert = true;
-                    Console.WriteLine("Statistiques ouvertes.");
+                    Console.WriteLine("Jeu - Statistiques ouvertes.");
                 }
             }
             if (e.Key == Key.Space)
             {
                 labCommencer.Visibility = Visibility.Hidden;
 
-                minuteurJeu.Start();
-                timer.Start();
-                Console.WriteLine("Début du minuteur.");
+                minuterieJeu.Start();
+                Console.WriteLine("Démarrage du timer 'MoteurJeu'.");
 
-                musiqueFond.Play();
-                Console.WriteLine("Début de la musique et des sons.");
-
-                robotTimer.Start();
-            }
-        }
-
-        private void TestCollisionJoueur1(Rectangle x, Rect joueur)
-        {
-            // Vérification de la collision avec le joueur.
-            Rect carreau = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
-            if (joueur.IntersectsWith(carreau) && (string)x.Tag != "joueur" && (string)x.Tag != "rouge")
-            {
-                x.Fill = new SolidColorBrush(Color.FromRgb(255, 25, 25));
-                scoreRouge++;
-                labScoreRouge.Content = scoreRouge.ToString();
-                if (joueur.IntersectsWith(carreau) && (string)x.Tag == "bleu")
+                if (fenetreAccueil.unJoueur == true)
                 {
-                    scoreBleu = scoreBleu - 1;
-                    labScoreBleu.Content = scoreBleu.ToString();
+                    robotTimer.Start();
+                    Console.WriteLine("Démarrage du timer 'robotTimer'.");
                 }
-                x.Tag = "rouge";
-                Console.WriteLine("Collision du joueur rouge.");
+                
+                musiqueJeu.Play();
+                musiqueJeu.MediaEnded += (sender, e) => musiqueJeu.Position = TimeSpan.Zero;
+                Console.WriteLine("Lancement de la musique 'Ultrasyd-Who_Cares.mp3'.");
             }
         }
 
-        private void TestCollisionJoueur2(Rectangle x, Rect joueur)
+        private void TestCollisionJoueur(System.Windows.Shapes.Rectangle x, Rect joueur, bool estJoueur1)
         {
             // Vérification de la collision avec le joueur.
             Rect carreau = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
-            if (joueur.IntersectsWith(carreau) && (string)x.Tag != "joueur" && (string)x.Tag != "bleu")
+            if (joueur.IntersectsWith(carreau) && (string)x.Tag != "joueur")
             {
-                x.Fill = new SolidColorBrush(Color.FromRgb(25, 25, 255));
-                scoreBleu++;
-                labScoreBleu.Content = scoreBleu.ToString();
-                if (joueur.IntersectsWith(carreau) && (string)x.Tag == "rouge")
+                if (estJoueur1 && (string)x.Tag != "rouge")
                 {
-                    scoreRouge = scoreRouge - 1;
+                    x.Fill = new SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 25, 25));
+                    scoreRouge++;
                     labScoreRouge.Content = scoreRouge.ToString();
+                    if (joueur.IntersectsWith(carreau) && (string)x.Tag == "bleu")
+                    {
+                        scoreBleu = scoreBleu - 1;
+                        labScoreBleu.Content = scoreBleu.ToString();
+                    }
+                    x.Tag = "rouge";
+                    Console.WriteLine("Jeu - Collision du joueur rouge.");
                 }
-                x.Tag = "bleu";
-                Console.WriteLine("Collision du joueur bleu.");
+                else if (!estJoueur1 && (string)x.Tag != "bleu")
+                {
+                    x.Fill = new SolidColorBrush(System.Windows.Media.Color.FromRgb(25, 25, 255));
+                    scoreBleu++;
+                    labScoreBleu.Content = scoreBleu.ToString();
+                    if (joueur.IntersectsWith(carreau) && (string)x.Tag == "rouge")
+                    {
+                        scoreRouge = scoreRouge - 1;
+                        labScoreRouge.Content = scoreRouge.ToString();
+                    }
+                    x.Tag = "bleu";
+                    Console.WriteLine("Jeu - Collision du joueur bleu.");
+                }    
             }
         }
 
@@ -391,132 +372,33 @@ namespace Splatnoob
             // On vérifie que le temps arrive à 0 et on fait des vérifications pour savoir qui est le gagnant.
             if (tempsJeu <= 0)
             {
-                Console.WriteLine("Vérification du score.");
+                Console.WriteLine("Jeu - Vérification du score...");
                 if (scoreBleu > scoreRouge)
                 {
                     labBleuGagne.Visibility = Visibility.Visible;
                     nbPartieGagneBleu++;
-                    Console.WriteLine("Le joueur bleu gagne la partie.");
+                    Console.WriteLine("Jeu - Le joueur bleu gagne la partie.");
                 }
                 else if (scoreBleu < scoreRouge)
                 {
                     labRougeGagne.Visibility = Visibility.Visible;
                     nbPartieGagneRouge++;
-                    Console.WriteLine("Le joueur rouge gagne la partie.");
+                    Console.WriteLine("Jeu - Le joueur rouge gagne la partie.");
                 }
                 else
                 {
                     labPersonneGagne.Visibility = Visibility.Visible;
-                    Console.WriteLine("Match nul.");
+                    Console.WriteLine("Jeu - Match nul.");
                 }
                 Canvas.SetZIndex(rectFond, 2);
                 butRejouer.Visibility = Visibility.Visible;
                 butMenu.Visibility = Visibility.Visible;
 
-                minuteurJeu.Stop();
-                timer.Stop();
+                minuterieJeu.Stop();
                 robotTimer.Stop();
-                Console.WriteLine("Arrêt du minuteur.");
+                Console.WriteLine("Arrêt du minuteur 'minuterieJeu' et 'robotTimer'.");
                 tempsJeu = 0;
             }
-        }
-
-        private void MoteurJeu(object sender, EventArgs e)
-        {
-            TestGagnant();
-            // Création de rectangles joueurs pour la détection de collision.
-            Rect rectJoueur1 = new Rect(Canvas.GetLeft(joueur1), Canvas.GetTop(joueur1), joueur1.Width, joueur1.Height);
-            Rect rectJoueur2 = new Rect(Canvas.GetLeft(joueur2), Canvas.GetTop(joueur2), joueur2.Width, joueur2.Height);
-            Console.WriteLine("Rect joueurs créés.");
-
-            foreach (Rectangle x in monCanvas.Children.OfType<Rectangle>())
-            {
-                TestCollisionJoueur1(x, rectJoueur1);
-                TestCollisionJoueur2(x, rectJoueur2);
-            }
-        }
-
-        private void Timer(object sender, EventArgs e)
-        {
-            tempsJeu = tempsJeu - 1;
-            labTemps.Content = tempsJeu.ToString();
-        }
-
-        private void butRejouer_Click(object sender, RoutedEventArgs e)
-        {
-            // On arrête la musique.
-            musiqueFond.Stop();
-
-            // On réinitialise le score.
-            scoreBleu = RESET;
-            scoreRouge = RESET;
-            labScoreBleu.Content = scoreBleu.ToString();
-            labScoreRouge.Content = scoreRouge.ToString();
-            Console.WriteLine("Réinitialisation du score.");
-
-            // On réinitialise les stats.
-            nbTourBleu = RESET;
-            nbTourRouge = RESET;
-            labTourRouge.Content = "Nb tours joués : " + nbTourRouge;
-            labTourBleu.Content = "Nb tours joués : " + nbTourBleu;
-            Console.WriteLine("Réinitialisation des statistiques.");
-
-            // On actualise la stat du nombre de partie gagné.
-            labNbPartiesGagneRouge.Content = "Parties gagnées : " + nbPartieGagneRouge;
-            labNbPartiesGagneBleu.Content = "Parties gagnées : " + nbPartieGagneBleu;
-            Console.WriteLine("Actualisation du nombre de parties gagnées.");
-
-            // On réinitialise le temps.
-            tempsJeu = tempsInitial;
-            labTemps.Content = tempsJeu;
-            Console.WriteLine("Réinitialisation du temps.");
-
-            // On réinitialise les carreaux et on remet les joueurs à leur place.
-            foreach (Rectangle x in monCanvas.Children.OfType<Rectangle>())
-            {
-                if ((string)x.Tag == "joueur")
-                {
-                    Canvas.SetLeft(joueur1, 228);
-                    Canvas.SetTop(joueur1, 45);
-
-                    Canvas.SetLeft(joueur2, 548);
-                    Canvas.SetTop(joueur2, 365);
-                }
-                if ((string)x.Tag == "bleu" || (string)x.Tag == "rouge")
-                {
-                    x.Fill = new SolidColorBrush(Color.FromRgb(255, 255, 255));
-                    x.Tag = "blanc";
-                }
-            }
-            Console.WriteLine("Réinitialisation de la grille et des joueurs.");
-
-            // On remet le fond à sa place.
-            Canvas.SetZIndex(rectFond, 0);
-
-            // On réinitialise les coordonnées.
-            x1 = LIGNE - LIGNE;
-            y1 = COLONNE - COLONNE;
-            x2 = COLONNE - 1;
-            y2 = LIGNE - 1;
-            labCooRouge.Content = "x,y : " + x1 + "," + y1;
-            labCooBleu.Content = "x,y : " + x2 + "," + y2;
-            Console.WriteLine("Réinitialisation des coordonnées.");
-
-            // On met en Hidden toutes les fenêtres pour restart le jeu.
-            labBleuGagne.Visibility = Visibility.Hidden;
-            labRougeGagne.Visibility = Visibility.Hidden;
-            labPersonneGagne.Visibility = Visibility.Hidden;
-            butRejouer.Visibility = Visibility.Hidden;
-            butMenu.Visibility = Visibility.Hidden;
-
-            // Et c'est reparti !
-            labCommencer.Visibility = Visibility.Visible;
-            Console.WriteLine("Nouvelle partie.");
-        }
-
-        private void monCanvas_ContextMenuClosing(object sender, ContextMenuEventArgs e)
-        {
-            Application.Current.Shutdown();
         }
 
         private void AdversaireIntelligent()
@@ -531,11 +413,11 @@ namespace Splatnoob
             int rougeDeltaY = 0;
             double distanceRouge = double.MaxValue;
 
-            for (int i = 0; i < LIGNE; i++)
+            for (int i = 0; i < nbLigne; i++)
             {
-                for (int j = 0; j < COLONNE; j++)
+                for (int j = 0; j < nbColonne; j++)
                 {
-                    if ((string)grille5x5[i, j].Tag == "blanc")
+                    if ((string)grille[i, j].Tag == "blanc")
                     {
                         double distance = Math.Sqrt(Math.Pow(j - x2, 2) + Math.Pow(i - y2, 2));
                         if (distance < distanceBlanche)
@@ -545,7 +427,7 @@ namespace Splatnoob
                             distanceBlanche = distance;
                         }
                     }
-                    else if ((string)grille5x5[i, j].Tag == "rouge" && (i != y1 || j != x1))
+                    else if ((string)grille[i, j].Tag == "rouge" && (i != y1 || j != x1))
                     {
                         double distance = Math.Sqrt(Math.Pow(j - x2, 2) + Math.Pow(i - y2, 2));
                         if (distance < distanceRouge)
@@ -577,7 +459,7 @@ namespace Splatnoob
             int newPosY = y2 + Math.Sign(deltaY);
 
             if (newPosX >= minX && newPosX <= maxX && newPosY >= minY && newPosY <= maxY &&
-                (string)grille5x5[newPosY, newPosX].Tag != "bleu")
+                (string)grille[newPosY, newPosX].Tag != "bleu")
             {
                 Canvas.SetLeft(joueur2, Canvas.GetLeft(joueur2) + pasJoueur * Math.Sign(deltaX));
                 Canvas.SetTop(joueur2, Canvas.GetTop(joueur2) + pasJoueur * Math.Sign(deltaY));
@@ -586,27 +468,185 @@ namespace Splatnoob
             }
         }
 
-        private void butMenu_Click(object sender, RoutedEventArgs e)
+        private void Reinitialisation()
         {
+            // On arrête la musique.
+            musiqueJeu.Stop();
+
+            // On réinitialise le score.
+            scoreBleu = 0;
+            scoreRouge = 0;
+            labScoreBleu.Content = scoreBleu.ToString();
+            labScoreRouge.Content = scoreRouge.ToString();
+            Console.WriteLine("Jeu - Scores réinitialisés.");
+
+            // On réinitialise les stats.
+            nbTourBleu = 0;
+            nbTourRouge = 0;
+            labTourRouge.Content = "Nb tours joués : " + nbTourRouge;
+            labTourBleu.Content = "Nb tours joués : " + nbTourBleu;
+            Console.WriteLine("Jeu - Statistiques réinitialisées.");
+
+            // On actualise la stat du nombre de partie gagné.
+            labNbPartiesGagneRouge.Content = "Parties gagnées : " + nbPartieGagneRouge;
+            labNbPartiesGagneBleu.Content = "Parties gagnées : " + nbPartieGagneBleu;
+            Console.WriteLine("Jeu - Nombre de parties gagnées actualisées.");
+
+            // On réinitialise le temps.
+            tempsJeu = tempsInitial;
+            labTemps.Content = tempsJeu.ToString();
+            Console.WriteLine("Jeu - Temps réinitialisé.");
+
+            // On réinitialise les carreaux et on remet les joueurs à leur place.
+            foreach (System.Windows.Shapes.Rectangle x in monCanvas.Children.OfType<System.Windows.Shapes.Rectangle>())
+            {
+                if ((string)x.Tag == "joueur")
+                {
+                    if (fenetreAccueil.grille5x5 == true)
+                    {
+                        Canvas.SetLeft(joueur1, SET_LEFT_J1_5X5);
+                        Canvas.SetTop(joueur1, SET_TOP_J1_5X5);
+
+                        Canvas.SetLeft(joueur2, SET_LEFT_J2_5X5);
+                        Canvas.SetTop(joueur2, SET_TOP_J2_5X5);
+                    }
+                    else
+                    {
+                        Canvas.SetLeft(joueur1, SET_LEFT_J1_7X7);
+                        Canvas.SetTop(joueur1, SET_TOP_J1_7X7);
+
+                        Canvas.SetLeft(joueur2, SET_LEFT_J2_7X7);
+                        Canvas.SetTop(joueur2, SET_TOP_J2_7X7);
+                    }
+                }
+                if ((string)x.Tag == "bleu" || (string)x.Tag == "rouge")
+                {
+                    x.Fill = new SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 255, 255));
+                    x.Tag = "blanc";
+                }
+            }
+            Console.WriteLine("Jeu - Grille et joueurs réinitialisés.");
+
+            // On remet le fond à sa place.
+            Canvas.SetZIndex(rectFond, 0);
+
+            // On réinitialise les coordonnées.
+            x1 = nbLigne - nbLigne;
+            y1 = nbColonne - nbColonne;
+            x2 = nbColonne - 1;
+            y2 = nbLigne - 1;
+            labCooRouge.Content = "x,y : " + x1 + "," + y1;
+            labCooBleu.Content = "x,y : " + x2 + "," + y2;
+            Console.WriteLine("Jeu - Coordonnées réinitialisées.");
+
+            // On met en Hidden toutes les fenêtres pour restart le jeu.
+            labBleuGagne.Visibility = Visibility.Hidden;
+            labRougeGagne.Visibility = Visibility.Hidden;
+            labPersonneGagne.Visibility = Visibility.Hidden;
+            butRejouer.Visibility = Visibility.Hidden;
             butMenu.Visibility = Visibility.Hidden;
-            fenetreAccueil.ShowDialog();
-            actualisation();
+
+            // Et c'est reparti !
+            labCommencer.Visibility = Visibility.Visible;
         }
 
-        private void actualisation()
+        private void Rejouer(object sender, RoutedEventArgs e)
         {
-            //création du robot
+            Reinitialisation();
+            Console.WriteLine("Jeu - Rejouer.");
+        }
+
+        private void NouveauxParametres()
+        {
+            // Difficulté (affecte la rapidité de l'adversaire).
             if (fenetreAccueil.unJoueur == true)
             {
                 if (fenetreAccueil.modeFacile == true)
-                    difficulté = VITESSE_TICK_FACILE;
+                {
+                    difficulte = VITESSE_TICK_FACILE;
+                }      
                 else if (fenetreAccueil.modeNormal == true)
-                    difficulté = VITESSE_TICK_NORMALE;
+                {
+                    difficulte = VITESSE_TICK_NORMALE;
+                }
                 else
-                    difficulté = VITESSE_TICK_DIFFICILE;
+                {
+                    difficulte = VITESSE_TICK_DIFFICILE;
+                } 
                 robotTimer.Tick += AdversaireTimer;
-                robotTimer.Interval = TimeSpan.FromMilliseconds(difficulté);
+                robotTimer.Interval = TimeSpan.FromMilliseconds(difficulte);
             }
+
+            // Taille de la grille.
+            if (fenetreAccueil.grille5x5 == true)
+            {
+                Canvas.SetLeft(joueur1, SET_LEFT_J1_5X5);
+                Canvas.SetTop(joueur1, SET_TOP_J1_5X5);
+
+                Canvas.SetLeft(joueur2, SET_LEFT_J2_5X5);
+                Canvas.SetTop(joueur2, SET_TOP_J2_5X5);
+                nbLigne = 5;
+                nbColonne = 5;
+            }
+            else
+            {
+                Canvas.SetLeft(joueur1, SET_LEFT_J1_7X7);
+                Canvas.SetTop(joueur1, SET_TOP_J1_7X7);
+
+                Canvas.SetLeft(joueur2, SET_LEFT_J2_7X7);
+                Canvas.SetTop(joueur2, SET_TOP_J2_7X7);
+                nbLigne = 7;
+                nbColonne = 7;
+            }
+
+            // Limites grille.
+            maxX = nbColonne - 1;
+            minX = 0;
+            maxY = nbLigne - 1;
+            minY = 0;
+
+            // Coordonnées.
+            x1 = nbLigne - nbLigne;
+            y1 = nbColonne - nbColonne;
+            x2 = nbColonne - 1;
+            y2 = nbLigne - 1;
+
+            // Volume.
+            volume = Accueil.valeurSon;
+            musiqueJeu.Volume = volume / CONVERTION_VOLUME_DECIMALE;
+
+            // Fonds.
+            if (fenetreAccueil.fond1 == true)
+            {
+                rectFond.Fill = fenetreAccueil.espaceFond;
+            }
+            else if (fenetreAccueil.fond2 == true)
+            {
+                rectFond.Fill = fenetreAccueil.auroreBorealeFond;
+            }
+            else if (fenetreAccueil.fond3 == true)
+            {
+                rectFond.Fill = fenetreAccueil.cielBleuFond;
+            }
+            else if (fenetreAccueil.fond4 == true)
+            {
+                rectFond.Fill = fenetreAccueil.nebuleuseFond;
+            }
+            else if (fenetreAccueil.fond5 == true)
+            {
+                rectFond.Fill = fenetreAccueil.eauFond;
+            }
+            else if (fenetreAccueil.fond6 == true)
+            {
+                rectFond.Fill = fenetreAccueil.herbeFond;
+            }
+            Console.WriteLine("Jeu - Remplissage du fond.");
+
+            // Création des rectangles et on charge le Canvas pour que les coordonnées de la grille soient correcte.
+            CreationRectangle();
+            monCanvas.Loaded += (sender, e) => CreationGrille();
+            Console.WriteLine("Jeu - Création de la grille.");
+
             // On actualise les stats.
             labCooRouge.Content = "x,y : " + x1 + "," + y1;
             labCooBleu.Content = "x,y : " + x2 + "," + y2;
@@ -616,29 +656,62 @@ namespace Splatnoob
 
             labNbPartiesGagneRouge.Content = "Parties gagnées : " + nbPartieGagneRouge;
             labNbPartiesGagneBleu.Content = "Parties gagnées : " + nbPartieGagneBleu;
-            Console.WriteLine("Actualisation des statistiques.");
+            Console.WriteLine("Statistiques actualisées.");
 
-            tempsInitial = Parametre.TEMPS_PAR_DEPLACAGE * Math.Round(Parametre.Valeurtemps);
+            // Temps.
+            tempsInitial = 10 * Math.Round(Accueil.valeurTemps);
             tempsJeu = tempsInitial;
+            labTemps.Content = tempsJeu.ToString();
 
-            valKeyHautJ1 = Parametre.keyHautJ1;
-            valKeyGaucheJ1 = Parametre.keyGaucheJ1;
-            valKeyBasJ1 = Parametre.keyBasJ1;
-            valKeyDroiteJ1 = Parametre.keyDroiteJ1;
-            valKeyHautJ2 = Parametre.keyHautJ2;
-            valKeyGaucheJ2 = Parametre.keyGaucheJ2;
-            valKeyBasJ2 = Parametre.keyBasJ2;
-            valKeyDroiteJ2 = Parametre.keyDroiteJ2;
-            volume = Parametre.valeursons;
-            musiqueFond.Volume = volume / CONVERTION_VOLUME_DECIMALE;
+            // On attribue les nouvelles keys (s'il y en a).
+            ValKeyHautJ1 = Accueil.KeyHautJ1;
+            ValKeyGaucheJ1 = Accueil.KeyGaucheJ1;
+            ValKeyBasJ1 = Accueil.KeyBasJ1;
+            ValKeyDroiteJ1 = Accueil.KeyDroiteJ1;
+            ValKeyHautJ2 = Accueil.KeyHautJ2;
+            ValKeyGaucheJ2 = Accueil.KeyGaucheJ2;
+            ValKeyBasJ2 = Accueil.KeyBasJ2;
+            ValKeyDroiteJ2 = Accueil.KeyDroiteJ2;
+            Console.WriteLine("Jeu - Touches redéfinient.");
         }
 
-        private void AdversaireTimer(object sender, EventArgs e)
+        private void SupprimerGrille()
         {
-            if (fenetreAccueil.unJoueur == true)
+            // On créer une liste temporaire pour stocker les rectangles à supprimer.
+            List<System.Windows.Shapes.Rectangle> rectanglesASupprimer = new List<System.Windows.Shapes.Rectangle>();
+
+            // Parcours de tous les enfants du Canvas et ajout des rectangles à la liste temporaire
+            foreach (System.Windows.Shapes.Rectangle x in monCanvas.Children.OfType<System.Windows.Shapes.Rectangle>())
             {
-                Console.WriteLine("1 joueur.");
-                AdversaireIntelligent();
+                if ((string)x.Tag == "rouge" || (string)x.Tag == "bleu" || (string)x.Tag == "blanc")
+                {
+                    rectanglesASupprimer.Add(x);
+                }
+            }
+            // Suppression des rectangles du Canvas en utilisant la liste temporaire
+            foreach (System.Windows.Shapes.Rectangle x in rectanglesASupprimer)
+            {
+                monCanvas.Children.Remove(x);
+            }
+            // On réinitialise la grille.
+            grille = null;
+        }
+
+        private void Menu(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine("Jeu - Retour au menu.");
+            musiqueJeu.Stop();
+            Accueil.musiqueAccueil.Play();
+            Accueil.musiqueAccueil.MediaEnded += (sender, e) => Accueil.musiqueAccueil.Position = TimeSpan.Zero;
+            fenetreAccueil.ShowDialog();
+            if (fenetreAccueil.nouvellePartie == true)
+            {
+                SupprimerGrille();
+                NouveauxParametres();
+                CreationGrille();
+                Reinitialisation();
+                Console.WriteLine("Jeu - Nouvelle partie.");
+                fenetreAccueil.nouvellePartie = false;    
             }
         }
     }

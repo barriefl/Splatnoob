@@ -1,8 +1,8 @@
 ﻿<Application
-    x:Class="Splatnoob.App"
+    x:Class="Bêta.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="clr-namespace:Splatnoob"
+    xmlns:local="clr-namespace:Bêta"
     StartupUri="MainWindow.xaml">
     <Application.Resources />
 </Application>
