@@ -247,8 +247,7 @@ namespace Alpha
             {
                 nouvellePartie = true;
                 musiqueAccueil.Stop();
-                timer.Stop();
-                Console.WriteLine("Accueil - Arrêt de la musique 'Apocalypse.mp3'." + "\nParamètres - Arrêt du timer 'Actualisation'." + "\nAccueil - Lancement du jeu.");
+                Console.WriteLine("Accueil - Arrêt de la musique 'Apocalypse.mp3'." + "\nAccueil - Lancement du jeu.");
                 this.Hide();
             }
         }      
